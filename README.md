@@ -33,7 +33,7 @@ Scripts run in order. Each reads from the previous step's output.
 
 ## Website
 
-The interactive story lives in `website/`. It uses D3.js v7 for all visualizations — no build step required.
+The interactive story lives in `docs/`. It uses D3.js v7 for all visualizations — no build step required.
 
 To run locally:
 

@@ -6,7 +6,7 @@ datasets/
 appendix/
 
 # Private documents
-docs/
+private/
 
 # Python
 __pycache__/
