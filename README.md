@@ -2,7 +2,7 @@
 
 An analysis of 3.2 million closed NYC 311 service requests from 2024, investigating why lower-income neighborhoods experience longer resolution times.
 
-**[Read the story](https://shuqihong.github.io/nyc-service-gap/)** (link active after GitHub Pages deployment)
+**[Read the story](https://shuqihong.github.io/nyc-service-gap/)**
 
 ## Key finding
 
