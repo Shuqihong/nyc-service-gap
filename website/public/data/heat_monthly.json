@@ -1,0 +1,482 @@
+[
+  {
+    "month": 1,
+    "quartile": "Q1 (lowest)",
+    "n": 21209,
+    "population": 2844440,
+    "per_10k": 74.6,
+    "share_of_all_heat_pct": 56.7,
+    "n_total": 99196,
+    "heat_share_of_quartile_pct": 21.4
+  },
+  {
+    "month": 1,
+    "quartile": "Q2",
+    "n": 8841,
+    "population": 2313827,
+    "per_10k": 38.2,
+    "share_of_all_heat_pct": 23.7,
+    "n_total": 66555,
+    "heat_share_of_quartile_pct": 13.3
+  },
+  {
+    "month": 1,
+    "quartile": "Q3",
+    "n": 4822,
+    "population": 1911060,
+    "per_10k": 25.2,
+    "share_of_all_heat_pct": 12.9,
+    "n_total": 50979,
+    "heat_share_of_quartile_pct": 9.5
+  },
+  {
+    "month": 1,
+    "quartile": "Q4 (highest)",
+    "n": 2504,
+    "population": 1353858,
+    "per_10k": 18.5,
+    "share_of_all_heat_pct": 6.7,
+    "n_total": 43117,
+    "heat_share_of_quartile_pct": 5.8
+  },
+  {
+    "month": 2,
+    "quartile": "Q1 (lowest)",
+    "n": 13285,
+    "population": 2844440,
+    "per_10k": 46.7,
+    "share_of_all_heat_pct": 55.8,
+    "n_total": 81291,
+    "heat_share_of_quartile_pct": 16.3
+  },
+  {
+    "month": 2,
+    "quartile": "Q2",
+    "n": 5594,
+    "population": 2313827,
+    "per_10k": 24.2,
+    "share_of_all_heat_pct": 23.5,
+    "n_total": 57206,
+    "heat_share_of_quartile_pct": 9.8
+  },
+  {
+    "month": 2,
+    "quartile": "Q3",
+    "n": 3251,
+    "population": 1911060,
+    "per_10k": 17.0,
+    "share_of_all_heat_pct": 13.7,
+    "n_total": 45189,
+    "heat_share_of_quartile_pct": 7.2
+  },
+  {
+    "month": 2,
+    "quartile": "Q4 (highest)",
+    "n": 1668,
+    "population": 1353858,
+    "per_10k": 12.3,
+    "share_of_all_heat_pct": 7.0,
+    "n_total": 37679,
+    "heat_share_of_quartile_pct": 4.4
+  },
+  {
+    "month": 3,
+    "quartile": "Q1 (lowest)",
+    "n": 10824,
+    "population": 2844440,
+    "per_10k": 38.1,
+    "share_of_all_heat_pct": 55.9,
+    "n_total": 88615,
+    "heat_share_of_quartile_pct": 12.2
+  },
+  {
+    "month": 3,
+    "quartile": "Q2",
+    "n": 4534,
+    "population": 2313827,
+    "per_10k": 19.6,
+    "share_of_all_heat_pct": 23.4,
+    "n_total": 64494,
+    "heat_share_of_quartile_pct": 7.0
+  },
+  {
+    "month": 3,
+    "quartile": "Q3",
+    "n": 2603,
+    "population": 1911060,
+    "per_10k": 13.6,
+    "share_of_all_heat_pct": 13.4,
+    "n_total": 51611,
+    "heat_share_of_quartile_pct": 5.0
+  },
+  {
+    "month": 3,
+    "quartile": "Q4 (highest)",
+    "n": 1405,
+    "population": 1353858,
+    "per_10k": 10.4,
+    "share_of_all_heat_pct": 7.3,
+    "n_total": 41658,
+    "heat_share_of_quartile_pct": 3.4
+  },
+  {
+    "month": 4,
+    "quartile": "Q1 (lowest)",
+    "n": 6688,
+    "population": 2844440,
+    "per_10k": 23.5,
+    "share_of_all_heat_pct": 52.2,
+    "n_total": 87366,
+    "heat_share_of_quartile_pct": 7.7
+  },
+  {
+    "month": 4,
+    "quartile": "Q2",
+    "n": 3173,
+    "population": 2313827,
+    "per_10k": 13.7,
+    "share_of_all_heat_pct": 24.8,
+    "n_total": 63912,
+    "heat_share_of_quartile_pct": 5.0
+  },
+  {
+    "month": 4,
+    "quartile": "Q3",
+    "n": 1870,
+    "population": 1911060,
+    "per_10k": 9.8,
+    "share_of_all_heat_pct": 14.6,
+    "n_total": 50674,
+    "heat_share_of_quartile_pct": 3.7
+  },
+  {
+    "month": 4,
+    "quartile": "Q4 (highest)",
+    "n": 1084,
+    "population": 1353858,
+    "per_10k": 8.0,
+    "share_of_all_heat_pct": 8.5,
+    "n_total": 45609,
+    "heat_share_of_quartile_pct": 2.4
+  },
+  {
+    "month": 5,
+    "quartile": "Q1 (lowest)",
+    "n": 3002,
+    "population": 2844440,
+    "per_10k": 10.6,
+    "share_of_all_heat_pct": 53.8,
+    "n_total": 91042,
+    "heat_share_of_quartile_pct": 3.3
+  },
+  {
+    "month": 5,
+    "quartile": "Q2",
+    "n": 1216,
+    "population": 2313827,
+    "per_10k": 5.3,
+    "share_of_all_heat_pct": 21.8,
+    "n_total": 68003,
+    "heat_share_of_quartile_pct": 1.8
+  },
+  {
+    "month": 5,
+    "quartile": "Q3",
+    "n": 836,
+    "population": 1911060,
+    "per_10k": 4.4,
+    "share_of_all_heat_pct": 15.0,
+    "n_total": 55358,
+    "heat_share_of_quartile_pct": 1.5
+  },
+  {
+    "month": 5,
+    "quartile": "Q4 (highest)",
+    "n": 525,
+    "population": 1353858,
+    "per_10k": 3.9,
+    "share_of_all_heat_pct": 9.4,
+    "n_total": 50598,
+    "heat_share_of_quartile_pct": 1.0
+  },
+  {
+    "month": 6,
+    "quartile": "Q1 (lowest)",
+    "n": 1645,
+    "population": 2844440,
+    "per_10k": 5.8,
+    "share_of_all_heat_pct": 58.3,
+    "n_total": 99150,
+    "heat_share_of_quartile_pct": 1.7
+  },
+  {
+    "month": 6,
+    "quartile": "Q2",
+    "n": 550,
+    "population": 2313827,
+    "per_10k": 2.4,
+    "share_of_all_heat_pct": 19.5,
+    "n_total": 74481,
+    "heat_share_of_quartile_pct": 0.7
+  },
+  {
+    "month": 6,
+    "quartile": "Q3",
+    "n": 349,
+    "population": 1911060,
+    "per_10k": 1.8,
+    "share_of_all_heat_pct": 12.4,
+    "n_total": 60701,
+    "heat_share_of_quartile_pct": 0.6
+  },
+  {
+    "month": 6,
+    "quartile": "Q4 (highest)",
+    "n": 277,
+    "population": 1353858,
+    "per_10k": 2.0,
+    "share_of_all_heat_pct": 9.8,
+    "n_total": 49265,
+    "heat_share_of_quartile_pct": 0.6
+  },
+  {
+    "month": 7,
+    "quartile": "Q1 (lowest)",
+    "n": 1363,
+    "population": 2844440,
+    "per_10k": 4.8,
+    "share_of_all_heat_pct": 55.5,
+    "n_total": 104354,
+    "heat_share_of_quartile_pct": 1.3
+  },
+  {
+    "month": 7,
+    "quartile": "Q2",
+    "n": 543,
+    "population": 2313827,
+    "per_10k": 2.3,
+    "share_of_all_heat_pct": 22.1,
+    "n_total": 71487,
+    "heat_share_of_quartile_pct": 0.8
+  },
+  {
+    "month": 7,
+    "quartile": "Q3",
+    "n": 288,
+    "population": 1911060,
+    "per_10k": 1.5,
+    "share_of_all_heat_pct": 11.7,
+    "n_total": 56689,
+    "heat_share_of_quartile_pct": 0.5
+  },
+  {
+    "month": 7,
+    "quartile": "Q4 (highest)",
+    "n": 263,
+    "population": 1353858,
+    "per_10k": 1.9,
+    "share_of_all_heat_pct": 10.7,
+    "n_total": 44993,
+    "heat_share_of_quartile_pct": 0.6
+  },
+  {
+    "month": 8,
+    "quartile": "Q1 (lowest)",
+    "n": 1319,
+    "population": 2844440,
+    "per_10k": 4.6,
+    "share_of_all_heat_pct": 55.9,
+    "n_total": 97821,
+    "heat_share_of_quartile_pct": 1.3
+  },
+  {
+    "month": 8,
+    "quartile": "Q2",
+    "n": 528,
+    "population": 2313827,
+    "per_10k": 2.3,
+    "share_of_all_heat_pct": 22.4,
+    "n_total": 68890,
+    "heat_share_of_quartile_pct": 0.8
+  },
+  {
+    "month": 8,
+    "quartile": "Q3",
+    "n": 290,
+    "population": 1911060,
+    "per_10k": 1.5,
+    "share_of_all_heat_pct": 12.3,
+    "n_total": 54392,
+    "heat_share_of_quartile_pct": 0.5
+  },
+  {
+    "month": 8,
+    "quartile": "Q4 (highest)",
+    "n": 224,
+    "population": 1353858,
+    "per_10k": 1.7,
+    "share_of_all_heat_pct": 9.5,
+    "n_total": 43690,
+    "heat_share_of_quartile_pct": 0.5
+  },
+  {
+    "month": 9,
+    "quartile": "Q1 (lowest)",
+    "n": 1525,
+    "population": 2844440,
+    "per_10k": 5.4,
+    "share_of_all_heat_pct": 59.5,
+    "n_total": 110996,
+    "heat_share_of_quartile_pct": 1.4
+  },
+  {
+    "month": 9,
+    "quartile": "Q2",
+    "n": 486,
+    "population": 2313827,
+    "per_10k": 2.1,
+    "share_of_all_heat_pct": 19.0,
+    "n_total": 70937,
+    "heat_share_of_quartile_pct": 0.7
+  },
+  {
+    "month": 9,
+    "quartile": "Q3",
+    "n": 348,
+    "population": 1911060,
+    "per_10k": 1.8,
+    "share_of_all_heat_pct": 13.6,
+    "n_total": 57064,
+    "heat_share_of_quartile_pct": 0.6
+  },
+  {
+    "month": 9,
+    "quartile": "Q4 (highest)",
+    "n": 203,
+    "population": 1353858,
+    "per_10k": 1.5,
+    "share_of_all_heat_pct": 7.9,
+    "n_total": 49493,
+    "heat_share_of_quartile_pct": 0.4
+  },
+  {
+    "month": 10,
+    "quartile": "Q1 (lowest)",
+    "n": 7637,
+    "population": 2844440,
+    "per_10k": 26.8,
+    "share_of_all_heat_pct": 52.5,
+    "n_total": 105482,
+    "heat_share_of_quartile_pct": 7.2
+  },
+  {
+    "month": 10,
+    "quartile": "Q2",
+    "n": 3397,
+    "population": 2313827,
+    "per_10k": 14.7,
+    "share_of_all_heat_pct": 23.3,
+    "n_total": 71372,
+    "heat_share_of_quartile_pct": 4.8
+  },
+  {
+    "month": 10,
+    "quartile": "Q3",
+    "n": 2134,
+    "population": 1911060,
+    "per_10k": 11.2,
+    "share_of_all_heat_pct": 14.7,
+    "n_total": 58057,
+    "heat_share_of_quartile_pct": 3.7
+  },
+  {
+    "month": 10,
+    "quartile": "Q4 (highest)",
+    "n": 1383,
+    "population": 1353858,
+    "per_10k": 10.2,
+    "share_of_all_heat_pct": 9.5,
+    "n_total": 49418,
+    "heat_share_of_quartile_pct": 2.8
+  },
+  {
+    "month": 11,
+    "quartile": "Q1 (lowest)",
+    "n": 15547,
+    "population": 2844440,
+    "per_10k": 54.7,
+    "share_of_all_heat_pct": 56.0,
+    "n_total": 105258,
+    "heat_share_of_quartile_pct": 14.8
+  },
+  {
+    "month": 11,
+    "quartile": "Q2",
+    "n": 6539,
+    "population": 2313827,
+    "per_10k": 28.3,
+    "share_of_all_heat_pct": 23.6,
+    "n_total": 66124,
+    "heat_share_of_quartile_pct": 9.9
+  },
+  {
+    "month": 11,
+    "quartile": "Q3",
+    "n": 3634,
+    "population": 1911060,
+    "per_10k": 19.0,
+    "share_of_all_heat_pct": 13.1,
+    "n_total": 53164,
+    "heat_share_of_quartile_pct": 6.8
+  },
+  {
+    "month": 11,
+    "quartile": "Q4 (highest)",
+    "n": 2024,
+    "population": 1353858,
+    "per_10k": 14.9,
+    "share_of_all_heat_pct": 7.3,
+    "n_total": 42670,
+    "heat_share_of_quartile_pct": 4.7
+  },
+  {
+    "month": 12,
+    "quartile": "Q1 (lowest)",
+    "n": 25081,
+    "population": 2844440,
+    "per_10k": 88.2,
+    "share_of_all_heat_pct": 58.2,
+    "n_total": 122252,
+    "heat_share_of_quartile_pct": 20.5
+  },
+  {
+    "month": 12,
+    "quartile": "Q2",
+    "n": 9667,
+    "population": 2313827,
+    "per_10k": 41.8,
+    "share_of_all_heat_pct": 22.5,
+    "n_total": 64743,
+    "heat_share_of_quartile_pct": 14.9
+  },
+  {
+    "month": 12,
+    "quartile": "Q3",
+    "n": 5390,
+    "population": 1911060,
+    "per_10k": 28.2,
+    "share_of_all_heat_pct": 12.5,
+    "n_total": 51311,
+    "heat_share_of_quartile_pct": 10.5
+  },
+  {
+    "month": 12,
+    "quartile": "Q4 (highest)",
+    "n": 2922,
+    "population": 1353858,
+    "per_10k": 21.6,
+    "share_of_all_heat_pct": 6.8,
+    "n_total": 42743,
+    "heat_share_of_quartile_pct": 6.8
+  }
+]

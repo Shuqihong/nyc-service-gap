@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Why Do Some New Yorkers Wait Longer for City Services?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600;6..72,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg-page: #f7f4ed; --ink: #171614; --ink-mid: #34322f; --ink-light: #6f6a62;
+      --border: #ded7ca; --accent: #c72929;
+      --max-section: 960px; --max-prose: 760px; --max-figure: 760px;
+      --font-serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", serif;
+      --font-sans: "Source Sans 3", "Helvetica Neue", Helvetica, sans-serif;
+    }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body { margin: 0; font-family: var(--font-sans); color: var(--ink); line-height: 1.72;
+      background: radial-gradient(85% 45% at 12% 0%, #fffdf9 0%, transparent 100%),
+        radial-gradient(65% 40% at 86% 8%, #f2ece0 0%, transparent 100%), var(--bg-page); }
+    a { color: inherit; }
+
+    .hero { padding: clamp(5rem,10vw,8rem) 1.25rem 3.4rem; border-bottom: 1px solid var(--border);
+      position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; top: -60px; left: -80px; width: 420px; height: 420px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(217,100,89,0.08) 0%, transparent 70%);
+      pointer-events: none; }
+    .hero::after { content: ""; position: absolute; bottom: -100px; right: -60px; width: 500px; height: 500px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(91,147,197,0.07) 0%, transparent 70%);
+      pointer-events: none; }
+    .hero-inner { max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .hero-kicker { margin: 0 auto 1.2rem; color: var(--accent); letter-spacing: .12em;
+      text-transform: uppercase; font-weight: 700; font-size: .78rem;
+      display: inline-block; padding: .3rem .9rem; border: 1.5px solid var(--accent);
+      border-radius: 3px; }
+    .hero h1 { margin: 0; font-family: var(--font-serif); font-weight: 700;
+      font-size: clamp(2.2rem,5vw,3.8rem); line-height: 1.06; letter-spacing: -.015em; }
+    .hero-subtitle { margin: 1.4rem auto 1.6rem; font-family: var(--font-serif);
+      font-size: clamp(1.1rem,2.1vw,1.5rem); color: var(--ink-mid); }
+    .hero-rule { width: 80px; height: 3px; border: none; background: var(--accent);
+      border-radius: 99px; margin: 0 auto 1.4rem; }
+    .hero-meta { display: inline-block; margin: 0; font-size: .82rem; color: var(--ink-light);
+      border-top: 1px solid var(--border); padding-top: .8rem; }
+
+    .story-section { max-width: var(--max-section); margin: 0 auto; padding: 28px 24px; }
+    .section-header, .body-text, .footnote { width: min(100%, var(--max-prose)); margin-left: auto; margin-right: auto; }
+    .section-header { margin-bottom: 1.2rem; }
+    .section-header h2 { margin: 0; font-family: var(--font-serif); font-weight: 700;
+      font-size: clamp(1.7rem,3.2vw,2.35rem); line-height: 1.12; letter-spacing: -.01em; }
+    .section-header h2::after { content: ""; display: block; width: 78px; height: 3px;
+      border-radius: 999px; background: var(--accent); margin-top: .5rem; }
+    .body-text p { margin: 0 0 1rem; color: var(--ink-mid); font-size: clamp(1rem,1.28vw,1.12rem); }
+    .body-text p strong { color: var(--ink); }
+
+    /* D3 chart containers (replacing static PNGs) */
+    .d3-chart { max-width: var(--max-figure); margin: 24px auto; padding: 0; }
+    .d3-chart svg { width: 100%; display: block; font-family: var(--font-sans); }
+
+    .oaxaca-note-layout { position: relative; max-width: var(--max-figure); margin: 24px auto; }
+    .oaxaca-note-layout .d3-chart { margin: 0; max-width: none; padding: 0; }
+    .method-note { position: absolute; left: calc(100% + 28px); top: 0; width: 210px;
+      border: 1px solid #e5ddd0; background: #fbf6ed; border-radius: 10px; padding: .7rem .8rem; }
+    .method-note p { margin: 0; color: var(--ink-mid); font-size: .85rem; line-height: 1.45; }
+    .method-note p + p { margin-top: .4rem; }
+    .method-note strong { color: var(--ink); font-size: .88rem; }
+
+    .opening-timeline-wrap { max-width: var(--max-prose); margin: 24px auto; }
+    #opening-timeline { width: 100%; }
+    #opening-timeline svg { width: 100%; display: block; }
+
+    .pearson-note-layout { position: relative; max-width: var(--max-prose); margin: 0 auto; }
+    .pearson-note-layout .body-text { width: 100%; margin: 0; }
+    .pearson-note {
+      position: absolute; left: calc(100% + 28px); top: 0; width: 210px;
+      border: 1px solid #e5ddd0; background: #fbf6ed; border-radius: 10px; padding: .7rem .8rem;
+    }
+    .pearson-note p { margin: 0; color: var(--ink-mid); font-size: .85rem; line-height: 1.45; }
+    .pearson-note p + p { margin-top: .4rem; }
+    .pearson-note strong { color: var(--ink); font-size: .88rem; }
+
+    /* ── Map section ── */
+    .map-wrap { max-width: var(--max-section); margin: 24px auto; position: relative; }
+    .map-wrap svg { width: 100%; display: block; }
+    .map-legend { display: flex; justify-content: center; align-items: center; gap: 6px;
+      margin-top: 10px; font-size: .78rem; color: var(--ink-light); }
+    .map-legend-bar { width: 200px; height: 10px; border-radius: 3px; }
+    .map-title-label {
+      text-align: center; font-family: var(--font-sans); font-size: .92rem;
+      font-weight: 600; color: var(--ink); margin-bottom: 6px;
+    }
+    /* ZIP search */
+    .zip-search-wrap {
+      display: flex; justify-content: center; gap: 8px;
+      max-width: 360px; margin: 0 auto 8px;
+    }
+    .zip-search-input {
+      flex: 1; padding: 10px 14px; font-family: var(--font-sans); font-size: .95rem;
+      border: 1.5px solid #ccc; border-radius: 6px; outline: none;
+      transition: border-color .2s;
+    }
+    .zip-search-input:focus { border-color: var(--accent); }
+    .zip-search-btn {
+      padding: 10px 20px; font-family: var(--font-sans); font-size: .9rem;
+      font-weight: 600; color: #fff; background: var(--accent); border: none;
+      border-radius: 6px; cursor: pointer; transition: background .2s;
+    }
+    .zip-search-btn:hover { background: #a82020; }
+    .zip-result {
+      max-width: 420px; margin: 0 auto 18px; padding: 0 4px;
+      font-family: var(--font-sans); font-size: .88rem; line-height: 1.6;
+      color: var(--ink);
+    }
+    .zip-result:empty { display: none; }
+
+    /* ── Tooltip shared ── */
+    .chart-tooltip {
+      position: fixed; background: #fff; border: 1px solid #ddd; border-radius: 6px;
+      padding: 8px 12px; font-family: var(--font-sans); font-size: 13px; color: #333;
+      pointer-events: none; box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      opacity: 0; z-index: 1000; transition: opacity .15s; max-width: 240px;
+    }
+
+    .conclusion { border-top: 2px solid var(--border); }
+    .conclusion .section-header h2::after { width: 108px; }
+    .footnote { margin: 0 auto; padding-top: .95rem; border-top: 1px solid var(--border);
+      color: var(--ink-light); font-size: .79rem; line-height: 1.55; }
+
+    @media (max-width:1100px) {
+      .method-note { position: static; width: 100%; margin-top: 1rem; }
+      .pearson-note { position: static; width: 100%; margin-top: 1rem; }
+    }
+    @media (max-width:640px) {
+      .hero { padding-top: 4rem; padding-bottom: 2.4rem; }
+      .story-section { padding: 1.2rem .85rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════════════════ HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-kicker">NYC 311 Urban Inequality Analysis</p>
+      <h1>Why Do Some New Yorkers<br>Wait Longer for City Services?</h1>
+      <p class="hero-subtitle">The Hidden Story Behind 3 Million 311 Calls</p>
+      <hr class="hero-rule">
+      <p class="hero-meta">New York City &middot; Full Year 2024 &middot; 3,187,149 Closed Complaints &middot; 177 Neighborhoods</p>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════ OPENING STORY -->
+  <section id="section1" class="story-section">
+    <div class="oaxaca-note-layout" style="max-width: var(--max-prose);">
+      <div class="body-text" style="max-width: none; margin: 0; padding: 0;">
+        <p>
+          March 7, 2024. Two New Yorkers wake up to the same emergency: no heat. Both call 311,
+          both get routed to HPD, and both describe the problem in nearly the same words.
+        </p>
+        <p>
+          On the surface, their situations look identical. But one lives in Cambria Heights, Queens,
+          where the median household income is $147,000. The other lives in Soundview, the South Bronx,
+          where it&rsquo;s $38,000.
+        </p>
+        <p>
+          The Queens resident had heat by lunchtime. The Bronx resident waited <strong>17 days</strong>.
+        </p>
+      </div>
+      <aside class="method-note" aria-label="What is 311?">
+        <p><strong>What is NYC 311?</strong></p>
+        <p>
+          311 is New York City&rsquo;s non-emergency government services hotline.
+          Residents call, text, or go online to report problems like broken street
+          lights, noise complaints, lack of heat, or unsanitary conditions. Each request
+          is logged, routed to the responsible agency, and tracked until resolution.
+          The city publishes every request as open data.
+        </p>
+      </aside>
+    </div>
+
+    <div class="opening-timeline-wrap">
+      <div id="opening-timeline"></div>
+    </div>
+
+    <div class="body-text">
+      <p>
+        These are two real complaints pulled from the city&rsquo;s own records. Is the city treating
+        rich and poor neighborhoods differently, or is something else going on?
+      </p>
+      <p>
+        To find out, we analyzed every closed 311 service request filed in New York City
+        in 2024, over 3 million complaints across 177 neighborhoods. The data reveals
+        something more specific than simple discrimination.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ THE GAP -->
+  <section id="the-gap" class="story-section">
+    <div class="section-header"><h2>The Gap</h2></div>
+
+    <div class="body-text">
+      <p>
+        New York&rsquo;s 177 neighborhoods, grouped by income into four quartiles, show a clear gap.
+        The poorest quarter (Q1) waits a median of <strong>10.8 hours</strong>
+        for a 311 complaint to close. The wealthiest quarter (Q4) waits <strong>3.9 hours</strong>.
+        Nearly three times as long. Q2 and Q3 fall in between at around 7 hours, forming a
+        staircase from the poorest to the wealthiest neighborhoods.
+      </p>
+    </div>
+
+    <!-- D3: Quartile bar chart (was fig1_q1_quartile_bar_only.png) -->
+    <div class="d3-chart" id="chart-quartile-bars"></div>
+
+    <div class="oaxaca-note-layout">
+      <div class="body-text">
+        <p>
+          The staircase is real. But across all 3.2 million complaints, the correlation
+          between neighborhood income and resolution time is just <strong>r = 0.046</strong>,
+          explaining less than 0.2% of the variation. If anything, wealthier neighborhoods wait
+          slightly longer per complaint. Income alone barely predicts how long any given
+          complaint takes to resolve. Something else is driving the pattern, and it shows up
+          when we break complaints down by type.
+        </p>
+      </div>
+      <aside class="method-note" aria-label="Pearson correlation note">
+        <p><strong>Where does 0.2% come from?</strong></p>
+        <p>
+          The Pearson correlation coefficient (r) measures how strongly two variables
+          move together in a straight line, ranging from &minus;1 to +1. Here r&nbsp;=&nbsp;0.046,
+          nearly zero. R&sup2; (0.046&sup2;&nbsp;&asymp;&nbsp;0.002) tells us income explains
+          just 0.2% of the variation in resolution time across 3.2&nbsp;million complaints.
+          Why R&sup2;? If a variable perfectly predicts an outcome, all data points fall on the
+          regression line and R&sup2;&nbsp;=&nbsp;1. The further they scatter from the line,
+          the closer R&sup2; falls to 0. It measures what fraction of the spread in one
+          variable is accounted for by the other.
+        </p>
+      </aside>
+    </div>
+
+    <div class="body-text">
+      <p>
+        Every 311 complaint falls into one of four categories.
+        <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, and electrical issues.
+        <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, and water leaks.
+        <strong>Quality of Life</strong> means noise, dirty conditions, and graffiti.
+        <strong>Other</strong> is everything else, such as parking violations, blocked driveways, and abandoned vehicles.
+      </p>
+    </div>
+
+    <!-- D3: Category resolution bars (was fig5_q4_category_quartiles.png) -->
+    <div class="d3-chart" id="chart-category-bars"></div>
+
+    <div class="body-text">
+      <p>
+        Quality of Life and Other complaints close within a few hours regardless of income.
+        <strong>Health &amp; Safety</strong> and <strong>Infrastructure</strong>, however, take far
+        longer. Health &amp; Safety averages 61 to 71 hours across quartiles, while Infrastructure
+        ranges from 66 to 163 hours. Health &amp; Safety shows a modest staircase across quartiles,
+        but the sharpest gradient is in Infrastructure, where wait times rise steadily from
+        66 hours in Q4 to 163 hours in Q1.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ THE EXPLANATION -->
+  <section id="the-explanation" class="story-section">
+    <div class="section-header"><h2>The Explanation</h2></div>
+
+    <div class="body-text">
+      <p>
+        The Infrastructure gradient is driven by what &ldquo;Infrastructure&rdquo; actually
+        contains in each income group. Infrastructure complaints fall into two groups.
+        <strong>Interior housing repairs</strong> include plumbing, elevators, paint/plaster, doors/windows,
+        electrical, and appliances. <strong>Public infrastructure</strong> covers street conditions, traffic signals,
+        sewers, and water systems. Interior repairs take far longer to resolve, over
+        200 hours on average across all quartiles. The share of infrastructure complaints that are interior housing repairs rises
+        steadily with poverty. In Q4, it is <strong>28%</strong>. In Q3, <strong>34%</strong>. In Q2, <strong>47%</strong>.
+        And in Q1, <strong>68%</strong>. The staircase in resolution time follows this composition shift almost exactly.
+      </p>
+    </div>
+
+    <!-- D3: Infrastructure breakdown (was fig5_q4_infra_mix_within_type.png) -->
+    <div class="d3-chart" id="chart-infra-breakdown"></div>
+
+    <div class="body-text">
+      <p>
+        Notably, when comparing interior housing repairs alone, Q4 neighborhoods actually take longer
+        to resolve, with a median of <strong>265.6 hours</strong> compared to Q1&rsquo;s <strong>202.1 hours</strong>. This
+        confirms that the city is not giving wealthier areas faster service on the same type of problem.
+      </p>
+      <p>
+        The pattern extends beyond Infrastructure. When we zoom out to all complaint types,
+        the same compositional divide appears across income quartiles. Q1 waits longer because
+        it files far more of the complaints that take longer to fix.
+      </p>
+    </div>
+
+    <!-- D3: Complaint mix stacked bars (was fig_complaint_mix.png) -->
+    <div class="d3-chart" id="chart-complaint-mix"></div>
+
+    <div class="body-text">
+      <p>
+        Across all four quartiles, a clear gradient emerges. The poorer the neighborhood, the
+        larger the share of slow-resolving complaints. Health &amp; Safety and Infrastructure
+        account for <strong>37.9%</strong> of Q1&rsquo;s complaints, <strong>28.1%</strong> in Q2,
+        <strong>24.5%</strong> in Q3, and just <strong>18.6%</strong> in Q4. From the
+        wealthiest to the poorest quartile, the complaint mix steadily shifts away from issues
+        that close in hours toward problems that take days or weeks to fix.
+      </p>
+      <p>
+        An Oaxaca-Blinder decomposition lets us isolate how much of the gap this composition
+        difference actually explains. If Q1 had Q4&rsquo;s complaint mix but kept
+        its own response speeds, Q1&rsquo;s expected wait would drop to <strong>1.7 hours</strong>,
+        virtually identical to Q4.
+        <strong>Complaint mix alone explains 97.8% of the gap.</strong>
+      </p>
+    </div>
+
+    <div class="oaxaca-note-layout">
+      <!-- D3: Oaxaca decomposition (was fig4_q4_oaxaca.png) -->
+      <div class="d3-chart" id="chart-oaxaca"></div>
+
+      <aside class="method-note" aria-label="Oaxaca decomposition note">
+        <p><strong>What is Oaxaca-Blinder decomposition?</strong></p>
+        <p>
+          A statistical technique originally developed in labor economics to
+          decompose a gap between two groups into two parts: the portion
+          explained by differences in observable characteristics (such as
+          complaint type mix), and a residual that remains after controlling
+          for those differences.
+        </p>
+        <p><strong>Where does 97.8% come from?</strong></p>
+        <p>
+          The type-weighted median wait is 12.62&nbsp;h for Q1 and 1.50&nbsp;h for Q4,
+          a gap of 11.12&nbsp;h. If Q1 had Q4&rsquo;s complaint mix but kept its own
+          response speeds, Q1&rsquo;s expected wait drops to 1.74&nbsp;h, leaving only
+          a 0.24&nbsp;h residual. The explained share is
+          (11.12&nbsp;&minus;&nbsp;0.24)&nbsp;/&nbsp;11.12&nbsp;=&nbsp;97.8%.
+        </p>
+      </aside>
+    </div>
+
+    <div class="body-text">
+      <p>
+        The composition gap is the mechanism. But it raises a deeper question. Why do Q1
+        neighborhoods file so many more of these slow-resolving complaints? If the answer
+        is aging housing infrastructure, the data should show a seasonal signature. Heating
+        failures peak in winter. Plumbing and building systems break down more in cold weather.
+        If old buildings are behind the gap, the disparity between quartiles should follow
+        the same rhythm.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ THE SEASONAL PATTERN -->
+  <section id="winter-story" class="story-section">
+    <div class="section-header"><h2>The Seasonal Pattern</h2></div>
+
+    <div class="body-text">
+      <p>
+        Across the whole year, a clear pattern emerges in the monthly data. The gap between
+        Q1 and Q4 is largest in winter, reaching over <strong>22 hours</strong> in January. It
+        shrinks through spring, bottoms out in June at just <strong>1 hour</strong>, then shows a
+        small bump in July and August before dropping again in September. That mid-summer bump
+        comes from infrastructure complaints. Summer heat puts stress on aging plumbing and building
+        systems, and Q1 neighborhoods see the sharpest spike in volume and resolution time.
+        From October onward, the gap climbs steadily back through autumn into another winter peak.
+      </p>
+    </div>
+
+    <div class="d3-chart" id="winter-chart"></div>
+
+    <div class="body-text">
+      <p>
+        In winter, the four quartiles spread apart dramatically. In January, Q1 waits
+        <strong>25.3 hours</strong> while Q4 waits just <strong>3.1</strong>. Q2 and Q3 fall
+        in between at around 12&ndash;13 hours. By June the lines converge into a narrow band,
+        with all four quartiles between 2.8 and 6.4 hours. The staircase that is so visible
+        in winter nearly flattens in summer.
+      </p>
+      <p>
+        <strong>Q4 almost always resolves fastest throughout the year.</strong> Even in June,
+        Q4&rsquo;s 2.8 hours sits below the other three. This baseline gap exists because the
+        other quartiles, especially Q1, file far more <strong>Infrastructure</strong> and
+        <strong>Health&nbsp;&amp;&nbsp;Safety</strong> complaints, such as plumbing failures,
+        elevator outages, rodent infestations, and water leaks. These types take days or weeks
+        to resolve regardless of season, keeping medians higher than Q4&rsquo;s even in the
+        calmest months.
+      </p>
+      <p>
+        The baseline inequity is year-round. Winter amplifies it. So what drives the winter
+        spike? One complaint type dominates the answer.
+        <strong>HEAT/HOT&nbsp;WATER</strong>.
+      </p>
+    </div>
+
+    <div class="d3-chart" id="heat-chart"></div>
+
+    <div class="body-text">
+      <p>
+        In December, Q1 neighborhoods filed
+        <strong>88.2 HEAT/HOT&nbsp;WATER complaints per 10,000 residents</strong>,
+        more than four times Q4&rsquo;s rate of 21.6. Q2 and Q3 fall in between. In summer,
+        heating complaints drop to near zero across all quartiles and the bars converge. Starting
+        in October, they climb again, with Q1 rising the fastest. This single complaint type
+        accounts for <strong>18.4%</strong> of all Q1 complaints in winter but only
+        <strong>1.9%</strong> in summer. That massive seasonal volume is what pushes Q1&rsquo;s
+        overall median dramatically higher in winter, while Q2 and Q3 also rise but less sharply.
+      </p>
+      <p>
+        The seasonal data confirms what the complaint mix showed. HEAT/HOT&nbsp;WATER, driven by
+        aging boilers in low-income buildings, is the winter amplifier. The year-round baseline
+        comes from Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints that never go away.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ CONCLUSION -->
+  <section id="conclusion" class="story-section conclusion">
+    <div class="section-header"><h2>Conclusion</h2></div>
+
+    <div class="body-text">
+      <p>
+        The gap has <strong>two layers</strong>. The first is a year-round foundation. Lower-income
+        neighborhoods file more Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints, types
+        that are inherently slow to resolve, creating a baseline inequity that never disappears.
+        The second is a seasonal amplifier. HEAT/HOT&nbsp;WATER floods the caseload in winter,
+        driven by aging boilers and failing heating systems in old buildings. Together, they
+        explain both the persistent gap and its dramatic winter peak.
+      </p>
+      <p>
+        <strong>97.8%</strong> of the resolution-time gap is explained by complaint mix alone.
+        Within the same complaint type, wealthier neighborhoods sometimes wait even longer.
+        The 311 system itself is not biased. The equity gap is, at its root, a
+        <strong>housing infrastructure crisis</strong>.
+      </p>
+      <p>
+        The 311 data does not reveal a biased government. It reveals an economic landscape where
+        the burden of failing infrastructure falls disproportionately on those who can least
+        afford better housing. If you are poor, you are more likely to live in an older building
+        that breaks down more often, loses heat in winter, and generates the kinds of complaints
+        that take the longest to resolve. The service gap is real, but it starts with the
+        buildings people live in.
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════ FIND YOUR NEIGHBORHOOD -->
+  <section id="find-your-neighborhood" class="story-section">
+    <div class="section-header"><h2>Find Your Neighborhood</h2></div>
+
+    <div class="body-text">
+      <p>
+        Now that you&rsquo;ve seen the citywide patterns, find your own corner of the map.
+        The choropleth below colors every NYC neighborhood by <strong>median 311 resolution time</strong>.
+        Darker means longer waits. Hover over any area to see the full picture, including
+        income quartile, top complaint types, and how long residents typically wait for help.
+      </p>
+      <p>
+        Or type your ZIP code below to jump straight to your neighborhood and see where it
+        falls in the city&rsquo;s service gap.
+      </p>
+    </div>
+
+    <!-- ZIP search bar -->
+    <div class="zip-search-wrap">
+      <input type="text" id="zip-search" class="zip-search-input"
+             placeholder="Enter your NYC ZIP code" maxlength="5" inputmode="numeric">
+      <button id="zip-search-btn" class="zip-search-btn">Look up</button>
+    </div>
+    <div class="zip-result" id="zip-result"></div>
+
+    <div class="map-wrap" id="map-container">
+      <div class="map-title-label" id="map-title">Median Resolution Time by Neighborhood</div>
+      <div id="map-svg"></div>
+      <div class="map-legend" id="map-legend"></div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ FOOTER -->
+  <footer style="max-width: var(--max-section); margin: 0 auto; padding: 0 24px 2.5rem;">
+    <p class="footnote" style="width: min(100%, var(--max-prose)); margin: 0 auto;">
+      Data: NYC Open Data, 311 Service Requests 2024 (3,187,149 closed complaints) &middot;
+      U.S. Census ACS 5-Year Estimates &middot; NYC DOHMH Modified ZCTA Shapefile.
+      <a href="https://github.com/shuqihong/nyc-service-gap" style="color: var(--accent);">Methodology &amp; code</a>.
+    </p>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════ SCRIPTS -->
+  <div class="chart-tooltip" id="tooltip"></div>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="js/observe.js"></script>
+  <script src="js/section1.js"></script>
+  <script src="js/gap_charts.js"></script>
+  <script src="js/explanation_charts.js"></script>
+  <script src="js/winter.js"></script>
+  <script src="js/heat_chart.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>

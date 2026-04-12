@@ -1,0 +1,30 @@
+[
+  {
+    "quartile": "Q1 (lowest)",
+    "health_safety": 17.7,
+    "infrastructure": 20.2,
+    "other": 30.2,
+    "quality_of_life": 31.9
+  },
+  {
+    "quartile": "Q2",
+    "health_safety": 11.2,
+    "infrastructure": 16.9,
+    "other": 47.3,
+    "quality_of_life": 24.5
+  },
+  {
+    "quartile": "Q3",
+    "health_safety": 8.4,
+    "infrastructure": 16.1,
+    "other": 51.3,
+    "quality_of_life": 24.2
+  },
+  {
+    "quartile": "Q4 (highest)",
+    "health_safety": 6.1,
+    "infrastructure": 12.5,
+    "other": 53.1,
+    "quality_of_life": 28.3
+  }
+]

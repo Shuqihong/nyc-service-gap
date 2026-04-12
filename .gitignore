@@ -1,0 +1,23 @@
+# Large data files — too big for GitHub
+datasets/
+/data/
+
+# Source reference files
+appendix/
+
+# Private documents
+docs/
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE / tooling
+.vscode/
+.claude/
+.codex
