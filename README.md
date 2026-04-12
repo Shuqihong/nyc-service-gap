@@ -1,6 +1,6 @@
 # Why Do Some New Yorkers Wait Longer for City Services?
 
-An analysis of 3.2 million closed NYC 311 service requests from 2024, investigating why lower-income neighborhoods experience longer resolution times.
+A data-driven visual story built on 3.2 million closed NYC 311 service requests from 2024, investigating why lower-income neighborhoods experience longer resolution times. The narrative combines statistical decomposition with interactive D3.js charts to walk readers through the evidence step by step.
 
 **[Read the story](https://shuqihong.github.io/nyc-service-gap/)**
 
@@ -11,8 +11,8 @@ An analysis of 3.2 million closed NYC 311 service requests from 2024, investigat
 ## Data sources
 
 - **NYC Open Data** — [311 Service Requests](https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9), 2024 closed complaints
-- **U.S. Census Bureau** — American Community Survey 5-Year Estimates (median household income, population by ZCTA)
-- **NYC DOHMH** — Modified ZCTA shapefile
+- **U.S. Census Bureau** — [American Community Survey 5-Year Estimates](https://data.census.gov/table/ACSST5Y2022.S1903) (median household income, population by ZCTA)
+- **NYC DOHMH** — [Modified ZCTA shapefile](https://github.com/nychealth/coronavirus-data/blob/master/Geography-resources/MODZCTA_2010_WGS1984.geo.json)
 
 Raw data files are not included in this repo due to size (~3.7 GB). To reproduce, download the 311 dataset from NYC Open Data and place the CSV parts in `datasets/`.
 
@@ -38,7 +38,7 @@ The interactive story lives in `docs/`. It uses D3.js v7 for all visualizations 
 To run locally:
 
 ```bash
-cd website
+cd docs
 python -m http.server 8000
 ```
 
