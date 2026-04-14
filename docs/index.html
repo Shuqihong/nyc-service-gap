@@ -60,6 +60,7 @@
 
     .oaxaca-note-layout { position: relative; max-width: var(--max-figure); margin: 24px auto; }
     .oaxaca-note-layout .d3-chart { margin: 0; max-width: none; padding: 0; }
+    .nested-layout-compact { margin-bottom: 12px; }
     .method-note { position: absolute; left: calc(100% + 28px); top: 0; width: 210px;
       border: 1px solid #e5ddd0; background: #fbf6ed; border-radius: 10px; padding: .7rem .8rem; }
     .nested-model-note { width: 230px; }
@@ -131,6 +132,8 @@
     @media (max-width:1100px) {
       .method-note { position: static; width: 100%; margin-top: 1rem; }
       .pearson-note { position: static; width: 100%; margin-top: 1rem; }
+      .nested-layout-compact .method-note { margin-top: .6rem; }
+      .nested-layout-compact { margin-bottom: 8px; }
     }
     @media (max-width:640px) {
       .hero { padding-top: 4rem; padding-bottom: 2.4rem; }
@@ -265,7 +268,7 @@
       </p>
     </div>
 
-    <div class="oaxaca-note-layout">
+    <div class="oaxaca-note-layout nested-layout-compact">
       <div class="d3-chart" id="chart-nested-models"></div>
       <aside class="method-note nested-model-note" aria-label="Nested regression attribution notes">
         <p><strong>What is nested regression?</strong></p>
@@ -291,10 +294,10 @@
 
     <div class="body-text">
       <p>
-        Income quartile, month, and filing channel together explain only
+        As the plot above shows, income quartile, month, and filing channel together explain only
         <strong>12.3%</strong> of the variance in resolution time. Adding city agency and
         complaint type lifts R&sup2; to <strong>79.2%</strong>. Since agency, complaint type, and
-        filing channel overlap, we use a drop-one-block test on the full model to isolate each
+        filing channel are correlated, we use a drop-one-block test on the full model to isolate each
         variable&rsquo;s independent contribution. Removing complaint type drops R&sup2; by
         <strong>12.6 percentage points</strong> (&Delta;R&sup2; = 0.126), while removing city
         agency drops it by <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012), and
