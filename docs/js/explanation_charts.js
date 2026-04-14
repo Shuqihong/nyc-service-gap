@@ -131,7 +131,7 @@
    CHART 4: Complaint mix stacked bars
    ══════════════════════════════════ */
 (async function () {
-  const data = await d3.json("public/data/complaint_mix.json");
+  const raw = await d3.json("public/data/complaint_mix.json");
   const el = document.getElementById("chart-complaint-mix");
   if (!el) return;
 
@@ -151,13 +151,10 @@
     .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
     .text("Complaint Composition by Income Quartile");
 
-  const x = d3.scaleBand().domain(Q_ORDER).range([0, w]).padding(0.3);
-  const y = d3.scaleLinear().domain([0, 100]).range([h, 0]);
-
   g.append("g").attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(x).tickSize(0)).selectAll("text").style("font-size", "12px");
-  g.select(".domain").attr("stroke", "#ccc");
+    .attr("class", "mix-x-axis");
 
+  const y = d3.scaleLinear().domain([0, 100]).range([h, 0]);
   g.append("g").call(d3.axisLeft(y).ticks(5).tickFormat(d => d + "%"))
     .selectAll("text").style("font-size", "11px");
 
@@ -182,13 +179,103 @@
     other: "#b8b0a8"
   };
 
+  const toNum = v => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+  const valueFrom = (obj, keys) => {
+    for (const k of keys) {
+      if (obj && obj[k] != null) return toNum(obj[k]);
+    }
+    return 0;
+  };
+
+  const byQuartile = new Map();
+  const rows = Array.isArray(raw) ? raw : (raw && Array.isArray(raw.data) ? raw.data : []);
+  rows.forEach(row => {
+    const q = row && row.quartile ? row.quartile : "";
+    if (!q) return;
+    if (!byQuartile.has(q)) {
+      byQuartile.set(q, { quartile: q, shares: {}, medians: {} });
+    }
+    const out = byQuartile.get(q);
+
+    /* Format A: [{quartile, shares:{...}, medians:{...}}] */
+    if (row.shares || row.medians) {
+      const shares = row.shares || {};
+      const medians = row.medians || {};
+      stackOrder.forEach(cat => {
+        out.shares[cat] = valueFrom(shares, [cat]);
+        out.medians[cat] = valueFrom(medians, [cat]);
+      });
+      const hasSplitShare = shares.interior_housing != null || shares.public_infra != null;
+      const hasSplitMedian = medians.interior_housing != null || medians.public_infra != null;
+      if (!hasSplitShare && shares.infrastructure != null) {
+        out.shares.public_infra = valueFrom(shares, ["infrastructure"]);
+        out.shares.interior_housing = 0;
+      }
+      if (!hasSplitMedian && medians.infrastructure != null) {
+        out.medians.public_infra = valueFrom(medians, ["infrastructure"]);
+        out.medians.interior_housing = 0;
+      }
+      return;
+    }
+
+    /* Format B: one row per quartile, flat columns */
+    if (!row.category) {
+      out.shares.health_safety = valueFrom(row, ["health_safety", "health_safety_pct", "health_safety_share_pct"]);
+      out.shares.interior_housing = valueFrom(row, ["interior_housing", "interior_housing_pct", "interior_housing_share_pct"]);
+      out.shares.public_infra = valueFrom(row, ["public_infra", "public_infra_pct", "public_infra_share_pct", "infrastructure", "infrastructure_pct", "infrastructure_share_pct"]);
+      out.shares.quality_of_life = valueFrom(row, ["quality_of_life", "quality_of_life_pct", "quality_of_life_share_pct"]);
+      out.shares.other = valueFrom(row, ["other", "other_pct", "other_share_pct"]);
+
+      out.medians.health_safety = valueFrom(row, ["health_safety_median_h", "median_h_health_safety"]);
+      out.medians.interior_housing = valueFrom(row, ["interior_housing_median_h", "median_h_interior_housing"]);
+      out.medians.public_infra = valueFrom(row, ["public_infra_median_h", "infrastructure_median_h", "median_h_public_infra", "median_h_infrastructure"]);
+      out.medians.quality_of_life = valueFrom(row, ["quality_of_life_median_h", "median_h_quality_of_life"]);
+      out.medians.other = valueFrom(row, ["other_median_h", "median_h_other"]);
+      return;
+    }
+
+    /* Format C: one row per quartile-category ({category, share_pct, median_h}) */
+    const cat = row.category;
+    const mapped = cat === "infrastructure" ? "public_infra" : cat;
+    if (!stackOrder.includes(mapped)) return;
+    out.shares[mapped] = valueFrom(row, ["share_pct", "share", "pct"]);
+    out.medians[mapped] = valueFrom(row, ["median_h", "median"]);
+  });
+
+  const preferredQuartiles = (typeof Q_ORDER !== "undefined" && Array.isArray(Q_ORDER)) ? Q_ORDER : [];
+  const quartiles = preferredQuartiles.filter(q => byQuartile.has(q));
+  byQuartile.forEach((_, q) => {
+    if (!quartiles.includes(q)) quartiles.push(q);
+  });
+
+  const x = d3.scaleBand().domain(quartiles).range([0, w]).padding(0.3);
+  g.select(".mix-x-axis")
+    .call(d3.axisBottom(x).tickSize(0))
+    .selectAll("text")
+    .style("font-size", "12px");
+  g.select(".mix-x-axis .domain").attr("stroke", "#ccc");
+
+  const normalized = quartiles.map(q => {
+    const d = byQuartile.get(q) || { shares: {}, medians: {} };
+    const shares = {};
+    const medians = {};
+    stackOrder.forEach(cat => {
+      shares[cat] = valueFrom(d.shares, [cat]);
+      medians[cat] = valueFrom(d.medians, [cat]);
+    });
+    return { quartile: q, shares, medians };
+  });
+
   /* Build bar data with y positions */
   const barData = [];
-  data.forEach(d => {
+  normalized.forEach(d => {
     let cumY = 0;
     stackOrder.forEach(cat => {
-      const val = d.shares[cat];
-      const med = d.medians[cat];
+      const val = toNum(d.shares[cat]);
+      const med = toNum(d.medians[cat]);
       barData.push({
         quartile: d.quartile, category: cat,
         value: val, median_h: med, y0: cumY,
