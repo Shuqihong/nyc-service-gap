@@ -216,11 +216,6 @@
     .style("font-size", "11px").style("font-weight", "700").style("fill", "#333")
     .text(d => d.r2.toFixed(3));
 
-  // Legend
-  const lg = svg.append("g").attr("transform", `translate(${margin.left + 10},${H - 18})`);
-  lg.append("rect").attr("width", 14).attr("height", 10).attr("fill", "#5b93c5").attr("opacity", 0.88);
-  lg.append("text").attr("x", 20).attr("y", 9).style("font-size", "11px").style("fill", "#444")
-    .text("R² of model");
 })();
 
 
