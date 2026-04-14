@@ -8,6 +8,9 @@ appendix/
 # Private documents
 private/
 
+# Draft / scratch analysis (not for publication)
+draft/
+
 # Python
 __pycache__/
 *.pyc
