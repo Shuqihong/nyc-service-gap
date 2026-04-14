@@ -187,8 +187,12 @@
   data.forEach(d => {
     let cumY = 0;
     stackOrder.forEach(cat => {
-      const val = d[cat];
-      barData.push({ quartile: d.quartile, category: cat, value: val, y0: cumY });
+      const val = d.shares[cat];
+      const med = d.medians[cat];
+      barData.push({
+        quartile: d.quartile, category: cat,
+        value: val, median_h: med, y0: cumY,
+      });
       cumY += val;
     });
   });
@@ -198,8 +202,22 @@
     .attr("y", h).attr("height", 0)
     .attr("fill", d => MIX_COLOR[d.category]).attr("rx", 1)
     .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile}</strong><br>${MIX_LABEL[d.category]}: <strong>${d.value.toFixed(1)}%</strong>`))
+      `<strong>${d.quartile} · ${MIX_LABEL[d.category]}</strong><br>` +
+      `Share: ${d.value.toFixed(1)}%<br>` +
+      `Median resolution: <strong>${d.median_h.toFixed(1)} h</strong>`))
     .on("mousemove", moveTip).on("mouseout", hideTip);
+
+  /* Persistent percentage labels inside each stack segment */
+  const barLabels = g.selectAll(".mix-lbl").data(barData).enter().append("text")
+    .attr("class", "mix-lbl")
+    .attr("x", d => x(d.quartile) + x.bandwidth() / 2)
+    .attr("y", h)
+    .attr("text-anchor", "middle").attr("dominant-baseline", "middle")
+    .style("font-size", "11px").style("font-weight", "700")
+    .style("pointer-events", "none")
+    .style("fill", d => (d.category === "interior_housing" || d.category === "quality_of_life") ? "#3a2a10" : "#fff")
+    .style("opacity", 0)
+    .text(d => d.value >= 4 ? d.value.toFixed(1) + "%" : "");
 
   /* Legend — horizontal row below x-axis */
   const leg = g.append("g").attr("transform", `translate(${w / 2}, ${h + 30})`);
@@ -218,6 +236,9 @@
     bars.transition().duration(800).ease(d3.easeCubicOut)
       .attr("y", d => y(d.y0 + d.value))
       .attr("height", d => y(d.y0) - y(d.y0 + d.value));
+    barLabels.transition().delay(400).duration(500)
+      .attr("y", d => y(d.y0 + d.value / 2))
+      .style("opacity", 1);
   });
 })();
 

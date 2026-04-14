@@ -1,34 +1,70 @@
 [
   {
     "quartile": "Q1 (lowest)",
-    "health_safety": 17.7,
-    "interior_housing": 13.7,
-    "public_infra": 6.5,
-    "quality_of_life": 31.9,
-    "other": 30.2
+    "shares": {
+      "health_safety": 17.7,
+      "interior_housing": 13.7,
+      "public_infra": 6.5,
+      "quality_of_life": 31.9,
+      "other": 30.2
+    },
+    "medians": {
+      "health_safety": 60.8,
+      "interior_housing": 202.1,
+      "public_infra": 48.0,
+      "quality_of_life": 1.2,
+      "other": 3.4
+    }
   },
   {
     "quartile": "Q2",
-    "health_safety": 11.2,
-    "interior_housing": 8.0,
-    "public_infra": 8.9,
-    "quality_of_life": 24.5,
-    "other": 47.4
+    "shares": {
+      "health_safety": 11.2,
+      "interior_housing": 8.0,
+      "public_infra": 8.9,
+      "quality_of_life": 24.5,
+      "other": 47.4
+    },
+    "medians": {
+      "health_safety": 64.6,
+      "interior_housing": 193.9,
+      "public_infra": 43.3,
+      "quality_of_life": 1.2,
+      "other": 3.9
+    }
   },
   {
     "quartile": "Q3",
-    "health_safety": 8.4,
-    "interior_housing": 5.4,
-    "public_infra": 10.7,
-    "quality_of_life": 24.2,
-    "other": 51.3
+    "shares": {
+      "health_safety": 8.4,
+      "interior_housing": 5.4,
+      "public_infra": 10.7,
+      "quality_of_life": 24.2,
+      "other": 51.3
+    },
+    "medians": {
+      "health_safety": 65.1,
+      "interior_housing": 202.2,
+      "public_infra": 42.1,
+      "quality_of_life": 1.2,
+      "other": 4.0
+    }
   },
   {
     "quartile": "Q4 (highest)",
-    "health_safety": 6.1,
-    "interior_housing": 3.5,
-    "public_infra": 9.0,
-    "quality_of_life": 28.3,
-    "other": 53.1
+    "shares": {
+      "health_safety": 6.1,
+      "interior_housing": 3.5,
+      "public_infra": 9.0,
+      "quality_of_life": 28.3,
+      "other": 53.1
+    },
+    "medians": {
+      "health_safety": 70.8,
+      "interior_housing": 265.6,
+      "public_infra": 29.4,
+      "quality_of_life": 1.4,
+      "other": 1.9
+    }
   }
 ]
