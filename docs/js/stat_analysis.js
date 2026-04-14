@@ -132,47 +132,26 @@
   const el = document.getElementById("chart-nested-models");
   if (!el) return;
 
-  // Notes in tooltips:
-  // - R² / coefficients come from the ridge nested-model run (draft/scripts/03_regression_models.py).
-  // - p-values are from an auxiliary unregularized OLS inference run on a 100k sample
-  //   with the same block structure, because ridge coefficients do not have classical p-values.
+  // Diagnostic notes shown only where they add information beyond the plotted bars/line.
   const data = [
-    {
-      name: "income only", r2: 0.001, phone: null,
-      note: [
-        "Full model income (Q4 vs Q1): β = -0.155",
-        "Auxiliary OLS p-value (Q4 vs Q1): p < 1e-300",
-        "Income block (joint) p-value: p < 1e-300",
-      ],
-    },
-    {
-      name: "+ month", r2: 0.005, phone: null,
-      note: [
-        "Full model month (Dec vs Jan): β = +0.286",
-        "Auxiliary OLS p-value (Dec vs Jan): p < 1e-300",
-        "Month block (joint) p-value: p < 1e-300",
-      ],
-    },
+    { name: "income only",      r2: 0.001, phone: null },
+    { name: "+ month",          r2: 0.005, phone: null },
     {
       name: "+ filing channel", r2: 0.123, phone: 1.79,
-      note: [
-        "PHONE effect before agency/type: β = +1.79",
-        "In full model (with type): β = -0.02",
-      ],
     },
     {
       name: "+ city agency", r2: 0.666, phone: 0.06,
       note: [
-        "Drop-one unique ΔR² (agency): 0.0117",
-        "Shapley-style R² share (agency): 40.0%",
+        "Drop-one ΔR²: 0.0117",
+        "Shapley share: 40.0% of full R²",
         "Order sensitivity: +0.543 before type, +0.012 after type",
       ],
     },
     {
       name: "+ complaint type", r2: 0.792, phone: -0.02,
       note: [
-        "Drop-one unique ΔR² (complaint type): 0.1255",
-        "Shapley-style R² share (complaint type): 54.5%",
+        "Drop-one ΔR²: 0.1255",
+        "Shapley share: 54.5% of full R²",
         "Order sensitivity: +0.657 before agency, +0.126 after agency",
       ],
     },
@@ -232,7 +211,8 @@
     .attr("rx", 3).attr("fill", "#5b93c5").attr("opacity", 0.88)
     .on("mouseover", (evt, d) => {
       const lines = (d.note || []).map(t => `<span>${t}</span>`).join("<br>");
-      showTip(evt, `<strong>${d.name}</strong><br>${lines}`);
+      const html = lines ? `<strong>${d.name}</strong><br>${lines}` : `<strong>${d.name}</strong>`;
+      showTip(evt, html);
     })
     .on("mousemove", moveTip).on("mouseout", hideTip);
 
