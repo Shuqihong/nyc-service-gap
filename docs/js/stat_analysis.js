@@ -4,8 +4,7 @@
  * Three D3 visualizations using the page's color palette:
  *   1. chart-heatmap       — static 7x7 variable association heatmap
  *   2. chart-nested-models — static nested R² bar chart
- *   3. chart-block-attribution — agency vs complaint-type attribution
- *   4. chart-dag           — animated causal DAG (nodes fade in, arrows draw)
+ *   3. chart-dag           — animated causal DAG (nodes fade in, arrows draw)
  *
  * Palette matches gap_charts.js / explanation_charts.js:
  *   red #d96459, orange #f2a553, green #7bc8a4, blue #5b93c5, gray #b8b0a8
@@ -278,96 +277,7 @@
 
 
 /* ══════════════════════════════════
-   CHART 3: Block attribution (drop-one vs Shapley)
-   ══════════════════════════════════ */
-(function () {
-  const el = document.getElementById("chart-block-attribution");
-  if (!el) return;
-
-  const data = [
-    { block: "Complaint type", drop_unique: 0.1255, shapley: 0.4314 },
-    { block: "Agency",         drop_unique: 0.0117, shapley: 0.3169 },
-    { block: "Channel",        drop_unique: 0.0005, shapley: 0.0400 },
-    { block: "Month",          drop_unique: 0.0020, shapley: 0.0025 },
-    { block: "Income quartile",drop_unique: 0.0005, shapley: 0.0007 },
-  ];
-
-  const margin = { top: 44, right: 20, bottom: 56, left: 60 };
-  const W = el.clientWidth || 760;
-  const H = 360;
-  const w = W - margin.left - margin.right;
-  const h = H - margin.top - margin.bottom;
-
-  const svg = d3.select(el).append("svg")
-    .attr("viewBox", `0 0 ${W} ${H}`)
-    .attr("preserveAspectRatio", "xMidYMid meet");
-
-  svg.append("text").attr("x", W / 2).attr("y", 22).attr("text-anchor", "middle")
-    .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("Agency vs complaint type: unique effect vs shared effect");
-
-  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-  const x0 = d3.scaleBand().domain(data.map(d => d.block)).range([0, w]).padding(0.24);
-  const x1 = d3.scaleBand().domain(["drop_unique", "shapley"]).range([0, x0.bandwidth()]).padding(0.12);
-  const y = d3.scaleLinear().domain([0, 0.46]).range([h, 0]);
-  const color = d3.scaleOrdinal()
-    .domain(["drop_unique", "shapley"])
-    .range(["#5b93c5", "#d96459"]);
-
-  g.append("g").call(d3.axisLeft(y).ticks(5))
-    .selectAll("text").style("font-size", "11px");
-  g.append("text").attr("transform", "rotate(-90)")
-    .attr("x", -h / 2).attr("y", -44).attr("text-anchor", "middle")
-    .style("font-size", "12px").style("fill", "#666")
-    .text("R² contribution");
-
-  g.append("g").selectAll("line").data(y.ticks(5)).enter().append("line")
-    .attr("x1", 0).attr("x2", w).attr("y1", d => y(d)).attr("y2", d => y(d))
-    .attr("stroke", "#eae5db").attr("stroke-dasharray", "3,3");
-
-  g.append("g").attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(x0).tickSize(0))
-    .selectAll("text")
-    .style("font-size", "11px")
-    .attr("transform", "rotate(-14)")
-    .style("text-anchor", "end");
-
-  const groups = g.selectAll(".attr-group").data(data).enter().append("g")
-    .attr("class", "attr-group")
-    .attr("transform", d => `translate(${x0(d.block)},0)`);
-
-  groups.selectAll("rect").data(d => ([
-    { key: "drop_unique", value: d.drop_unique, block: d.block },
-    { key: "shapley", value: d.shapley, block: d.block },
-  ])).enter().append("rect")
-    .attr("x", d => x1(d.key))
-    .attr("y", d => y(d.value))
-    .attr("width", x1.bandwidth())
-    .attr("height", d => h - y(d.value))
-    .attr("rx", 2)
-    .attr("fill", d => color(d.key))
-    .on("mouseover", (evt, d) => {
-      const lbl = d.key === "drop_unique" ? "Drop-one unique ΔR²" : "Shapley R² share";
-      showTip(evt, `<strong>${d.block}</strong><br>${lbl}: <strong>${d.value.toFixed(4)}</strong>`);
-    })
-    .on("mousemove", moveTip)
-    .on("mouseout", hideTip);
-
-  const lg = svg.append("g").attr("transform", `translate(${margin.left + 8},${H - 16})`);
-  [
-    { key: "drop_unique", label: "Drop-one unique ΔR²", c: "#5b93c5" },
-    { key: "shapley", label: "Shapley-style R² share", c: "#d96459" },
-  ].forEach((d, i) => {
-    const row = lg.append("g").attr("transform", `translate(${i * 190},0)`);
-    row.append("rect").attr("width", 12).attr("height", 10).attr("rx", 2).attr("fill", d.c);
-    row.append("text").attr("x", 18).attr("y", 9).style("font-size", "11px").style("fill", "#444").text(d.label);
-  });
-})();
-
-
-/* ══════════════════════════════════
-   CHART 4: Animated causal DAG
+   CHART 3: Animated causal DAG
    ══════════════════════════════════ */
 (function () {
   const el = document.getElementById("chart-dag");
