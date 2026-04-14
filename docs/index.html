@@ -203,11 +203,11 @@
 
     <div class="body-text">
       <p>
-        New York&rsquo;s 177 neighborhoods, grouped by income into four quartiles, show a clear gap.
-        The poorest quarter (Q1) waits a median of <strong>10.8 hours</strong>
-        for a 311 complaint to close. The wealthiest quarter (Q4) waits <strong>3.9 hours</strong>.
-        Nearly three times as long. Q2 and Q3 fall in between at around 7 hours, forming a
-        staircase from the poorest to the wealthiest neighborhoods.
+        New York&rsquo;s 177 neighborhoods, grouped by income into four quartiles, show a clear 
+        difference in 311 resolution times. The poorest quarter (Q1) waits a median of 
+        <strong>10.8 hours</strong> for a 311 complaint to close. The wealthiest quarter (Q4) waits 
+        <strong>3.9 hours</strong>. Nearly three times as long. Q2 and Q3 fall in between at around 
+        7 hours, forming a staircase from the poorest to the wealthiest neighborhoods.
       </p>
     </div>
 
@@ -217,10 +217,11 @@
     <div class="oaxaca-note-layout">
       <div class="body-text">
         <p>
-          The staircase is real. But across all 3.2 million complaints, the correlation
-          between neighborhood income and resolution time is just <strong>r = 0.046</strong>,
-          indicating a very weak relationship. Income alone barely predicts how long
-          any given complaint takes to resolve, so something else is driving the pattern.
+          That pattern is visible at the group level. But when we look across all 3.2 million complaints, 
+          the relationship between neighborhood income and resolution time is extremely weak: 
+          the correlation is just <strong>r = 0.046</strong>. In other words, income by itself tells us very 
+          little about how long any single complaint will take to resolve. The gap is real, but income alone 
+          does not explain it.
         </p>
       </div>
       <aside class="method-note" aria-label="Pearson correlation note">
@@ -242,10 +243,13 @@
 
     <div class="body-text">
       <p>
-        Before accepting &ldquo;income causes longer waits,&rdquo; we have to test it.
-        Across 3.2&nbsp;million complaints we measured how strongly each candidate
-        variable moves with resolution time, and then asked which of those effects
-        survive once we control for complaint type. The results point in one direction.
+        To look more closely at what is going on, we start with a heat map of the main variables. 
+        Two factors stand out immediately. <strong>Complaint type</strong>
+        (0.84) and <strong>city agency</strong> (0.81) show the strongest relationships 
+        with resolution time. Filing channel is more moderate (0.35). Income, month, and population 
+        are all close to flat, which suggests that by themselves they say little about how long 
+        a complaint will take to close. The heat map also shows a strong relationship between 
+        complaint type and agency.
       </p>
     </div>
 
@@ -253,16 +257,9 @@
 
     <div class="body-text">
       <p>
-        On a 0&ndash;1 scale of association strength, <strong>complaint type</strong>
-        (0.84) and <strong>city agency</strong> (0.81) dominate. Filing channel is
-        moderate (0.35). Income, month, and population are essentially flat. That
-        already suggests the gap is about <strong>what</strong> is being reported,
-        not <strong>who</strong> is reporting it. But high correlation doesn&rsquo;t prove
-        causation &mdash; these variables could be proxies for each other. So we
-        built a sequence of regression models, adding one variable block at a
-        time, and watched two things: how much variance each block explains
-        (R&sup2;), and whether the apparent effect of filing channel survives
-        once complaint type is added.
+        We then model resolution time with nested regressions. The pattern is
+        consistent with the heat map: adding agency and complaint type blocks
+        dramatically improves model fit relative to income, month, and channel alone.
       </p>
     </div>
 
@@ -275,16 +272,12 @@
           predictor block on top of the previous one. This shows how much model
           fit improves as we introduce more information.
         </p>
-        <p><strong>Model type used here</strong></p>
-        <p>
-          We use <strong>Ridge linear regression</strong> on
-          <code>log(resolution_hours)</code>, with one-hot encoded categorical
-          blocks added in sequence.
-        </p>
         <p><strong>What is R&sup2;?</strong></p>
         <p>
           <strong>R&sup2;</strong> ranges from 0 to 1 and measures the share of outcome
-          variation explained by the model. Higher R&sup2; means better in-sample fit.
+          variation explained by the model. Multiply by 100 to read it as a
+          percentage (for example, R&sup2; = 0.123 means 12.3% explained variation).
+          Higher R&sup2; means better in-sample fit.
         </p>
         <p><strong>Drop-one &Delta;R&sup2;</strong></p>
         <p>
