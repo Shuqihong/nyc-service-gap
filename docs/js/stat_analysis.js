@@ -131,6 +131,7 @@
 (function () {
   const el = document.getElementById("chart-nested-models");
   if (!el) return;
+  el.innerHTML = "";
 
   // Diagnostic notes shown only where they add information beyond the plotted bars.
   const data = [
