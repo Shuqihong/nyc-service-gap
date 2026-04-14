@@ -174,7 +174,7 @@
   const MIX_COLOR = {
     health_safety: "#d96459",
     interior_housing: "#9ec5e8",
-    public_infra: "#3f73a6",
+    public_infra: "#5f8fbc",
     quality_of_life: "#f2a553",
     other: "#b8b0a8"
   };
