@@ -269,6 +269,18 @@
     <div class="oaxaca-note-layout">
       <div class="d3-chart" id="chart-nested-models"></div>
       <aside class="method-note nested-model-note" aria-label="Nested regression attribution notes">
+        <p><strong>What is nested regression?</strong></p>
+        <p>
+          Nested regression fits a sequence of models where each step adds a new
+          predictor block on top of the previous one. This shows how much model
+          fit improves as we introduce more information.
+        </p>
+        <p><strong>Model type used here</strong></p>
+        <p>
+          We use <strong>Ridge linear regression</strong> on
+          <code>log(resolution_hours)</code>, with one-hot encoded categorical
+          blocks added in sequence.
+        </p>
         <p><strong>What is R&sup2;?</strong></p>
         <p>
           <strong>R&sup2;</strong> ranges from 0 to 1 and measures the share of outcome
