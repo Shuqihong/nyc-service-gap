@@ -350,9 +350,10 @@
     <div class="body-text">
       <p>
         The stacked composition chart indicates that the poorer the neighborhood, the larger the
-        share of slow-resolving complaints. Health &amp; Safety and Infrastructure together account for
-        <strong>37.9%</strong> of Q1&rsquo;s complaints, <strong>28.1%</strong> in Q2,
-        <strong>24.5%</strong> in Q3, and just <strong>18.6%</strong> in Q4.
+        share of slow-resolving complaints. Health &amp; Safety and interior housing repairs
+        together account for <strong>31.4%</strong> of Q1&rsquo;s complaints,
+        <strong>19.2%</strong> in Q2, <strong>13.8%</strong> in Q3, and just
+        <strong>9.6%</strong> in Q4.
       </p>
       <p>
         We used Oaxaca-Blinder decomposition to indicate how much of the Q1-Q4 wait gap comes
@@ -409,7 +410,6 @@
         Expanding the data across the calendar, the gap separates into two layers:
         a <strong>year-round baseline</strong> that persists every month, and a
         <strong>winter amplifier</strong> that temporarily makes the gap much larger.
-        We start with the baseline, then turn to the winter surge.
       </p>
     </div>
 
@@ -417,8 +417,9 @@
 
     <div class="body-text">
       <p>
-        <strong>Q4 is the fastest quartile in almost every month of the year.</strong> Even in
-        June, when all four quartiles converge into a narrow band between 2.8 and 6.4 hours,
+        <strong>Q4 is the fastest quartile in almost every month of the year.</strong> As the
+        line plot shows, even in June, when all four quartiles converge into a narrow band
+        between 2.8 and 6.4 hours,
         Q4&rsquo;s 2.8 hours still sits below the other three. This baseline gap exists because
         Q1, Q2, and Q3 file far more Infrastructure and Health &amp; Safety complaints, such as
         plumbing failures, elevator outages, rodent infestations, and water leaks. Those types
@@ -455,19 +456,19 @@
         <strong>88.2 HEAT/HOT&nbsp;WATER complaints per 10,000 residents</strong>, more than
         four times Q4&rsquo;s rate of 21.6, with Q2 and Q3 in between. In summer, heating
         complaints drop to near zero across all quartiles and the bars converge. Starting in
-        October they climb again, with Q1 rising the fastest. This single complaint type
-        accounts for <strong>18.4%</strong> of all Q1 complaints in winter but only
-        <strong>1.9%</strong> in summer.
+        October they climb again, with Q1 rising the fastest. Using heating months
+        (October&ndash;March) versus non-heating months (April&ndash;September), this single
+        complaint type accounts for <strong>15.5%</strong> of all Q1 complaints in heating
+        months, but only <strong>2.6%</strong> in non-heating months.
       </p>
       <p>
-        This is the three-way interaction made concrete. Month alone does not slow the city
-        down, and income alone does not slow it down, and a complaint type alone does not slow
-        it down. What slows Q1 down is the particular combination: in winter, Q1 files a
-        surge of a complaint type that is inherently slow to resolve. The calendar shifts the
-        complaint mix, and the mix shift is concentrated in the poorest quartile. Neither
-        month nor income would look like much of a driver on its own, but together they
-        reshape Q1&rsquo;s complaint distribution and drag its median upward. The baseline
-        inequity is year-round; the winter amplifier is a seasonal rearrangement of the mix.
+        To quantify this interaction, we fit a simple model on the 48 month-by-quartile cells:
+        median resolution time ~ month + income quartile + HEAT/HOT&nbsp;WATER share +
+        (income quartile &times; HEAT/HOT&nbsp;WATER share). A month-only model explains
+        <strong>42.3%</strong> of variation (R&sup2; = 0.423), while adding HEAT/HOT&nbsp;WATER
+        share and the interaction raises fit to <strong>94.2%</strong> (R&sup2; = 0.942). The
+        winter spike is therefore a mix effect concentrated in lower-income neighborhoods, not a
+        standalone calendar effect.
       </p>
     </div>
   </section>
@@ -476,7 +477,7 @@
   <section id="the-full-picture" class="story-section">
     <div class="section-header"><h2>The Full Picture</h2></div>
 
-    <div class="body-text">
+    <!-- <div class="body-text">
       <p>
         Everything so far has traced the proximate cause of the gap. Lower-income
         neighborhoods wait longer because they file more of the complaint types that are slow
@@ -534,11 +535,11 @@
         resolution time, because some complaint types are inherently slow to fix and others
         are not.
       </p>
-    </div>
+    </div> -->
 
     <div class="d3-chart" id="chart-dag"></div>
 
-    <div class="body-text">
+    <!-- <div class="body-text">
       <p>
         A few details in the diagram are worth reading carefully. First, the arrow from
         <strong>complaint mix</strong> to <strong>resolution time</strong> is drawn bold and
@@ -568,14 +569,14 @@
         <strong>structural inequality upstream of 311</strong>. The 311 dataset is not the
         site of the inequity. It is the mirror that makes the inequity legible.
       </p>
-    </div>
+    </div> -->
   </section>
 
   <!-- ══════════════════════════════════ CONCLUSION -->
   <section id="conclusion" class="story-section conclusion">
     <div class="section-header"><h2>Conclusion</h2></div>
 
-    <div class="body-text">
+    <!-- <div class="body-text">
       <p>
         The gap has <strong>two layers</strong>. The first is a year-round foundation. Lower-income
         neighborhoods file more Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints, types
@@ -600,7 +601,7 @@
         that take the longest to resolve. The service gap is real, but it starts with the
         buildings people live in.
       </p>
-    </div>
+    </div> -->
 
   </section>
 
@@ -652,7 +653,7 @@
   <script src="js/observe.js"></script>
   <script src="js/section1.js"></script>
   <script src="js/gap_charts.js"></script>
-  <script src="js/stat_analysis.js?v=20260414-2"></script>
+  <script src="js/stat_analysis.js?v=20260414-3"></script>
   <script src="js/explanation_charts.js"></script>
   <script src="js/winter.js"></script>
   <script src="js/heat_chart.js"></script>

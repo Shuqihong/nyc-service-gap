@@ -250,21 +250,21 @@
       label: "Older rental housing with\ndeferred maintenance\n(boilers, plumbing, pests)",
       color: "#f2a553", text: "#3a2a10",
     },
-    digital: {
-      pos: P(600, 190), w: 260, h: 68,
-      label: "Unequal digital access\n(broadband, smartphones,\ntech fluency)",
-      color: "#f2a553", text: "#3a2a10",
-    },
+    // digital: {
+    //   pos: P(600, 190), w: 260, h: 68,
+    //   label: "Unequal digital access\n(broadband, smartphones,\ntech fluency)",
+    //   color: "#f2a553", text: "#3a2a10",
+    // },
     mix: {
       pos: P(280, 330), w: 320, h: 68,
       label: "Different complaint mix\n(more slow, housing-interior\nissues; heat, plumbing, pests)",
       color: "#d96459", text: "#fff",
     },
-    channel: {
-      pos: P(620, 330), w: 240, h: 68,
-      label: "More phone-filed\ncomplaints\n(vs. online portal / app)",
-      color: "#c9b9a0", text: "#3a2a10",
-    },
+    // channel: {
+    //   pos: P(620, 330), w: 240, h: 68,
+    //   label: "More phone-filed\ncomplaints\n(vs. online portal / app)",
+    //   color: "#c9b9a0", text: "#3a2a10",
+    // },
     winter: {
       pos: P(260, 450), w: 260, h: 56,
       label: "Winter surge in\nHEAT/HOT WATER",
@@ -280,13 +280,13 @@
   // Edges: [from, to, dashed?, label, strong?]
   const EDGES = [
     ["root",    "housing", false, null,              false],
-    ["root",    "digital", false, null,              false],
+    // ["root",    "digital", false, null,              false],
     ["housing", "mix",     false, "primary path",    true ],
-    ["digital", "channel", false, null,              false],
+    // ["digital", "channel", false, null,              false],
     ["mix",     "winter",  false, "seasonal surge",  false],
     ["mix",     "out",     false, "97.8% of gap",    true ],
     ["winter",  "out",     false, "amplifier",       false],
-    ["channel", "out",     true,  "≈0 after controls", false],
+    // ["channel", "out",     true,  "≈0 after controls", false],
   ];
 
   // Arrow markers (normal + strong)
@@ -378,11 +378,11 @@
   const ORDER = [
     { type: "node", key: "root" },
     { type: "node", key: "housing" },
-    { type: "node", key: "digital" },
+    // { type: "node", key: "digital" },
     { type: "edge", match: (e) => e[0] === "root" },
     { type: "node", key: "mix" },
-    { type: "node", key: "channel" },
-    { type: "edge", match: (e) => e[0] === "housing" || e[0] === "digital" },
+    // { type: "node", key: "channel" },
+    { type: "edge", match: (e) => e[0] === "housing" },
     { type: "node", key: "winter" },
     { type: "edge", match: (e) => e[0] === "mix" && e[1] === "winter" },
     { type: "node", key: "out" },
