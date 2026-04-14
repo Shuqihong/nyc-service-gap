@@ -62,7 +62,8 @@
     .oaxaca-note-layout .d3-chart { margin: 0; max-width: none; padding: 0; }
     .method-note { position: absolute; left: calc(100% + 28px); top: 0; width: 210px;
       border: 1px solid #e5ddd0; background: #fbf6ed; border-radius: 10px; padding: .7rem .8rem; }
-    .method-note-secondary { top: 190px; }
+    .method-note-secondary { top: 250px; }
+    .nested-model-note { width: 230px; }
     .method-note p { margin: 0; color: var(--ink-mid); font-size: .85rem; line-height: 1.45; }
     .method-note p + p { margin-top: .4rem; }
     .method-note strong { color: var(--ink); font-size: .88rem; }
@@ -235,11 +236,11 @@
       <aside class="method-note method-note-secondary" aria-label="R and R squared note">
         <p><strong>What do r and R&sup2; mean here?</strong></p>
         <p>
-          Here <strong>r = 0.046</strong>, which is very close to 0, so income alone has
-          very weak linear association with complaint resolution time.
-          <strong>R&sup2; = r&sup2; = 0.046&sup2; &asymp; 0.002</strong>, meaning income
-          explains about <strong>0.2%</strong> of the variation in resolution time.
-          The remaining 99.8% is driven by other factors.
+          <strong>R&sup2;</strong> is the share of variation explained by a linear
+          model, and it ranges from 0 to 1. You can read it as a percentage:
+          <strong>R&sup2; = 0.002</strong> means the model explains
+          <strong>0.2%</strong> of variation, and <strong>99.8%</strong> remains
+          unexplained by income alone.
         </p>
       </aside>
     </div>
@@ -276,7 +277,30 @@
       </p>
     </div>
 
-    <div class="d3-chart" id="chart-nested-models"></div>
+    <div class="oaxaca-note-layout">
+      <div class="d3-chart" id="chart-nested-models"></div>
+      <aside class="method-note nested-model-note" aria-label="Nested regression attribution notes">
+        <p><strong>Drop-one &Delta;R&sup2;</strong></p>
+        <p>
+          Remove one block from the full model and measure the R&sup2; loss.
+          This estimates that block&rsquo;s unique incremental contribution.
+        </p>
+        <p><strong>Shapley R&sup2;</strong></p>
+        <p>
+          Average each block&rsquo;s marginal contribution across all block orders,
+          giving a fair allocation when predictors overlap.
+        </p>
+        <p><strong>Shapley / Full R&sup2;</strong></p>
+        <p>
+          A normalized share: block Shapley value divided by full-model R&sup2;.
+        </p>
+        <p><strong>Order Sensitivity</strong></p>
+        <p>
+          Compare gain when a block enters before vs after another correlated block.
+          Large shifts indicate shared explanatory power.
+        </p>
+      </aside>
+    </div>
 
     <div class="body-text">
       <p>
