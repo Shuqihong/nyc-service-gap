@@ -293,28 +293,14 @@
       <p>
         The results are clear. Income quartile, month, and filing channel together explain only
         <strong>12.3%</strong> of the variance in resolution time. Adding city agency and
-        complaint type lifts R&sup2; to <strong>79.2%</strong>. The filing-channel coefficient
-        tells the same story in miniature. Residents can file a 311 complaint by phone, through
-        the online portal, via the mobile app, or a few smaller routes, and phone is by far the
-        most common channel in lower-income neighborhoods. When we first add filing channel to
-        the model, phone complaints look about <strong>6&times; slower</strong> than online ones
-        (&beta; = +1.79). But once complaint type is controlled for, that coefficient collapses
-        to essentially zero (&beta; = &minus;0.02). There is no independent &ldquo;phones are
-        slow&rdquo; effect. Phones simply carry the complaint types that happen to be slow to
-        resolve.
-      </p>
-      <p>
-        Because city agency, complaint type, and filing channel are correlated with each other, a
-        single R&sup2; number can hide which variable is doing the work. We use a drop-one-block
-        test on the full model to isolate what each variable adds on its own. Removing complaint
-        type from the full model drops R&sup2; by <strong>12.6 percentage points</strong>
-        (&Delta;R&sup2; = 0.126), while removing city agency drops it by only
-        <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012). Removing filing
-        channel drops R&sup2; by just <strong>0.05 percentage points</strong>
-        (&Delta;R&sup2; = 0.0005), which is close to zero. This indicates that complaint type is
-        almost the entire reason the gap appears in the model, while agency and channel add
-        comparatively little unique information. That leads directly to the next question:
-        what complaint types make up each neighborhood&rsquo;s 311 mix?
+        complaint type lifts R&sup2; to <strong>79.2%</strong>. Since agency, complaint type, and
+        filing channel overlap, we use a drop-one-block test on the full model to isolate each
+        variable&rsquo;s independent contribution. Removing complaint type drops R&sup2; by
+        <strong>12.6 percentage points</strong> (&Delta;R&sup2; = 0.126), while removing city
+        agency drops it by <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012), and
+        removing filing channel drops it by just <strong>0.05 percentage points</strong>
+        (&Delta;R&sup2; = 0.0005). Complaint type is therefore almost the entire reason the gap
+        appears in the model, with agency and channel adding little unique information.
       </p>
     </div>
 

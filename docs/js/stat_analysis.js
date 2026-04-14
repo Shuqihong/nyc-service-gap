@@ -126,30 +126,30 @@
 
 
 /* ══════════════════════════════════
-   CHART 2: Nested R² bars + phone coefficient line (static)
+   CHART 2: Nested R² bars (static)
    ══════════════════════════════════ */
 (function () {
   const el = document.getElementById("chart-nested-models");
   if (!el) return;
 
-  // Diagnostic notes shown only where they add information beyond the plotted bars/line.
+  // Diagnostic notes shown only where they add information beyond the plotted bars.
   const data = [
-    { name: "income only",      r2: 0.001, phone: null },
-    { name: "+ month",          r2: 0.005, phone: null },
+    { name: "income only",      r2: 0.001 },
+    { name: "+ month",          r2: 0.005 },
     {
-      name: "+ filing channel", r2: 0.123, phone: 1.79,
+      name: "+ filing channel", r2: 0.123,
       note: [
         "Drop-one ΔR²: 0.0005",
       ],
     },
     {
-      name: "+ city agency", r2: 0.666, phone: 0.06,
+      name: "+ city agency", r2: 0.666,
       note: [
         "Drop-one ΔR²: 0.0117",
       ],
     },
     {
-      name: "+ complaint type", r2: 0.792, phone: -0.02,
+      name: "+ complaint type", r2: 0.792,
       note: [
         "Drop-one ΔR²: 0.1255",
       ],
@@ -167,13 +167,12 @@
 
   svg.append("text").attr("x", W / 2).attr("y", 22).attr("text-anchor", "middle")
     .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("Nested regression (without borough): variance explained & phone-effect collapse");
+    .text("Nested regression (without borough): variance explained");
 
   const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
   const x = d3.scaleBand().domain(data.map(d => d.name)).range([0, w]).padding(0.35);
   const y = d3.scaleLinear().domain([0, 1]).range([h, 0]);
-  const yR = d3.scaleLinear().domain([-0.2, 2.0]).range([h, 0]);
 
   // Left axis (R²)
   g.append("g").call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".3f")))
@@ -182,14 +181,6 @@
     .attr("x", -h / 2).attr("y", -44).attr("text-anchor", "middle")
     .style("font-size", "12px").style("fill", "#666")
     .text("R² (variance explained)");
-
-  // Right axis (phone coefficient)
-  g.append("g").attr("transform", `translate(${w},0)`)
-    .call(d3.axisRight(yR).ticks(5)).selectAll("text").style("font-size", "11px");
-  g.append("text").attr("transform", "rotate(90)")
-    .attr("x", h / 2).attr("y", -w - 50).attr("text-anchor", "middle")
-    .style("font-size", "12px").style("fill", "#c72929")
-    .text("PHONE coefficient (log-hours)");
 
   // Grid
   g.append("g").selectAll("line").data(y.ticks(5)).enter().append("line")
@@ -224,36 +215,11 @@
     .style("font-size", "11px").style("font-weight", "700").style("fill", "#333")
     .text(d => d.r2.toFixed(3));
 
-  // Phone coefficient line (red) — only rows where phone is defined
-  const lineData = data.filter(d => d.phone !== null);
-  const line = d3.line().x(d => x(d.name) + x.bandwidth() / 2).y(d => yR(d.phone));
-
-  g.append("path").datum(lineData).attr("fill", "none")
-    .attr("stroke", "#c72929").attr("stroke-width", 2.5)
-    .attr("stroke-dasharray", "6,3")
-    .attr("d", line);
-
-  g.selectAll(".pdot").data(lineData).enter().append("circle")
-    .attr("cx", d => x(d.name) + x.bandwidth() / 2)
-    .attr("cy", d => yR(d.phone)).attr("r", 5)
-    .attr("fill", "#c72929").attr("stroke", "#fff").attr("stroke-width", 1.5);
-
-  g.selectAll(".plabel").data(lineData).enter().append("text")
-    .attr("x", d => x(d.name) + x.bandwidth() / 2 + 8)
-    .attr("y", d => yR(d.phone) - 8)
-    .style("font-size", "11px").style("font-weight", "600").style("fill", "#c72929")
-    .text(d => d.phone.toFixed(2));
-
   // Legend
   const lg = svg.append("g").attr("transform", `translate(${margin.left + 10},${H - 18})`);
   lg.append("rect").attr("width", 14).attr("height", 10).attr("fill", "#5b93c5").attr("opacity", 0.88);
   lg.append("text").attr("x", 20).attr("y", 9).style("font-size", "11px").style("fill", "#444")
     .text("R² of model");
-  lg.append("circle").attr("cx", 128).attr("cy", 5).attr("r", 5).attr("fill", "#c72929");
-  lg.append("line").attr("x1", 115).attr("x2", 141).attr("y1", 5).attr("y2", 5)
-    .attr("stroke", "#c72929").attr("stroke-width", 2).attr("stroke-dasharray", "4,2");
-  lg.append("text").attr("x", 148).attr("y", 9).style("font-size", "11px").style("fill", "#444")
-    .text("PHONE coefficient (log-hours)");
 })();
 
 
