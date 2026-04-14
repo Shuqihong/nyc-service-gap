@@ -197,9 +197,10 @@
     });
   });
 
-  const bars = g.selectAll(".mix-bar").data(barData).enter().append("rect").attr("class", "mix-bar")
+  g.selectAll(".mix-bar").data(barData).enter().append("rect").attr("class", "mix-bar")
     .attr("x", d => x(d.quartile)).attr("width", x.bandwidth())
-    .attr("y", h).attr("height", 0)
+    .attr("y", d => y(d.y0 + d.value))
+    .attr("height", d => y(d.y0) - y(d.y0 + d.value))
     .attr("fill", d => MIX_COLOR[d.category]).attr("rx", 1)
     .on("mouseover", (evt, d) => showTip(evt,
       `<strong>${d.quartile} · ${MIX_LABEL[d.category]}</strong><br>` +
@@ -208,15 +209,14 @@
     .on("mousemove", moveTip).on("mouseout", hideTip);
 
   /* Persistent percentage labels inside each stack segment */
-  const barLabels = g.selectAll(".mix-lbl").data(barData).enter().append("text")
+  g.selectAll(".mix-lbl").data(barData).enter().append("text")
     .attr("class", "mix-lbl")
     .attr("x", d => x(d.quartile) + x.bandwidth() / 2)
-    .attr("y", h)
+    .attr("y", d => y(d.y0 + d.value / 2))
     .attr("text-anchor", "middle").attr("dominant-baseline", "middle")
     .style("font-size", "11px").style("font-weight", "700")
     .style("pointer-events", "none")
     .style("fill", d => (d.category === "interior_housing" || d.category === "quality_of_life") ? "#3a2a10" : "#fff")
-    .style("opacity", 0)
     .text(d => d.value >= 4 ? d.value.toFixed(1) + "%" : "");
 
   /* Legend — horizontal row below x-axis */
@@ -232,14 +232,6 @@
     legX += label.length * 6.5 + 28;
   });
 
-  onReveal(el, () => {
-    bars.transition().duration(800).ease(d3.easeCubicOut)
-      .attr("y", d => y(d.y0 + d.value))
-      .attr("height", d => y(d.y0) - y(d.y0 + d.value));
-    barLabels.transition().delay(400).duration(500)
-      .attr("y", d => y(d.y0 + d.value / 2))
-      .style("opacity", 1);
-  });
 })();
 
 /* ══════════════════════════════════

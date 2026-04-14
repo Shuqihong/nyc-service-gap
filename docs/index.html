@@ -330,14 +330,10 @@
         complaints actually are. The raw data contains roughly two hundred distinct complaint
         strings, which is too many to reason about directly, so we group them into four broad
         categories based on the nature of the underlying issue.
-        <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, and electrical issues.
-        <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, and water leaks.
-        <strong>Quality of Life</strong> means noise, dirty conditions, and graffiti.
-        <strong>Other</strong> is everything else, such as parking violations, blocked driveways, and abandoned vehicles.
-        <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, and electrical issues.
-        <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, and water leaks.
-        <strong>Quality of Life</strong> means noise, dirty conditions, and graffiti.
-        <strong>Other</strong> is everything else, such as parking violations, blocked driveways, and abandoned vehicles.
+        <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, electrical issues, and similar building- or street-system problems.
+        <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, water leaks, and other hazards that threaten habitability.
+        <strong>Quality of Life</strong> covers noise, dirty conditions, graffiti, and similar neighborhood nuisances.
+        <strong>Other</strong> is everything else, such as parking violations, blocked driveways, abandoned vehicles, etc.
       </p>
     </div>
 
@@ -378,9 +374,9 @@
         <strong>24.5%</strong> in Q3, and just <strong>18.6%</strong> in Q4.
       </p>
       <p>
-        The regression told us how much of the <em>variance</em> in resolution time is
+        The regression told us how much of the variance in resolution time is
         accounted for by complaint type. It did not tell us how much of the eleven-hour
-        <em>gap</em> between Q1 and Q4 would disappear if the two quartiles filed the same mix
+        <strong>gap</strong> between Q1 and Q4 would disappear if the two quartiles filed the same mix
         of complaints. For that we need a different kind of question, a counterfactual one.
         An Oaxaca-Blinder decomposition answers it directly. It takes Q4&rsquo;s complaint mix,
         applies it to Q1 while holding Q1&rsquo;s own response speeds fixed, and reports what
@@ -445,7 +441,7 @@
       </p>
       <p>
         Before going further, it is worth noting a subtlety that might look like a contradiction.
-        In the earlier heat map and regression, the variable <em>month</em> on its own barely
+        In the earlier heat map and regression, the variable &ldquo;month&rdquo; on its own barely
         moved resolution time at all. Yet here we are about to show a very large seasonal effect.
         Both are true. The seasonal story is not a main effect of month. It is a three-way
         interaction between <strong>month</strong>, <strong>income quartile</strong>, and
@@ -520,7 +516,7 @@
 
     <div class="body-text">
       <p>
-        Everything so far has traced the <em>proximate</em> cause of the gap. Lower-income
+        Everything so far has traced the proximate cause of the gap. Lower-income
         neighborhoods wait longer because they file more of the complaint types that are slow
         to resolve, and because in winter those slow types surge. But this only pushes the
         question one step back. Why do poorer neighborhoods file so many more heat failures,
@@ -535,7 +531,7 @@
         takes up a rising share of low-income household budgets, the buildings that the
         poorest residents can afford are disproportionately older, smaller, and under the
         control of landlords whose financial incentives do not favor proactive maintenance.
-        Matthew Desmond&rsquo;s fieldwork in <em>Evicted</em> (2016) documents this dynamic in
+        Matthew Desmond&rsquo;s fieldwork in &ldquo;Evicted&rdquo; (2016) documents this dynamic in
         detail. In low-rent buildings, owners calculate that the cost of replacing a failing
         boiler or repairing chronic plumbing leaks often exceeds the marginal rent they can
         extract from the unit, so they defer the work, sometimes indefinitely, while tenants
@@ -543,13 +539,13 @@
         fix a leak themselves the same day. Tenants who rent can only file a complaint and
         wait. The <strong>renter-owner split</strong> is therefore not a demographic detail,
         it is the switch that converts a private maintenance problem into a public 311 ticket.
-        NYU&rsquo;s Furman Center, in its annual <em>State of New York City&rsquo;s Housing
-        and Neighborhoods</em> reports, has shown repeatedly that serious housing
+        NYU&rsquo;s Furman Center, in its annual &ldquo;State of New York City&rsquo;s Housing
+        and Neighborhoods&rdquo; reports, has shown repeatedly that serious housing
         deficiencies, including rodent infestations, water leaks, and heating breakdowns,
         are concentrated in lower-income ZIP codes. HUD&rsquo;s American Housing Survey
         finds similar patterns nationally. None of this is a coincidence of geography. It
         is the legacy of decades of housing policy choices, from the mid-century redlining
-        maps documented by Richard Rothstein in <em>The Color of Law</em> (2017) to
+        maps documented by Richard Rothstein in &ldquo;The Color of Law&rdquo; (2017) to
         contemporary patterns of landlord disinvestment in rent-stabilized low-rent
         buildings. When we see HEAT/HOT WATER complaints flood Q1 neighborhoods in January,
         we are watching that accumulated history finally break through the surface of the
