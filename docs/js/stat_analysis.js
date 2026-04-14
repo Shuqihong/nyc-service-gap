@@ -138,6 +138,9 @@
     { name: "+ month",          r2: 0.005, phone: null },
     {
       name: "+ filing channel", r2: 0.123, phone: 1.79,
+      note: [
+        "Drop-one ΔR²: 0.0005",
+      ],
     },
     {
       name: "+ city agency", r2: 0.666, phone: 0.06,
