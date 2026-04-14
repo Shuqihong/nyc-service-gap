@@ -273,19 +273,29 @@
 
     <div class="body-text">
       <p>
-        The result is unambiguous. A model using only income quartile, borough,
-        month, and filing channel explains just <strong>13%</strong> of the
-        variance. Adding agency and complaint type pushes R&sup2; to
-        <strong>79%</strong>. More importantly, the coefficient on the phone
-        channel &mdash; which at first appeared to make complaints
-        roughly <strong>6&times; slower</strong> &mdash; collapses to nearly zero
-        once complaint type is controlled for. There is no &ldquo;phones are slow&rdquo;
-        effect. Phones just carry the slow complaint types. The same logic
-        applied to agency, borough, and month erases each of those apparent
-        effects too. Every downstream variable is a shadow of one underlying
-        cause: <strong>the mix of complaints a neighborhood files</strong>.
+        The result is unambiguous. A model using income quartile, month,
+        and filing channel explains only <strong>12.3%</strong> of the variance.
+        Adding agency and complaint type pushes R&sup2; to <strong>79.2%</strong>.
+        More importantly, the phone coefficient &mdash; which initially implies
+        complaints are about <strong>6&times; slower</strong> by phone (&beta; = +1.79) &mdash;
+        collapses to nearly zero (&beta; = -0.02) once complaint type is added.
+        There is no independent &ldquo;phones are slow&rdquo; effect. Phones mostly carry
+        the complaint types that are slow to resolve.
+      </p>
+      <p>
+        Agency and complaint type are tightly correlated, so we isolate them in
+        two ways. First, a full-model drop-one-block test asks how much unique
+        variance each block adds after all others are included:
+        complaint type contributes <strong>&Delta;R&sup2; = 0.126</strong>, agency
+        contributes <strong>&Delta;R&sup2; = 0.012</strong>. Second, a Shapley-style
+        variance partition allocates shared explanatory power fairly across
+        correlated blocks: complaint type gets <strong>54.5%</strong> and agency
+        <strong>40.0%</strong> of total model R&sup2;. Taken together, agency matters,
+        but mostly through the complaint types it receives.
       </p>
     </div>
+
+    <div class="d3-chart" id="chart-block-attribution"></div>
 
     <div class="d3-chart" id="chart-dag"></div>
 
