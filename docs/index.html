@@ -257,9 +257,12 @@
 
     <div class="body-text">
       <p>
-        We then model resolution time with nested regressions. The pattern is
-        consistent with the heat map: adding agency and complaint type blocks
-        dramatically improves model fit relative to income, month, and channel alone.
+        A heat map can only tell us that complaint type and agency move with
+        resolution time. It cannot tell us whether those two variables act
+        independently or simply overlap with each other and with everything
+        else. To separate their contributions, we fit a sequence of nested
+        regression models, adding one block of predictors at a time and
+        watching how much each addition actually improves the fit.
       </p>
     </div>
 
@@ -289,21 +292,27 @@
 
     <div class="body-text">
       <p>
-        The result is unambiguous. A model using income quartile, month,
-        and filing channel explains only <strong>12.3%</strong> of the variance.
-        Adding agency and complaint type pushes R&sup2; to <strong>79.2%</strong>.
-        More importantly, the phone coefficient &mdash; which initially implies
-        complaints are about <strong>6&times; slower</strong> by phone (&beta; = +1.79) &mdash;
-        collapses to nearly zero (&beta; = -0.02) once complaint type is added.
-        There is no independent &ldquo;phones are slow&rdquo; effect. Phones mostly carry
-        the complaint types that are slow to resolve.
+        The jump is stark. Income quartile, month, and filing channel together
+        explain only <strong>12.3%</strong> of the variance in resolution time.
+        Adding city agency and complaint type lifts R&sup2; to
+        <strong>79.2%</strong>. The filing-channel coefficient tells the same
+        story in miniature: before complaint type is in the model, phone
+        complaints look about <strong>6&times; slower</strong> than online ones
+        (&beta; = +1.79); once complaint type is controlled for, that coefficient
+        collapses to essentially zero (&beta; = &minus;0.02). There is no
+        independent &ldquo;phones are slow&rdquo; effect. Phones simply carry the
+        complaint types that are slow to resolve.
       </p>
       <p>
-        Agency and complaint type are tightly correlated, so we use a
-        full-model drop-one-block test to isolate unique contribution:
-        complaint type contributes <strong>&Delta;R&sup2; = 0.126</strong>, agency
-        contributes <strong>&Delta;R&sup2; = 0.012</strong>. Agency still matters,
-        but far less than complaint type once overlap is controlled.
+        Because agency and complaint type are themselves tightly correlated,
+        a single R&sup2; number can hide which of the two is doing the work.
+        We use a drop-one-block test on the full model to isolate what each
+        variable adds on its own: complaint type contributes
+        <strong>&Delta;R&sup2; = 0.126</strong>, agency contributes only
+        <strong>&Delta;R&sup2; = 0.012</strong>. Agency still matters, but far
+        less than complaint type once the overlap between them is controlled.
+        The main driver of the resolution-time gap is what the complaint is
+        about.
       </p>
     </div>
 
