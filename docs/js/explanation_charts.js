@@ -173,8 +173,8 @@
   };
   const MIX_COLOR = {
     health_safety: "#d96459",
-    interior_housing: "#c27a4a",
-    public_infra: "#5b93c5",
+    interior_housing: "#9ec5e8",
+    public_infra: "#3f73a6",
     quality_of_life: "#f2a553",
     other: "#b8b0a8"
   };
@@ -268,6 +268,9 @@
     });
     return { quartile: q, shares, medians };
   });
+  const infraTotalByQuartile = new Map(
+    normalized.map(d => [d.quartile, toNum(d.shares.interior_housing) + toNum(d.shares.public_infra)])
+  );
 
   /* Build bar data with y positions */
   const barData = [];
@@ -276,9 +279,12 @@
     stackOrder.forEach(cat => {
       const val = toNum(d.shares[cat]);
       const med = toNum(d.medians[cat]);
+      const infraTotal = infraTotalByQuartile.get(d.quartile) || 0;
+      const isInfraPart = (cat === "interior_housing" || cat === "public_infra");
       barData.push({
         quartile: d.quartile, category: cat,
         value: val, median_h: med, y0: cumY,
+        infra_within_pct: (isInfraPart && infraTotal > 0) ? (val / infraTotal * 100) : null,
       });
       cumY += val;
     });
@@ -289,10 +295,15 @@
     .attr("y", d => y(d.y0 + d.value))
     .attr("height", d => y(d.y0) - y(d.y0 + d.value))
     .attr("fill", d => MIX_COLOR[d.category]).attr("rx", 1)
-    .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile} · ${MIX_LABEL[d.category]}</strong><br>` +
-      `Share: ${d.value.toFixed(1)}%<br>` +
-      `Median resolution: <strong>${d.median_h.toFixed(1)} h</strong>`))
+    .on("mouseover", (evt, d) => {
+      const infraLine = (d.infra_within_pct == null)
+        ? ""
+        : `<br>Share of infrastructure complaints: <strong>${d.infra_within_pct.toFixed(1)}%</strong>`;
+      showTip(evt,
+        `<strong>${d.quartile} · ${MIX_LABEL[d.category]}</strong><br>` +
+        `Share: ${d.value.toFixed(1)}%${infraLine}<br>` +
+        `Median resolution: <strong>${d.median_h.toFixed(1)} h</strong>`);
+    })
     .on("mousemove", moveTip).on("mouseout", hideTip);
 
   /* Persistent percentage labels inside each stack segment */

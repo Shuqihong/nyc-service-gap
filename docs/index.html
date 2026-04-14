@@ -345,15 +345,15 @@
         Quality of Life and Other complaints close within a few hours regardless of income.
         Health &amp; Safety and Infrastructure, however, take far longer. Health &amp; Safety
         averages 61 to 71 hours across quartiles, while Infrastructure ranges from 66 hours in
-        Q4 to <strong>163 hours</strong> in Q1. Infrastructure is also the category with the
-        sharpest gradient, and almost all of that gradient comes from one subgroup. Infrastructure
-        splits naturally into <strong>interior housing repairs</strong> (plumbing, elevators,
-        paint and plaster, doors and windows, electrical, appliances) and
-        <strong>public infrastructure</strong> (street conditions, traffic signals, sewers, water
-        systems). Interior repairs take far longer to resolve, over 200 hours on average across
-        all quartiles, and their share of infrastructure complaints climbs steadily with poverty,
-        from 28% in Q4 to 34% in Q3, 47% in Q2, and 68% in Q1. Importantly, when we compare only
-        interior housing repairs to each other, Q4 actually waits a bit longer than Q1
+        Q4 to <strong>163 hours</strong> in Q1. The poorer the neighborhood, the larger the share
+        of these slow-resolving complaints in what residents file. Infrastructure splits naturally
+        into <strong>interior housing repairs</strong> (plumbing, elevators, etc.) and
+        <strong>public infrastructure</strong> (street conditions, sewers, etc.). Interior repairs
+        take far longer to resolve, over 200 hours on average across quartiles, while public
+        infrastructure is much faster at about 29 to 48 hours. As neighborhoods get poorer,
+        interior repairs make up a larger share of infrastructure complaints, rising from about
+        28% in Q4 to about 68% in Q1. Importantly, when we compare only interior housing repairs
+        to each other, Q4 actually waits a bit longer than Q1
         (a median of 265.6 hours versus 202.1 hours). The city is not giving wealthier areas
         faster service on the same kind of problem. What changes across quartiles is how much of
         each kind of problem gets filed in the first place.
@@ -365,22 +365,17 @@
 
     <div class="body-text">
       <p>
-        Splitting Infrastructure this way makes the shift visible at a glance. Interior housing
-        repairs occupy a large slice of Q1&rsquo;s bar and shrink almost to nothing by Q4, while
-        public infrastructure and Quality of Life grow in the opposite direction. Across all four
-        quartiles, a clear gradient emerges. The poorer the neighborhood, the larger the share of
-        slow-resolving complaints. Health &amp; Safety and Infrastructure together account for
+        The stacked composition chart extends this pattern across all complaint categories. The
+        poorer the neighborhood, the larger the share of slow-resolving complaints. Health &amp;
+        Safety and Infrastructure together account for
         <strong>37.9%</strong> of Q1&rsquo;s complaints, <strong>28.1%</strong> in Q2,
         <strong>24.5%</strong> in Q3, and just <strong>18.6%</strong> in Q4.
       </p>
       <p>
-        The regression told us how much of the variance in resolution time is
-        accounted for by complaint type. It did not tell us how much of the eleven-hour
-        <strong>gap</strong> between Q1 and Q4 would disappear if the two quartiles filed the same mix
-        of complaints. For that we need a different kind of question, a counterfactual one.
-        An Oaxaca-Blinder decomposition answers it directly. It takes Q4&rsquo;s complaint mix,
-        applies it to Q1 while holding Q1&rsquo;s own response speeds fixed, and reports what
-        Q1&rsquo;s median wait would have been under that hypothetical.
+        Oaxaca-Blinder decomposition adds one key piece: how much of the Q1-Q4 wait gap comes
+        specifically from complaint composition. It builds a counterfactual where Q1 keeps its own
+        within-type response speeds but takes Q4&rsquo;s complaint mix, then computes Q1&rsquo;s
+        expected wait under that scenario.
       </p>
     </div>
 
@@ -410,7 +405,7 @@
 
     <div class="body-text">
       <p>
-        The result is striking. Q1&rsquo;s expected wait under Q4&rsquo;s mix drops to
+        Under that counterfactual, Q1&rsquo;s expected wait drops to
         <strong>1.7 hours</strong>, almost identical to Q4&rsquo;s actual 1.5 hours. Out of
         the 11.1-hour gap, only 0.24 hours survive once the composition difference is removed.
         <strong>Complaint mix alone explains 97.8% of the gap between Q1 and Q4.</strong>
@@ -418,12 +413,10 @@
         account for.
       </p>
       <p>
-        The composition gap is the mechanism. But it raises a deeper question. Why do Q1
-        neighborhoods file so many more of these slow-resolving complaints? If the answer
-        is aging housing infrastructure, the data should show a seasonal signature. Heating
-        failures peak in winter. Plumbing and building systems break down more in cold weather.
-        If old buildings are behind the gap, the disparity between quartiles should follow
-        the same rhythm.
+        The composition gap is the mechanism. The next question is why Q1 neighborhoods file so
+        many more of these slow-resolving complaints in the first place. The next section turns to
+        seasonal patterns to test whether aging housing and winter stress amplify this mix
+        difference.
       </p>
     </div>
   </section>
