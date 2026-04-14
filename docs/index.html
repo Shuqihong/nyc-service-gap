@@ -221,9 +221,6 @@
           explaining less than 0.2% of the variation. Income alone barely predicts how long
           any given complaint takes to resolve, and something else is driving the pattern.
         </p>
-        <p>
-          <em>The overall gap is real, but income itself explains very little at the complaint level.</em>
-        </p>
       </div>
       <aside class="method-note" aria-label="Pearson correlation note">
         <p><strong>Where does 0.2% come from?</strong></p>
@@ -245,6 +242,90 @@
   <!-- ══════════════════════════════════ STATISTICAL ANALYSIS -->
   <section id="statistical-analysis" class="story-section">
     <div class="section-header"><h2>Statistical Analysis</h2></div>
+
+    <div class="body-text">
+      <p>
+        Before accepting &ldquo;income causes longer waits,&rdquo; we have to test it.
+        Across 3.2&nbsp;million complaints we measured how strongly each candidate
+        variable moves with resolution time, and then asked which of those effects
+        survive once we control for complaint type. The results point in one direction.
+      </p>
+    </div>
+
+    <div class="d3-chart" id="chart-heatmap"></div>
+
+    <div class="body-text">
+      <p>
+        On a 0&ndash;1 scale of association strength, <strong>complaint type</strong>
+        (0.84) and <strong>city agency</strong> (0.81) dominate. Filing channel is
+        moderate (0.35). Income, month, and population are essentially flat. That
+        already suggests the gap is about <strong>what</strong> is being reported,
+        not <strong>who</strong> is reporting it. But high correlation doesn&rsquo;t prove
+        causation &mdash; these variables could be proxies for each other. So we
+        built a sequence of regression models, adding one variable block at a
+        time, and watched two things: how much variance each block explains
+        (R&sup2;), and whether the apparent effect of filing channel survives
+        once complaint type is added.
+      </p>
+    </div>
+
+    <div class="d3-chart" id="chart-nested-models"></div>
+
+    <div class="body-text">
+      <p>
+        The result is unambiguous. A model using only income quartile, borough,
+        month, and filing channel explains just <strong>13%</strong> of the
+        variance. Adding agency and complaint type pushes R&sup2; to
+        <strong>79%</strong>. More importantly, the coefficient on the phone
+        channel &mdash; which at first appeared to make complaints
+        roughly <strong>6&times; slower</strong> &mdash; collapses to nearly zero
+        once complaint type is controlled for. There is no &ldquo;phones are slow&rdquo;
+        effect. Phones just carry the slow complaint types. The same logic
+        applied to agency, borough, and month erases each of those apparent
+        effects too. Every downstream variable is a shadow of one underlying
+        cause: <strong>the mix of complaints a neighborhood files</strong>.
+      </p>
+    </div>
+
+    <div class="d3-chart" id="chart-dag"></div>
+
+    <div class="body-text">
+      <p>
+        Reading the diagram from the top: economic inequality feeds two parallel
+        mechanisms. The main one is the housing stock. The precise mechanism is
+        not &ldquo;old buildings,&rdquo; it is <strong>rental housing with deferred
+        maintenance</strong>. Manhattan has some of the city&rsquo;s oldest buildings
+        and also its fastest Q4 resolution times. Age matters only because it
+        correlates with failing boilers and plumbing. The load-bearing cause is
+        landlord disinvestment in aging rental stock: owner-occupiers fix their
+        own boiler, renters file 311.
+      </p>
+      <p>
+        The second, smaller pathway is digital access. Most of the filing-channel
+        gap is complaint type in disguise, but not all of it. Lower-income
+        residents calling about even the faster complaint types still prefer
+        phones because they have less reliable internet. So filing channel
+        is roughly <strong>90% complaint type in disguise</strong> plus a small
+        genuine digital-access effect &mdash; real, but dwarfed by the housing
+        pathway.
+      </p>
+      <p>
+        None of this shows the city&rsquo;s 311 system treating rich and poor
+        neighborhoods differently. Within matched cells (same agency, same
+        complaint category, same borough, same month) Q4 is faster in only
+        <strong>52.3%</strong> of cases &mdash; a coin flip. What it shows is
+        <strong>structural inequality upstream of 311</strong>. The fact that
+        lower-income renters end up in buildings with older boilers, aging
+        plumbing, and recurring pest problems is not a random feature of the
+        world. It is the product of several decades of housing-market dynamics:
+        landlord underinvestment in low-rent units, absentee ownership,
+        rent-regulation incentives that let low-income buildings deteriorate,
+        historical redlining, and concentrated poverty in specific neighborhoods.
+        Those patterns are unequal by any reasonable definition &mdash; Q1
+        renters disproportionately bear the cost of living in a housing stock
+        that has been allowed to decay.
+      </p>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════ THE EXPLANATION -->
@@ -355,9 +436,6 @@
         If old buildings are behind the gap, the disparity between quartiles should follow
         the same rhythm.
       </p>
-      <p>
-        <em>What differs most is the mix of complaints, not the speed of processing within the same type.</em>
-      </p>
     </div>
   </section>
 
@@ -420,9 +498,6 @@
         The seasonal data confirms what the complaint mix showed. HEAT/HOT&nbsp;WATER, driven by
         aging boilers in low-income buildings, is the winter amplifier. The year-round baseline
         comes from Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints that never go away.
-      </p>
-      <p>
-        <em>Winter widens the gap because heat-related complaints surge in poorer neighborhoods.</em>
       </p>
     </div>
   </section>
@@ -508,6 +583,7 @@
   <script src="js/observe.js"></script>
   <script src="js/section1.js"></script>
   <script src="js/gap_charts.js"></script>
+  <script src="js/stat_analysis.js"></script>
   <script src="js/explanation_charts.js"></script>
   <script src="js/winter.js"></script>
   <script src="js/heat_chart.js"></script>
