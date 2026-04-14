@@ -62,7 +62,6 @@
     .oaxaca-note-layout .d3-chart { margin: 0; max-width: none; padding: 0; }
     .method-note { position: absolute; left: calc(100% + 28px); top: 0; width: 210px;
       border: 1px solid #e5ddd0; background: #fbf6ed; border-radius: 10px; padding: .7rem .8rem; }
-    .method-note-secondary { top: 250px; }
     .nested-model-note { width: 230px; }
     .method-note p { margin: 0; color: var(--ink-mid); font-size: .85rem; line-height: 1.45; }
     .method-note p + p { margin-top: .4rem; }
@@ -220,8 +219,8 @@
         <p>
           The staircase is real. But across all 3.2 million complaints, the correlation
           between neighborhood income and resolution time is just <strong>r = 0.046</strong>,
-          explaining less than 0.2% of the variation. Income alone barely predicts how long
-          any given complaint takes to resolve, and something else is driving the pattern.
+          indicating a very weak relationship. Income alone barely predicts how long
+          any given complaint takes to resolve, so something else is driving the pattern.
         </p>
       </div>
       <aside class="method-note" aria-label="Pearson correlation note">
@@ -231,16 +230,6 @@
           variables and ranges from &minus;1 to +1. The sign gives direction
           (positive or negative), and the absolute value gives strength.
           Values near 0 mean almost no linear relationship.
-        </p>
-      </aside>
-      <aside class="method-note method-note-secondary" aria-label="R and R squared note">
-        <p><strong>What do r and R&sup2; mean here?</strong></p>
-        <p>
-          <strong>R&sup2;</strong> is the share of variation explained by a linear
-          model, and it ranges from 0 to 1. You can read it as a percentage:
-          <strong>R&sup2; = 0.002</strong> means the model explains
-          <strong>0.2%</strong> of variation, and <strong>99.8%</strong> remains
-          unexplained by income alone.
         </p>
       </aside>
     </div>
@@ -280,24 +269,15 @@
     <div class="oaxaca-note-layout">
       <div class="d3-chart" id="chart-nested-models"></div>
       <aside class="method-note nested-model-note" aria-label="Nested regression attribution notes">
+        <p><strong>What is R&sup2;?</strong></p>
+        <p>
+          <strong>R&sup2;</strong> ranges from 0 to 1 and measures the share of outcome
+          variation explained by the model. Higher R&sup2; means better in-sample fit.
+        </p>
         <p><strong>Drop-one &Delta;R&sup2;</strong></p>
         <p>
-          Remove one block from the full model and measure the R&sup2; loss.
-          This estimates that block&rsquo;s unique incremental contribution.
-        </p>
-        <p><strong>Shapley R&sup2;</strong></p>
-        <p>
-          Average each block&rsquo;s marginal contribution across all block orders,
-          giving a fair allocation when predictors overlap.
-        </p>
-        <p><strong>Shapley / Full R&sup2;</strong></p>
-        <p>
-          A normalized share: block Shapley value divided by full-model R&sup2;.
-        </p>
-        <p><strong>Order Sensitivity</strong></p>
-        <p>
-          Compare gain when a block enters before vs after another correlated block.
-          Large shifts indicate shared explanatory power.
+          Keep the full model fixed, remove one predictor block, and recompute R&sup2;.
+          The decrease is that block&rsquo;s unique contribution beyond the others.
         </p>
       </aside>
     </div>
@@ -314,15 +294,11 @@
         the complaint types that are slow to resolve.
       </p>
       <p>
-        Agency and complaint type are tightly correlated, so we isolate them in
-        two ways. First, a full-model drop-one-block test asks how much unique
-        variance each block adds after all others are included:
+        Agency and complaint type are tightly correlated, so we use a
+        full-model drop-one-block test to isolate unique contribution:
         complaint type contributes <strong>&Delta;R&sup2; = 0.126</strong>, agency
-        contributes <strong>&Delta;R&sup2; = 0.012</strong>. Second, a Shapley-style
-        variance partition allocates shared explanatory power fairly across
-        correlated blocks: complaint type gets <strong>54.5%</strong> and agency
-        <strong>40.0%</strong> of total model R&sup2;. Taken together, agency matters,
-        but mostly through the complaint types it receives.
+        contributes <strong>&Delta;R&sup2; = 0.012</strong>. Agency still matters,
+        but far less than complaint type once overlap is controlled.
       </p>
     </div>
 

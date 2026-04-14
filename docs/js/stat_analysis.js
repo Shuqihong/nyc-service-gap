@@ -143,18 +143,12 @@
       name: "+ city agency", r2: 0.666, phone: 0.06,
       note: [
         "Drop-one ΔR²: 0.0117",
-        "Shapley R²: 0.3169",
-        "Shapley/full R² ratio: 0.400",
-        "Order sensitivity: +0.5427 before complaint type; +0.0117 after complaint type",
       ],
     },
     {
       name: "+ complaint type", r2: 0.792, phone: -0.02,
       note: [
         "Drop-one ΔR²: 0.1255",
-        "Shapley R²: 0.4314",
-        "Shapley/full R² ratio: 0.545",
-        "Order sensitivity: +0.6566 before agency; +0.1255 after agency",
       ],
     },
   ];
