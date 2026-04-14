@@ -142,17 +142,17 @@
     {
       name: "+ city agency", r2: 0.666, phone: 0.06,
       note: [
-        "Drop-one ΔR²: 0.0117",
-        "Shapley share: 40.0% of full R²",
-        "Order sensitivity: +0.543 before type, +0.012 after type",
+        "Drop-one ΔR²: 0.0117 (1.17 percentage points)",
+        "Shapley contribution: 0.3169 R² (40.0% of full model)",
+        "Order sensitivity: +0.5427 before type, +0.0117 after type",
       ],
     },
     {
       name: "+ complaint type", r2: 0.792, phone: -0.02,
       note: [
-        "Drop-one ΔR²: 0.1255",
-        "Shapley share: 54.5% of full R²",
-        "Order sensitivity: +0.657 before agency, +0.126 after agency",
+        "Drop-one ΔR²: 0.1255 (12.55 percentage points)",
+        "Shapley contribution: 0.4314 R² (54.5% of full model)",
+        "Order sensitivity: +0.6566 before agency, +0.1255 after agency",
       ],
     },
   ];
