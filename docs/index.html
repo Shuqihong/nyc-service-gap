@@ -243,13 +243,15 @@
 
     <div class="body-text">
       <p>
-        To look more closely at what is going on, we start with a heat map of the main variables. 
-        Two factors stand out immediately. <strong>Complaint type</strong>
-        (0.84) and <strong>city agency</strong> (0.81) show the strongest relationships 
-        with resolution time. Filing channel is more moderate (0.35). Income, month, and population 
-        are all close to flat, which suggests that by themselves they say little about how long 
-        a complaint will take to close. The heat map also shows a strong relationship between 
-        complaint type and agency.
+        To look more closely at what is going on, we start with a heat map of the main variables.
+        Two factors stand out immediately. <strong>Complaint type</strong> (0.84) and
+        <strong>city agency</strong> (0.81) show the strongest relationships with resolution
+        time. Filing channel is more moderate (0.35), while income, month, and population are
+        all close to flat, which suggests that on their own they say little about how long a
+        complaint will take to close. Complaint type and city agency also have a strong
+        relationship with each other (0.87), and several other variables show intermediate
+        overlaps, so much of what any single variable appears to explain may in fact be shared
+        with the others.
       </p>
     </div>
 
@@ -257,12 +259,9 @@
 
     <div class="body-text">
       <p>
-        A heat map can only tell us that complaint type and agency move with
-        resolution time. It cannot tell us whether those two variables act
-        independently or simply overlap with each other and with everything
-        else. To separate their contributions, we fit a sequence of nested
-        regression models, adding one block of predictors at a time and
-        watching how much each addition actually improves the fit.
+        To separate their contributions, we fit a sequence of nested regression models, adding
+        one block of predictors at a time and watching how much each addition actually improves
+        the fit.
       </p>
     </div>
 
@@ -292,78 +291,42 @@
 
     <div class="body-text">
       <p>
-        The jump is stark. Income quartile, month, and filing channel together
-        explain only <strong>12.3%</strong> of the variance in resolution time.
-        Adding city agency and complaint type lifts R&sup2; to
-        <strong>79.2%</strong>. The filing-channel coefficient tells the same
-        story in miniature: before complaint type is in the model, phone
-        complaints look about <strong>6&times; slower</strong> than online ones
-        (&beta; = +1.79); once complaint type is controlled for, that coefficient
-        collapses to essentially zero (&beta; = &minus;0.02). There is no
-        independent &ldquo;phones are slow&rdquo; effect. Phones simply carry the
-        complaint types that are slow to resolve.
+        The results are clear. Income quartile, month, and filing channel together explain only
+        <strong>12.3%</strong> of the variance in resolution time. Adding city agency and
+        complaint type lifts R&sup2; to <strong>79.2%</strong>. The filing-channel coefficient
+        tells the same story in miniature. Residents can file a 311 complaint by phone, through
+        the online portal, via the mobile app, or a few smaller routes, and phone is by far the
+        most common channel in lower-income neighborhoods. When we first add filing channel to
+        the model, phone complaints look about <strong>6&times; slower</strong> than online ones
+        (&beta; = +1.79). But once complaint type is controlled for, that coefficient collapses
+        to essentially zero (&beta; = &minus;0.02). There is no independent &ldquo;phones are
+        slow&rdquo; effect. Phones simply carry the complaint types that happen to be slow to
+        resolve.
       </p>
       <p>
-        Because agency and complaint type are themselves tightly correlated,
-        a single R&sup2; number can hide which of the two is doing the work.
-        We use a drop-one-block test on the full model to isolate what each
-        variable adds on its own: complaint type contributes
-        <strong>&Delta;R&sup2; = 0.126</strong>, agency contributes only
-        <strong>&Delta;R&sup2; = 0.012</strong>. Agency still matters, but far
-        less than complaint type once the overlap between them is controlled.
-        The main driver of the resolution-time gap is what the complaint is
-        about.
+        Because agency and complaint type are themselves tightly correlated, a single R&sup2;
+        number can hide which of the two is doing the work. We use a drop-one-block test on the
+        full model to isolate what each variable adds on its own. Removing complaint type from
+        the full model drops R&sup2; by <strong>12.6 percentage points</strong>
+        (&Delta;R&sup2; = 0.126), while removing city agency drops it by only
+        <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012). In other words,
+        complaint type carries about ten times as much unique explanatory weight as agency once
+        the overlap between them is accounted for. The main driver of the resolution-time gap
+        is what the complaint is actually about.
       </p>
     </div>
 
-    <div class="d3-chart" id="chart-dag"></div>
-
-    <div class="body-text">
-      <p>
-        Reading the diagram from the top: economic inequality feeds two parallel
-        mechanisms. The main one is the housing stock. The precise mechanism is
-        not &ldquo;old buildings,&rdquo; it is <strong>rental housing with deferred
-        maintenance</strong>. Manhattan has some of the city&rsquo;s oldest buildings
-        and also its fastest Q4 resolution times. Age matters only because it
-        correlates with failing boilers and plumbing. The load-bearing cause is
-        landlord disinvestment in aging rental stock: owner-occupiers fix their
-        own boiler, renters file 311.
-      </p>
-      <p>
-        The second, smaller pathway is digital access. Most of the filing-channel
-        gap is complaint type in disguise, but not all of it. Lower-income
-        residents calling about even the faster complaint types still prefer
-        phones because they have less reliable internet. So filing channel
-        is roughly <strong>90% complaint type in disguise</strong> plus a small
-        genuine digital-access effect &mdash; real, but dwarfed by the housing
-        pathway.
-      </p>
-      <p>
-        None of this shows the city&rsquo;s 311 system treating rich and poor
-        neighborhoods differently. Within matched cells (same agency, same
-        complaint category, same borough, same month) Q4 is faster in only
-        <strong>52.3%</strong> of cases &mdash; a coin flip. What it shows is
-        <strong>structural inequality upstream of 311</strong>. The fact that
-        lower-income renters end up in buildings with older boilers, aging
-        plumbing, and recurring pest problems is not a random feature of the
-        world. It is the product of several decades of housing-market dynamics:
-        landlord underinvestment in low-rent units, absentee ownership,
-        rent-regulation incentives that let low-income buildings deteriorate,
-        historical redlining, and concentrated poverty in specific neighborhoods.
-        Those patterns are unequal by any reasonable definition &mdash; Q1
-        renters disproportionately bear the cost of living in a housing stock
-        that has been allowed to decay.
-      </p>
-    </div>
   </section>
 
-  <!-- ══════════════════════════════════ THE EXPLANATION -->
+  <!-- ══════════════════════════════════ THE MECHANISM -->
   <section id="the-explanation" class="story-section">
-    <div class="section-header"><h2>The Explanation</h2></div>
+    <div class="section-header"><h2>The Mechanism</h2></div>
 
     <div class="body-text">
       <p>
-        Every 311 complaint falls into one of four categories.
+        If complaint type carries almost all of the gap, the next question is what those
+        complaints actually are, and why the mix looks so different between the poorest and
+        wealthiest neighborhoods. Every 311 complaint falls into one of four categories.
         <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, and electrical issues.
         <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, and water leaks.
         <strong>Quality of Life</strong> means noise, dirty conditions, and graffiti.
@@ -527,6 +490,53 @@
         The seasonal data confirms what the complaint mix showed. HEAT/HOT&nbsp;WATER, driven by
         aging boilers in low-income buildings, is the winter amplifier. The year-round baseline
         comes from Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints that never go away.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════ THE FULL PICTURE -->
+  <section id="the-full-picture" class="story-section">
+    <div class="section-header"><h2>The Full Picture</h2></div>
+
+    <div class="body-text">
+      <p>
+        Pulling the threads together, the resolution-time gap is not one thing but a chain of
+        linked mechanisms. The diagram below traces that chain from its root cause down to the
+        outcome we actually observe in the 311 data.
+      </p>
+    </div>
+
+    <div class="d3-chart" id="chart-dag"></div>
+
+    <div class="body-text">
+      <p>
+        Reading the diagram from the top, economic inequality feeds two parallel mechanisms.
+        The main one is the housing stock. The precise mechanism is not simply &ldquo;old
+        buildings,&rdquo; it is <strong>rental housing with deferred maintenance</strong>.
+        Manhattan has some of the city&rsquo;s oldest buildings and also its fastest Q4
+        resolution times. Age matters only because it correlates with failing boilers and
+        plumbing. The load-bearing cause is landlord disinvestment in aging rental stock.
+        Owner-occupiers fix their own boiler; renters file 311.
+      </p>
+      <p>
+        The second, smaller pathway is digital access. Most of the filing-channel gap is
+        complaint type in disguise, but not all of it. Lower-income residents calling about
+        even the faster complaint types still prefer phones because they have less reliable
+        internet. So filing channel is roughly <strong>90% complaint type in disguise</strong>
+        plus a small genuine digital-access effect, real but dwarfed by the housing pathway.
+      </p>
+      <p>
+        None of this shows the city&rsquo;s 311 system treating rich and poor neighborhoods
+        differently. Within matched cells (same agency, same complaint category, same borough,
+        same month) Q4 is faster in only <strong>52.3%</strong> of cases, essentially a coin
+        flip. What it shows is <strong>structural inequality upstream of 311</strong>. The
+        fact that lower-income renters end up in buildings with older boilers, aging plumbing,
+        and recurring pest problems is not a random feature of the world. It is the product of
+        decades of housing-market dynamics, including landlord underinvestment in low-rent
+        units, absentee ownership, rent-regulation incentives that let low-income buildings
+        deteriorate, historical redlining, and concentrated poverty in specific neighborhoods.
+        Those patterns are unequal by any reasonable definition. Q1 renters disproportionately
+        bear the cost of living in a housing stock that has been allowed to decay.
       </p>
     </div>
   </section>
