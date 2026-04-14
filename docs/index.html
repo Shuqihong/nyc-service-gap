@@ -62,6 +62,7 @@
     .oaxaca-note-layout .d3-chart { margin: 0; max-width: none; padding: 0; }
     .method-note { position: absolute; left: calc(100% + 28px); top: 0; width: 210px;
       border: 1px solid #e5ddd0; background: #fbf6ed; border-radius: 10px; padding: .7rem .8rem; }
+    .method-note-secondary { top: 190px; }
     .method-note p { margin: 0; color: var(--ink-mid); font-size: .85rem; line-height: 1.45; }
     .method-note p + p { margin-top: .4rem; }
     .method-note strong { color: var(--ink); font-size: .88rem; }
@@ -223,16 +224,22 @@
         </p>
       </div>
       <aside class="method-note" aria-label="Pearson correlation note">
-        <p><strong>Where does 0.2% come from?</strong></p>
+        <p><strong>What is Pearson correlation (r)?</strong></p>
         <p>
-          The Pearson correlation coefficient (r) measures how strongly two variables
-          move together in a straight line, ranging from &minus;1 to +1. Here r&nbsp;=&nbsp;0.046,
-          nearly zero. R&sup2; (0.046&sup2;&nbsp;&asymp;&nbsp;0.002) tells us income explains
-          just 0.2% of the variation in resolution time across 3.2&nbsp;million complaints.
-          Why R&sup2;? If a variable perfectly predicts an outcome, all data points fall on the
-          regression line and R&sup2;&nbsp;=&nbsp;1. The further they scatter from the line,
-          the closer R&sup2; falls to 0. It measures what fraction of the spread in one
-          variable is accounted for by the other.
+          Pearson correlation <strong>r</strong> measures linear association between two
+          variables and ranges from &minus;1 to +1. The sign gives direction
+          (positive or negative), and the absolute value gives strength.
+          Values near 0 mean almost no linear relationship.
+        </p>
+      </aside>
+      <aside class="method-note method-note-secondary" aria-label="R and R squared note">
+        <p><strong>What do r and R&sup2; mean here?</strong></p>
+        <p>
+          Here <strong>r = 0.046</strong>, which is very close to 0, so income alone has
+          very weak linear association with complaint resolution time.
+          <strong>R&sup2; = r&sup2; = 0.046&sup2; &asymp; 0.002</strong>, meaning income
+          explains about <strong>0.2%</strong> of the variation in resolution time.
+          The remaining 99.8% is driven by other factors.
         </p>
       </aside>
     </div>

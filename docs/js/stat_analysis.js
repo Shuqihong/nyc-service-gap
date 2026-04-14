@@ -142,17 +142,19 @@
     {
       name: "+ city agency", r2: 0.666, phone: 0.06,
       note: [
-        "Drop-one ΔR²: 0.0117 (1.17 percentage points)",
-        "Shapley contribution: 0.3169 R² (40.0% of full model)",
-        "Order sensitivity: +0.5427 before type, +0.0117 after type",
+        "Drop-one ΔR²: 0.0117",
+        "Shapley R²: 0.3169",
+        "Shapley/full R² ratio: 0.400",
+        "Order sensitivity: +0.5427 before complaint type; +0.0117 after complaint type",
       ],
     },
     {
       name: "+ complaint type", r2: 0.792, phone: -0.02,
       note: [
-        "Drop-one ΔR²: 0.1255 (12.55 percentage points)",
-        "Shapley contribution: 0.4314 R² (54.5% of full model)",
-        "Order sensitivity: +0.6566 before agency, +0.1255 after agency",
+        "Drop-one ΔR²: 0.1255",
+        "Shapley R²: 0.4314",
+        "Shapley/full R² ratio: 0.545",
+        "Order sensitivity: +0.6566 before agency; +0.1255 after agency",
       ],
     },
   ];
@@ -177,7 +179,7 @@
   const yR = d3.scaleLinear().domain([-0.2, 2.0]).range([h, 0]);
 
   // Left axis (R²)
-  g.append("g").call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".0%")))
+  g.append("g").call(d3.axisLeft(y).ticks(5).tickFormat(d3.format(".3f")))
     .selectAll("text").style("font-size", "11px");
   g.append("text").attr("transform", "rotate(-90)")
     .attr("x", -h / 2).attr("y", -44).attr("text-anchor", "middle")
@@ -209,19 +211,21 @@
     .attr("x", d => x(d.name)).attr("width", x.bandwidth())
     .attr("y", d => y(d.r2)).attr("height", d => h - y(d.r2))
     .attr("rx", 3).attr("fill", "#5b93c5").attr("opacity", 0.88)
+    .style("cursor", d => d.note ? "pointer" : "default")
     .on("mouseover", (evt, d) => {
+      if (!d.note) return;
       const lines = (d.note || []).map(t => `<span>${t}</span>`).join("<br>");
-      const html = lines ? `<strong>${d.name}</strong><br>${lines}` : `<strong>${d.name}</strong>`;
-      showTip(evt, html);
+      showTip(evt, `<strong>${d.name}</strong><br>${lines}`);
     })
-    .on("mousemove", moveTip).on("mouseout", hideTip);
+    .on("mousemove", (evt, d) => { if (d.note) moveTip(evt); })
+    .on("mouseout", hideTip);
 
   g.selectAll(".rlab").data(data).enter().append("text")
     .attr("x", d => x(d.name) + x.bandwidth() / 2)
     .attr("y", d => y(d.r2) - 6)
     .attr("text-anchor", "middle")
     .style("font-size", "11px").style("font-weight", "700").style("fill", "#333")
-    .text(d => (d.r2 * 100).toFixed(1) + "%");
+    .text(d => d.r2.toFixed(3));
 
   // Phone coefficient line (red) — only rows where phone is defined
   const lineData = data.filter(d => d.phone !== null);
