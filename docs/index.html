@@ -521,9 +521,61 @@
 
     <div class="body-text">
       <p>
-        Pulling the threads together, the resolution-time gap is not one thing but a chain of
-        linked mechanisms. The diagram below traces that chain from its root cause down to the
-        outcome we actually observe in the 311 data.
+        Everything so far has traced the <em>proximate</em> cause of the gap. Lower-income
+        neighborhoods wait longer because they file more of the complaint types that are slow
+        to resolve, and because in winter those slow types surge. But this only pushes the
+        question one step back. Why do poorer neighborhoods file so many more heat failures,
+        plumbing breakdowns, and pest problems in the first place? The 311 data itself does
+        not answer this. The answer lies outside the dataset, in the structure of the housing
+        market and the distribution of digital infrastructure. The root cause is
+        <strong>economic inequality</strong>, and it reaches the 311 system through two
+        parallel pathways, one dominant and one secondary.
+      </p>
+      <p>
+        The dominant pathway runs through <strong>housing</strong>. In a market where rent
+        takes up a rising share of low-income household budgets, the buildings that the
+        poorest residents can afford are disproportionately older, smaller, and under the
+        control of landlords whose financial incentives do not favor proactive maintenance.
+        Matthew Desmond&rsquo;s fieldwork in <em>Evicted</em> (2016) documents this dynamic in
+        detail. In low-rent buildings, owners calculate that the cost of replacing a failing
+        boiler or repairing chronic plumbing leaks often exceeds the marginal rent they can
+        extract from the unit, so they defer the work, sometimes indefinitely, while tenants
+        with little bargaining power absorb the consequences. Tenants who own their homes can
+        fix a leak themselves the same day. Tenants who rent can only file a complaint and
+        wait. The <strong>renter-owner split</strong> is therefore not a demographic detail,
+        it is the switch that converts a private maintenance problem into a public 311 ticket.
+        NYU&rsquo;s Furman Center, in its annual <em>State of New York City&rsquo;s Housing
+        and Neighborhoods</em> reports, has shown repeatedly that serious housing
+        deficiencies, including rodent infestations, water leaks, and heating breakdowns,
+        are concentrated in lower-income ZIP codes. HUD&rsquo;s American Housing Survey
+        finds similar patterns nationally. None of this is a coincidence of geography. It
+        is the legacy of decades of housing policy choices, from the mid-century redlining
+        maps documented by Richard Rothstein in <em>The Color of Law</em> (2017) to
+        contemporary patterns of landlord disinvestment in rent-stabilized low-rent
+        buildings. When we see HEAT/HOT WATER complaints flood Q1 neighborhoods in January,
+        we are watching that accumulated history finally break through the surface of the
+        municipal data.
+      </p>
+      <p>
+        The secondary pathway runs through <strong>digital access</strong>. The Pew Research
+        Center&rsquo;s ongoing broadband and smartphone surveys have documented a persistent
+        gap in reliable home internet, computer ownership, and day-to-day comfort with
+        digital tools between lower- and higher-income Americans. In New York specifically,
+        Census and city broadband reports show the same gap at the neighborhood level. A
+        resident with fast home internet and an up-to-date phone will usually file a
+        non-urgent 311 request through the NYC311 website or mobile app. A resident without
+        those things, or who has to share a device, will usually pick up the phone. This
+        does not, as our regression showed, make the city answer phone complaints more
+        slowly. But it does mean that filing channel carries a small independent signature of
+        the digital divide, layered on top of the much larger housing pathway.
+      </p>
+      <p>
+        The diagram below makes the full chain visible. Economic inequality sits at the top.
+        It feeds the two upstream mechanisms, which in turn reshape what neighborhoods file
+        and how they file it. The thick red arrow in the middle of the diagram marks the
+        direct causal edge that does almost all of the work: the complaint mix itself drives
+        resolution time, because some complaint types are inherently slow to fix and others
+        are not.
       </p>
     </div>
 
@@ -531,33 +583,33 @@
 
     <div class="body-text">
       <p>
-        Reading the diagram from the top, economic inequality feeds two parallel mechanisms.
-        The main one is the housing stock. The precise mechanism is not simply &ldquo;old
-        buildings,&rdquo; it is <strong>rental housing with deferred maintenance</strong>.
-        Manhattan has some of the city&rsquo;s oldest buildings and also its fastest Q4
-        resolution times. Age matters only because it correlates with failing boilers and
-        plumbing. The load-bearing cause is landlord disinvestment in aging rental stock.
-        Owner-occupiers fix their own boiler; renters file 311.
-      </p>
-      <p>
-        The second, smaller pathway is digital access. Most of the filing-channel gap is
-        complaint type in disguise, but not all of it. Lower-income residents calling about
-        even the faster complaint types still prefer phones because they have less reliable
-        internet. So filing channel is roughly <strong>90% complaint type in disguise</strong>
-        plus a small genuine digital-access effect, real but dwarfed by the housing pathway.
+        A few details in the diagram are worth reading carefully. First, the arrow from
+        <strong>complaint mix</strong> to <strong>resolution time</strong> is drawn bold and
+        red because the Oaxaca decomposition showed that this single edge accounts for 97.8%
+        of the gap between the poorest and wealthiest quartiles. Everything else in the
+        diagram feeds into it or rides on top of it. Second, the
+        <strong>winter amplifier</strong> is drawn as a branch off the complaint-mix node, not
+        as an independent cause. Winter does not slow the city down on its own. It
+        rearranges the seasonal mix of complaint types in lower-income neighborhoods, and
+        that rearrangement is what produces the winter spike. Third, the arrow from
+        <strong>filing channel</strong> is drawn dashed and marked &ldquo;&asymp;0 after
+        controls,&rdquo; to make it clear that the phone signal disappears once complaint
+        type is held fixed. It is a real marker of the digital divide, but it is not an
+        independent slowdown mechanism. Finally, the outcome node is labeled simply
+        &ldquo;longer 311 resolution time,&rdquo; not &ldquo;longer wait in Q1.&rdquo; The
+        mechanism is general. It produces slower waits in any neighborhood whose complaint
+        mix tilts toward slow housing-interior issues, and faster waits in any neighborhood
+        whose mix tilts toward fast, externally visible issues. Income is how neighborhoods
+        end up on one side of that tilt or the other, but the mechanism itself is about
+        complaint composition, not zip-code labels.
       </p>
       <p>
         None of this shows the city&rsquo;s 311 system treating rich and poor neighborhoods
-        differently. Within matched cells (same agency, same complaint category, same borough,
-        same month) Q4 is faster in only <strong>52.3%</strong> of cases, essentially a coin
-        flip. What it shows is <strong>structural inequality upstream of 311</strong>. The
-        fact that lower-income renters end up in buildings with older boilers, aging plumbing,
-        and recurring pest problems is not a random feature of the world. It is the product of
-        decades of housing-market dynamics, including landlord underinvestment in low-rent
-        units, absentee ownership, rent-regulation incentives that let low-income buildings
-        deteriorate, historical redlining, and concentrated poverty in specific neighborhoods.
-        Those patterns are unequal by any reasonable definition. Q1 renters disproportionately
-        bear the cost of living in a housing stock that has been allowed to decay.
+        differently. Within matched cells (same agency, same complaint category, same
+        borough, same month) the wealthier quartile is faster in only <strong>52.3%</strong>
+        of cases, essentially a coin flip. What the diagram shows is
+        <strong>structural inequality upstream of 311</strong>. The 311 dataset is not the
+        site of the inequity. It is the mirror that makes the inequity legible.
       </p>
     </div>
   </section>

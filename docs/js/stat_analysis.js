@@ -261,53 +261,81 @@
   const el = document.getElementById("chart-dag");
   if (!el) return;
 
-  const W = el.clientWidth || 760;
-  const H = 520;
+  const W = el.clientWidth || 820;
+  const H = 560;
 
   const svg = d3.select(el).append("svg")
     .attr("viewBox", `0 0 ${W} ${H}`).attr("preserveAspectRatio", "xMidYMid meet");
 
   svg.append("text").attr("x", W / 2).attr("y", 24).attr("text-anchor", "middle")
     .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("Causal DAG — how the gap is produced");
+    .text("Causal DAG — how inequality produces the resolution-time gap");
 
-  // Node positions tuned for a 760-wide canvas; scale if wider
-  const sx = W / 760;
+  const sx = W / 820;
   function P(x, y) { return [x * sx, y]; }
 
   const NODES = {
-    root:    { pos: P(380, 70),  w: 220, h: 44, label: "Economic inequality",       color: "#d96459", text: "#fff" },
-    housing: { pos: P(210, 180), w: 240, h: 58, label: "Rental housing with\ndeferred maintenance", color: "#f2a553", text: "#3a2a10" },
-    digital: { pos: P(560, 180), w: 220, h: 58, label: "Less reliable\ndigital access",            color: "#f2a553", text: "#3a2a10" },
-    mix:     { pos: P(380, 295), w: 300, h: 58, label: "More slow-to-fix\ncomplaint types",        color: "#d96459", text: "#fff"    },
-    agency:  { pos: P(140, 395), w: 180, h: 44, label: "Agency mix (HPD)",          color: "#5b93c5", text: "#fff" },
-    channel: { pos: P(380, 395), w: 190, h: 44, label: "Channel mix (phone)",       color: "#5b93c5", text: "#fff" },
-    winter:  { pos: P(620, 395), w: 180, h: 44, label: "Winter amplifier",          color: "#5b93c5", text: "#fff" },
-    out:     { pos: P(380, 480), w: 300, h: 44, label: "Longer wait in Q1 neighborhoods", color: "#8a1f1f", text: "#fff" },
+    root: {
+      pos: P(410, 60), w: 260, h: 46,
+      label: "Economic inequality",
+      color: "#d96459", text: "#fff",
+    },
+    housing: {
+      pos: P(220, 190), w: 280, h: 68,
+      label: "Older rental housing with\ndeferred maintenance\n(boilers, plumbing, pests)",
+      color: "#f2a553", text: "#3a2a10",
+    },
+    digital: {
+      pos: P(600, 190), w: 260, h: 68,
+      label: "Unequal digital access\n(broadband, smartphones,\ntech fluency)",
+      color: "#f2a553", text: "#3a2a10",
+    },
+    mix: {
+      pos: P(280, 330), w: 320, h: 68,
+      label: "Different complaint mix\n(more slow, housing-interior\nissues; heat, plumbing, pests)",
+      color: "#d96459", text: "#fff",
+    },
+    channel: {
+      pos: P(620, 330), w: 240, h: 68,
+      label: "More phone-filed\ncomplaints\n(vs. online portal / app)",
+      color: "#c9b9a0", text: "#3a2a10",
+    },
+    winter: {
+      pos: P(260, 450), w: 260, h: 56,
+      label: "Winter surge in\nHEAT/HOT WATER",
+      color: "#c9b9a0", text: "#3a2a10",
+    },
+    out: {
+      pos: P(560, 500), w: 360, h: 48,
+      label: "Longer 311 resolution time",
+      color: "#8a1f1f", text: "#fff",
+    },
   };
 
-  // Edges: [from, to, dashed?, label]
+  // Edges: [from, to, dashed?, label, strong?]
   const EDGES = [
-    ["root",    "housing", false, null],
-    ["root",    "digital", false, null],
-    ["housing", "mix",     false, "main path"],
-    ["digital", "mix",     false, "small"],
-    ["digital", "channel", true,  null],
-    ["mix",     "agency",  false, null],
-    ["mix",     "channel", false, null],
-    ["mix",     "winter",  false, null],
-    ["mix",     "out",     false, null],
-    ["agency",  "out",     false, null],
-    ["channel", "out",     false, null],
-    ["winter",  "out",     false, null],
+    ["root",    "housing", false, null,              false],
+    ["root",    "digital", false, null,              false],
+    ["housing", "mix",     false, "primary path",    true ],
+    ["digital", "channel", false, null,              false],
+    ["mix",     "winter",  false, "seasonal surge",  false],
+    ["mix",     "out",     false, "97.8% of gap",    true ],
+    ["winter",  "out",     false, "amplifier",       false],
+    ["channel", "out",     true,  "≈0 after controls", false],
   ];
 
-  // Arrow marker
-  svg.append("defs").append("marker")
+  // Arrow markers (normal + strong)
+  const defs = svg.append("defs");
+  defs.append("marker")
     .attr("id", "arrowhead").attr("viewBox", "0 -5 10 10")
     .attr("refX", 10).attr("refY", 0)
     .attr("markerWidth", 6).attr("markerHeight", 6).attr("orient", "auto")
     .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", "#7a6a50");
+  defs.append("marker")
+    .attr("id", "arrowhead-strong").attr("viewBox", "0 -5 10 10")
+    .attr("refX", 10).attr("refY", 0)
+    .attr("markerWidth", 7).attr("markerHeight", 7).attr("orient", "auto")
+    .append("path").attr("d", "M0,-5L10,0L0,5").attr("fill", "#8a1f1f");
 
   const gEdges = svg.append("g").attr("class", "dag-edges");
   const gNodes = svg.append("g").attr("class", "dag-nodes");
@@ -338,9 +366,10 @@
     .attr("y1", d => edgePoints(d[0], d[1]).sy)
     .attr("x2", d => edgePoints(d[0], d[1]).sx)  // starts collapsed
     .attr("y2", d => edgePoints(d[0], d[1]).sy)
-    .attr("stroke", "#7a6a50").attr("stroke-width", 1.6)
+    .attr("stroke", d => d[4] ? "#8a1f1f" : "#7a6a50")
+    .attr("stroke-width", d => d[4] ? 2.8 : 1.5)
     .attr("stroke-dasharray", d => d[2] ? "6,4" : null)
-    .attr("marker-end", "url(#arrowhead)")
+    .attr("marker-end", d => d[4] ? "url(#arrowhead-strong)" : "url(#arrowhead)")
     .style("opacity", 0);
 
   // Edge labels
@@ -348,7 +377,7 @@
     .attr("x", d => { const p = edgePoints(d[0], d[1]); return (p.sx + p.ex) / 2 + 6; })
     .attr("y", d => { const p = edgePoints(d[0], d[1]); return (p.sy + p.ey) / 2 - 4; })
     .style("font-size", "10.5px").style("font-style", "normal")
-    .style("fill", "#c72929").style("font-weight", "600")
+    .style("fill", d => d[4] ? "#8a1f1f" : "#6a6558").style("font-weight", "600")
     .style("opacity", 0)
     .text(d => d[3]);
 
@@ -387,11 +416,10 @@
     { type: "node", key: "digital" },
     { type: "edge", match: (e) => e[0] === "root" },
     { type: "node", key: "mix" },
-    { type: "edge", match: (e) => (e[0] === "housing" || e[0] === "digital") && (e[1] === "mix" || e[1] === "channel") },
-    { type: "node", key: "agency" },
     { type: "node", key: "channel" },
+    { type: "edge", match: (e) => e[0] === "housing" || e[0] === "digital" },
     { type: "node", key: "winter" },
-    { type: "edge", match: (e) => e[0] === "mix" && e[1] !== "out" },
+    { type: "edge", match: (e) => e[0] === "mix" && e[1] === "winter" },
     { type: "node", key: "out" },
     { type: "edge", match: (e) => e[1] === "out" },
   ];
