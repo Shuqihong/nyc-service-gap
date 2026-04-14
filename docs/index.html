@@ -311,8 +311,10 @@
         (&Delta;R&sup2; = 0.126), while removing city agency drops it by only
         <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012). In other words,
         complaint type carries about ten times as much unique explanatory weight as agency once
-        the overlap between them is accounted for. The main driver of the resolution-time gap
-        is what the complaint is actually about.
+        the overlap between them is accounted for. Put differently, once we know what a
+        complaint is actually about, roughly four fifths of the variation in how long it takes
+        to close is already pinned down. Whatever is left after that is residual noise within
+        complaint types, not a hidden gap between neighborhoods.
       </p>
     </div>
 
@@ -326,7 +328,13 @@
       <p>
         If complaint type carries almost all of the gap, the next question is what those
         complaints actually are, and why the mix looks so different between the poorest and
-        wealthiest neighborhoods. Every 311 complaint falls into one of four categories.
+        wealthiest neighborhoods. To answer that, we first need a simpler view of the roughly
+        two hundred raw complaint strings in the data. We group them into four broad
+        categories based on the nature of the issue they describe.
+        <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, and electrical issues.
+        <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, and water leaks.
+        <strong>Quality of Life</strong> means noise, dirty conditions, and graffiti.
+        <strong>Other</strong> is everything else, such as parking violations, blocked driveways, and abandoned vehicles.
         <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, and electrical issues.
         <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, and water leaks.
         <strong>Quality of Life</strong> means noise, dirty conditions, and graffiti.
@@ -340,37 +348,20 @@
     <div class="body-text">
       <p>
         Quality of Life and Other complaints close within a few hours regardless of income.
-        <strong>Health &amp; Safety</strong> and <strong>Infrastructure</strong>, however, take far
-        longer. Health &amp; Safety averages 61 to 71 hours across quartiles, while Infrastructure
-        ranges from 66 to 163 hours. Health &amp; Safety shows a modest staircase across quartiles,
-        but the sharpest gradient is in Infrastructure, where wait times rise steadily from
-        66 hours in Q4 to 163 hours in Q1.
-      </p>
-      <p>
-        The Infrastructure gradient is driven by what &ldquo;Infrastructure&rdquo; actually
-        contains in each income group. Infrastructure complaints fall into two groups.
-        <strong>Interior housing repairs</strong> include plumbing, elevators, paint/plaster, doors/windows,
-        electrical, and appliances. <strong>Public infrastructure</strong> covers street conditions, traffic signals,
-        sewers, and water systems. Interior repairs take far longer to resolve, over
-        200 hours on average across all quartiles. The share of infrastructure complaints that are interior housing repairs rises
-        steadily with poverty. In Q4, it is <strong>28%</strong>. In Q3, <strong>34%</strong>. In Q2, <strong>47%</strong>.
-        And in Q1, <strong>68%</strong>. The staircase in resolution time follows this composition shift almost exactly.
-      </p>
-    </div>
-
-    <!-- D3: Infrastructure breakdown (was fig5_q4_infra_mix_within_type.png) -->
-    <div class="d3-chart" id="chart-infra-breakdown"></div>
-
-    <div class="body-text">
-      <p>
-        Notably, when comparing interior housing repairs alone, Q4 neighborhoods actually take longer
-        to resolve, with a median of <strong>265.6 hours</strong> compared to Q1&rsquo;s <strong>202.1 hours</strong>. This
-        confirms that the city is not giving wealthier areas faster service on the same type of problem.
-      </p>
-      <p>
-        The pattern extends beyond Infrastructure. When we zoom out to all complaint types,
-        the same compositional divide appears across income quartiles. Q1 waits longer because
-        it files far more of the complaints that take longer to fix.
+        Health &amp; Safety and Infrastructure, however, take far longer. Health &amp; Safety
+        averages 61 to 71 hours across quartiles, while Infrastructure ranges from 66 hours in
+        Q4 to <strong>163 hours</strong> in Q1. Infrastructure is also the category with the
+        sharpest gradient, and almost all of that gradient comes from one subgroup. Infrastructure
+        splits naturally into <strong>interior housing repairs</strong> (plumbing, elevators,
+        paint and plaster, doors and windows, electrical, appliances) and
+        <strong>public infrastructure</strong> (street conditions, traffic signals, sewers, water
+        systems). Interior repairs take far longer to resolve, over 200 hours on average across
+        all quartiles, and their share of infrastructure complaints climbs steadily with poverty,
+        from 28% in Q4 to 34% in Q3, 47% in Q2, and 68% in Q1. Importantly, when we compare only
+        interior housing repairs to each other, Q4 actually waits a bit longer than Q1
+        (a median of 265.6 hours versus 202.1 hours). The city is not giving wealthier areas
+        faster service on the same kind of problem. What changes across quartiles is how much of
+        each kind of problem gets filed in the first place.
       </p>
     </div>
 
@@ -379,19 +370,22 @@
 
     <div class="body-text">
       <p>
-        Across all four quartiles, a clear gradient emerges. The poorer the neighborhood, the
-        larger the share of slow-resolving complaints. Health &amp; Safety and Infrastructure
-        account for <strong>37.9%</strong> of Q1&rsquo;s complaints, <strong>28.1%</strong> in Q2,
-        <strong>24.5%</strong> in Q3, and just <strong>18.6%</strong> in Q4. From the
-        wealthiest to the poorest quartile, the complaint mix steadily shifts away from issues
-        that close in hours toward problems that take days or weeks to fix.
+        Splitting Infrastructure this way makes the shift visible at a glance. Interior housing
+        repairs occupy a large slice of Q1&rsquo;s bar and shrink almost to nothing by Q4, while
+        public infrastructure and Quality of Life grow in the opposite direction. Across all four
+        quartiles, a clear gradient emerges. The poorer the neighborhood, the larger the share of
+        slow-resolving complaints. Health &amp; Safety and Infrastructure together account for
+        <strong>37.9%</strong> of Q1&rsquo;s complaints, <strong>28.1%</strong> in Q2,
+        <strong>24.5%</strong> in Q3, and just <strong>18.6%</strong> in Q4.
       </p>
       <p>
-        An Oaxaca-Blinder decomposition lets us isolate how much of the gap this composition
-        difference actually explains. If Q1 had Q4&rsquo;s complaint mix but kept
-        its own response speeds, Q1&rsquo;s expected wait would drop to <strong>1.7 hours</strong>,
-        virtually identical to Q4.
-        <strong>Complaint mix alone explains 97.8% of the gap.</strong>
+        The regression told us how much of the <em>variance</em> in resolution time is
+        accounted for by complaint type. It did not tell us how much of the eleven-hour
+        <em>gap</em> between Q1 and Q4 would disappear if the two quartiles filed the same mix
+        of complaints. For that we need a different kind of question, a counterfactual one.
+        An Oaxaca-Blinder decomposition answers it directly. It takes Q4&rsquo;s complaint mix,
+        applies it to Q1 while holding Q1&rsquo;s own response speeds fixed, and reports what
+        Q1&rsquo;s median wait would have been under that hypothetical.
       </p>
     </div>
 
@@ -421,6 +415,14 @@
 
     <div class="body-text">
       <p>
+        The result is striking. Q1&rsquo;s expected wait under Q4&rsquo;s mix drops to
+        <strong>1.7 hours</strong>, almost identical to Q4&rsquo;s actual 1.5 hours. Out of
+        the 11.1-hour gap, only 0.24 hours survive once the composition difference is removed.
+        <strong>Complaint mix alone explains 97.8% of the gap between Q1 and Q4.</strong>
+        The remaining 2.2% is the most any within-type speed difference could possibly
+        account for.
+      </p>
+      <p>
         The composition gap is the mechanism. But it raises a deeper question. Why do Q1
         neighborhoods file so many more of these slow-resolving complaints? If the answer
         is aging housing infrastructure, the data should show a seasonal signature. Heating
@@ -431,44 +433,59 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════ THE SEASONAL PATTERN -->
+  <!-- ══════════════════════════════════ BASELINE AND WINTER AMPLIFIER -->
   <section id="winter-story" class="story-section">
-    <div class="section-header"><h2>The Seasonal Pattern</h2></div>
+    <div class="section-header"><h2>Baseline and Winter Amplifier</h2></div>
 
     <div class="body-text">
       <p>
-        Across the whole year, a clear pattern emerges in the monthly data. The gap between
-        Q1 and Q4 is largest in winter, reaching over <strong>22 hours</strong> in January. It
-        shrinks through spring, bottoms out in June at just <strong>1 hour</strong>, then shows a
-        small bump in July and August before dropping again in September. That mid-summer bump
-        comes from infrastructure complaints. Summer heat puts stress on aging plumbing and building
-        systems, and Q1 neighborhoods see the sharpest spike in volume and resolution time.
-        From October onward, the gap climbs steadily back through autumn into another winter peak.
+        The gap we have been studying is not a single number. It has two layers stacked on top
+        of each other. A <strong>year-round baseline</strong> that never disappears, and a
+        <strong>winter amplifier</strong> that briefly makes the gap three or four times
+        larger. Separating these two layers is what this section is about.
+      </p>
+      <p>
+        Before going further, it is worth noting a subtlety that might look like a contradiction.
+        In the earlier heat map and regression, the variable <em>month</em> on its own barely
+        moved resolution time at all. Yet here we are about to show a very large seasonal effect.
+        Both are true. The seasonal story is not a main effect of month. It is a three-way
+        interaction between <strong>month</strong>, <strong>income quartile</strong>, and
+        <strong>complaint type</strong>. Pooled across all complaints and all neighborhoods,
+        month washes out. Once we split by quartile and watch how the complaint mix itself
+        shifts with the calendar, a clear pattern appears.
+      </p>
+    </div>
+
+    <h3 style="max-width: var(--max-prose); margin: 2rem auto 0.5rem; font-family: var(--font-serif); font-weight: 600;">The year-round baseline</h3>
+
+    <div class="body-text">
+      <p>
+        <strong>Q4 is the fastest quartile in almost every month of the year.</strong> Even in
+        June, when all four quartiles converge into a narrow band between 2.8 and 6.4 hours,
+        Q4&rsquo;s 2.8 hours still sits below the other three. This baseline gap exists because
+        Q1, Q2, and Q3 file far more Infrastructure and Health &amp; Safety complaints, such as
+        plumbing failures, elevator outages, rodent infestations, and water leaks. Those types
+        take days or weeks to resolve regardless of season, so they keep Q1 through Q3 medians
+        higher than Q4&rsquo;s even in the calmest months. The baseline is inequitable year-round.
       </p>
     </div>
 
     <div class="d3-chart" id="winter-chart"></div>
 
+    <h3 style="max-width: var(--max-prose); margin: 2.5rem auto 0.5rem; font-family: var(--font-serif); font-weight: 600;">The winter amplifier</h3>
+
     <div class="body-text">
       <p>
-        In winter, the four quartiles spread apart dramatically. In January, Q1 waits
-        <strong>25.3 hours</strong> while Q4 waits just <strong>3.1</strong>. Q2 and Q3 fall
-        in between at around 12&ndash;13 hours. By June the lines converge into a narrow band,
-        with all four quartiles between 2.8 and 6.4 hours. The staircase that is so visible
-        in winter nearly flattens in summer.
+        On top of that baseline, winter adds a dramatic spike. In January, Q1 waits
+        <strong>25.3 hours</strong> while Q4 still waits only <strong>3.1</strong>. Q2 and Q3
+        fall in between at around 12 to 13 hours. The gap between Q1 and Q4 reaches over
+        <strong>22 hours</strong> in January, shrinks through spring, bottoms out in June at
+        just <strong>1 hour</strong>, bumps up slightly in July and August as summer heat
+        stresses aging plumbing, and then climbs back through autumn into another winter peak.
+        The staircase that is so visible in winter nearly flattens in summer.
       </p>
       <p>
-        <strong>Q4 almost always resolves fastest throughout the year.</strong> Even in June,
-        Q4&rsquo;s 2.8 hours sits below the other three. This baseline gap exists because the
-        other quartiles, especially Q1, file far more <strong>Infrastructure</strong> and
-        <strong>Health&nbsp;&amp;&nbsp;Safety</strong> complaints, such as plumbing failures,
-        elevator outages, rodent infestations, and water leaks. These types take days or weeks
-        to resolve regardless of season, keeping medians higher than Q4&rsquo;s even in the
-        calmest months.
-      </p>
-      <p>
-        The baseline inequity is year-round. Winter amplifies it. So what drives the winter
-        spike? One complaint type dominates the answer.
+        So what drives the winter spike? One complaint type dominates the answer.
         <strong>HEAT/HOT&nbsp;WATER</strong>.
       </p>
     </div>
@@ -478,18 +495,22 @@
     <div class="body-text">
       <p>
         In December, Q1 neighborhoods filed
-        <strong>88.2 HEAT/HOT&nbsp;WATER complaints per 10,000 residents</strong>,
-        more than four times Q4&rsquo;s rate of 21.6. Q2 and Q3 fall in between. In summer,
-        heating complaints drop to near zero across all quartiles and the bars converge. Starting
-        in October, they climb again, with Q1 rising the fastest. This single complaint type
+        <strong>88.2 HEAT/HOT&nbsp;WATER complaints per 10,000 residents</strong>, more than
+        four times Q4&rsquo;s rate of 21.6, with Q2 and Q3 in between. In summer, heating
+        complaints drop to near zero across all quartiles and the bars converge. Starting in
+        October they climb again, with Q1 rising the fastest. This single complaint type
         accounts for <strong>18.4%</strong> of all Q1 complaints in winter but only
-        <strong>1.9%</strong> in summer. That massive seasonal volume is what pushes Q1&rsquo;s
-        overall median dramatically higher in winter, while Q2 and Q3 also rise but less sharply.
+        <strong>1.9%</strong> in summer.
       </p>
       <p>
-        The seasonal data confirms what the complaint mix showed. HEAT/HOT&nbsp;WATER, driven by
-        aging boilers in low-income buildings, is the winter amplifier. The year-round baseline
-        comes from Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints that never go away.
+        This is the three-way interaction made concrete. Month alone does not slow the city
+        down, and income alone does not slow it down, and a complaint type alone does not slow
+        it down. What slows Q1 down is the particular combination: in winter, Q1 files a
+        surge of a complaint type that is inherently slow to resolve. The calendar shifts the
+        complaint mix, and the mix shift is concentrated in the poorest quartile. Neither
+        month nor income would look like much of a driver on its own, but together they
+        reshape Q1&rsquo;s complaint distribution and drag its median upward. The baseline
+        inequity is year-round; the winter amplifier is a seasonal rearrangement of the mix.
       </p>
     </div>
   </section>

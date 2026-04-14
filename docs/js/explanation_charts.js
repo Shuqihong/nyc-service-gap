@@ -166,7 +166,21 @@
     .style("font-size", "12px").style("fill", "#666")
     .text("Share of complaints (%)");
 
-  const stackOrder = ["health_safety", "infrastructure", "quality_of_life", "other"];
+  const stackOrder = ["health_safety", "interior_housing", "public_infra", "quality_of_life", "other"];
+  const MIX_LABEL = {
+    health_safety: "Health & Safety",
+    interior_housing: "Interior housing repairs",
+    public_infra: "Public infrastructure",
+    quality_of_life: "Quality of Life",
+    other: "Other"
+  };
+  const MIX_COLOR = {
+    health_safety: "#d96459",
+    interior_housing: "#c27a4a",
+    public_infra: "#5b93c5",
+    quality_of_life: "#f2a553",
+    other: "#b8b0a8"
+  };
 
   /* Build bar data with y positions */
   const barData = [];
@@ -182,20 +196,20 @@
   const bars = g.selectAll(".mix-bar").data(barData).enter().append("rect").attr("class", "mix-bar")
     .attr("x", d => x(d.quartile)).attr("width", x.bandwidth())
     .attr("y", h).attr("height", 0)
-    .attr("fill", d => CAT_COLOR[d.category]).attr("rx", 1)
+    .attr("fill", d => MIX_COLOR[d.category]).attr("rx", 1)
     .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile}</strong><br>${CAT_LABEL[d.category]}: <strong>${d.value.toFixed(1)}%</strong>`))
+      `<strong>${d.quartile}</strong><br>${MIX_LABEL[d.category]}: <strong>${d.value.toFixed(1)}%</strong>`))
     .on("mousemove", moveTip).on("mouseout", hideTip);
 
   /* Legend — horizontal row below x-axis */
   const leg = g.append("g").attr("transform", `translate(${w / 2}, ${h + 30})`);
   let legX = 0;
-  const legItems = stackOrder.map(cat => ({ cat, label: CAT_LABEL[cat] }));
+  const legItems = stackOrder.map(cat => ({ cat, label: MIX_LABEL[cat] }));
   const totalLegW = legItems.reduce((sum, it) => sum + it.label.length * 6.5 + 28, 0);
   legX = -totalLegW / 2;
   legItems.forEach(({ cat, label }) => {
     const row = leg.append("g").attr("transform", `translate(${legX}, 0)`);
-    row.append("rect").attr("width", 10).attr("height", 10).attr("rx", 2).attr("fill", CAT_COLOR[cat]);
+    row.append("rect").attr("width", 10).attr("height", 10).attr("rx", 2).attr("fill", MIX_COLOR[cat]);
     row.append("text").attr("x", 14).attr("y", 9).style("font-size", "10px").style("fill", "#666").text(label);
     legX += label.length * 6.5 + 28;
   });
