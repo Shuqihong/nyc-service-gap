@@ -51,15 +51,103 @@ Then open `http://localhost:8000`.
 
 ## Methods
 
-- **Pearson correlation** on all 3.2 million individual complaints to test the naive hypothesis that neighborhood income predicts resolution time. Result: r = 0.046, R² = 0.002. Income at the complaint level is essentially uninformative.
-- **Variable-association heat map** across seven candidate predictors (income quartile, month, filing channel, city agency, complaint type, population, borough) to surface which pairs are correlated before fitting any model.
-- **Nested OLS regression** on neighborhood-month medians, adding predictor blocks one at a time (income + month + channel → + agency → + complaint type). R² is tracked at each step, and a **drop-one-block test** on the full model isolates each variable's unique contribution after controlling for the others.
-- **Oaxaca-Blinder decomposition** (Oaxaca 1973; Blinder 1973) to split the Q1-Q4 gap into the portion explained by differences in complaint-type composition and a residual that survives after holding the mix fixed. A counterfactual Q1 with Q4's mix but Q1's within-type speeds quantifies the composition effect.
-- **Complaint taxonomy.** Raw complaint strings (roughly 200 distinct values) are grouped into four categories: Infrastructure, Health & Safety, Quality of Life, and Other. Infrastructure is further split into **interior housing repairs** (plumbing, elevators, etc.) and **public infrastructure** (street conditions, sewers, etc.) because the two behave very differently in resolution time.
-- **Seasonal interaction model** fit on the 48 month-by-quartile cells:
-  `median_wait ~ month + quartile + heat_share + quartile × heat_share`.
-  A month-only baseline explains 42.3% of variation; adding HEAT/HOT WATER share and its interaction with quartile raises R² to 94.2%, indicating the winter spike is a mix effect concentrated in lower-income housing rather than a calendar effect.
-- **Within-cell comparison.** For every (borough × agency × complaint category × month) cell present in both Q1 and Q4, we check which quartile is faster. Q4 is faster in only 52.3% of such matched cells, confirming that speed differences within comparable cases are near zero.
+### Nested OLS regression with drop-one-block tests
+
+**Goal.** Identify which variables actually explain the variation in resolution time, after controlling for the others. A naive correlation between income and wait time is noisy; a nested model isolates each predictor's unique contribution.
+
+**Unit of analysis.** Cell-level medians at (modified ZCTA × month × complaint type × agency × channel), weighted by complaint count. Working in medians rather than raw rows collapses extreme right-tail noise and matches the scale at which the policy question is asked ("how long does a typical complaint of this kind wait in this neighborhood?").
+
+**Specification.** We fit an OLS model of the form
+
+```
+median_wait ~ income_quartile + month + channel + agency + complaint_type
+```
+
+and add the predictors in blocks, one block at a time. The categorical variables (month, channel, agency, complaint_type) enter as sets of dummy variables. At each step we record R², the share of variance explained.
+
+**Nested sequence.**
+
+| Step | Blocks in the model | R² |
+|---|---|---|
+| 1 | income + month + channel | 0.123 |
+| 2 | + agency | — |
+| 3 | + complaint type | 0.792 |
+
+**Drop-one-block test.** After fitting the full model, we refit it once with each block removed and record the drop in R². The difference, `R²_full − R²_without_block`, is that block's **unique contribution** — the variance only it can explain once the other variables are in. Results: complaint type contributes 12.6 percentage points, agency 1.2 pp, channel 0.05 pp. Income-quartile dummies contribute essentially nothing once complaint type is in the model.
+
+**Interpretation.** Complaint type is not just the strongest predictor — it is the only predictor that matters at this scale. The gap looks like an income story at the aggregate, but once we hold the type of complaint constant, the income signal disappears. Whatever is driving the Q1-Q4 gap must operate *through* the composition of complaints, not through how quickly the same complaint gets handled.
+
+### Oaxaca-Blinder decomposition
+
+**Goal.** Quantify how much of the Q1-Q4 wait gap is driven by **what** Q1 and Q4 residents report (composition effect) versus **how fast** the same complaint gets handled in each (within-type effect). This is the standard labor-economics decomposition from Oaxaca (1973) and Blinder (1973).
+
+**Setup.** Let `T` index complaint types, `s_q(T)` be the share of Q's complaints that are of type T, and `m_q(T)` be Q's median resolution time for type T. Observed median wait for quartile Q is approximately
+
+```
+W_q = Σ_T s_q(T) · m_q(T)
+```
+
+**Counterfactual.** We construct a synthetic Q1 that keeps its own within-type speeds `m_Q1(T)` but takes Q4's mix `s_Q4(T)`:
+
+```
+W_Q1^cf = Σ_T s_Q4(T) · m_Q1(T)
+```
+
+The gap then splits into
+
+- **Composition effect** = `W_Q1 − W_Q1^cf` (how much faster Q1 would be if it had Q4's types)
+- **Within-type effect** = `W_Q1^cf − W_Q4` (residual gap that survives even after fixing the mix)
+
+**Result.** Q1's observed wait is 12.6 h; its counterfactual wait with Q4's mix is 1.7 h; Q4's actual wait is 1.5 h. Composition accounts for (12.6 − 1.7) / (12.6 − 1.5) = **97.8%** of the gap; within-type speeds account for the remaining ~2%.
+
+**Interpretation.** If Q1 filed the same kinds of complaints Q4 files, it would wait about as long as Q4 does. The equity gap is almost entirely a **mix problem**, not a treatment problem — the city is not meaningfully slower in poorer neighborhoods for the same job; poorer neighborhoods are reporting a harder mix of jobs.
+
+### Complaint taxonomy and the interior/public split
+
+**Goal.** Reduce roughly 200 raw complaint strings into a small set of categories that are analytically useful (stable sample sizes, interpretable labels) without hiding the mechanism that matters for the wait gap.
+
+**Top-level categories.** Complaints are grouped into **Infrastructure**, **Health & Safety**, **Quality of Life**, and **Other**. Mapping is based on the underlying public-service function, not the NYC 311 agency routing.
+
+**Why Infrastructure is split further.** Early EDA showed that "Infrastructure" is bimodal. Some infrastructure complaints close in hours; others take weeks. The split runs along a clean line: whether the problem is inside a building (private property) or out in public space. Median resolution times in 2024 (from [data/eda/decomp_E6_infra_subtype_by_quartile.csv](data/eda/decomp_E6_infra_subtype_by_quartile.csv)) illustrate the gap:
+
+| Subtype | Example complaint | Median wait (Q1, hours) |
+|---|---|---|
+| Interior housing repair | PLUMBING | 189 |
+| Interior housing repair | PAINT/PLASTER | 165 |
+| Interior housing repair | ELECTRIC | 175 |
+| Interior housing repair | DOOR/WINDOW | 241 |
+| Interior housing repair | Elevator | 778 |
+| Public infrastructure | Street Condition | 35 |
+| Public infrastructure | Water System | 24 |
+| Public infrastructure | Traffic Signal Condition | 2 |
+| Public infrastructure | Sewer | 4 |
+
+Interior housing repairs are typically **10-100× slower** than public-infrastructure repairs. Lumping them together would hide the most important mechanism in the dataset: Q1 is slow because its infrastructure complaints are overwhelmingly *interior housing repairs*, which are slow for **everyone** — including wealthier neighborhoods in the rare cases they file them.
+
+**How the split is used.** The interior-vs-public distinction is not a statistical control; it is a lens. It motivates the final framing of the story: 311 acts as a **dispatch** system for public-space problems (complaint → agency → fix) and as an **escalation** system for housing problems (tenant → landlord fails → 311 → inspection → enforcement), and the second path is fundamentally slower by design.
+
+### Seasonal interaction model
+
+**Goal.** Explain why the Q1-Q4 gap widens dramatically in winter. Two competing hypotheses: (a) winter is a calendar effect — agencies slow down in cold months for everyone, and poor neighborhoods happen to get hit harder; or (b) winter is a mix effect — poor neighborhoods file far more HEAT/HOT WATER complaints in winter, and that complaint type is inherently slow.
+
+**Unit of analysis.** The 48 month-by-quartile cells (12 months × 4 income quartiles), with median wait computed per cell. Working at this aggregated scale lets us include `heat_share` as a cell-level mix variable — something you cannot do at the complaint level, where each row is either a heat complaint or not.
+
+**Specification.**
+
+```
+median_wait ~ month + quartile + heat_share + quartile × heat_share
+```
+
+- `month`: 11 dummy variables (December is the reference)
+- `quartile`: 3 dummies (Q4 is the reference)
+- `heat_share`: continuous, the fraction of complaints in that month-quartile cell that are HEAT/HOT WATER
+- `quartile × heat_share`: interaction, lets the slope of `heat_share` vary by quartile
+
+**Why this specification.** Crucially, the model has **no complaint-type fixed effects**. If we put the full complaint-type dummies in, the HEAT/HOT WATER dummy would absorb the mechanism and `heat_share` would look redundant. By leaving complaint_type out and putting `heat_share` in its place, we force the model to express the seasonal mechanism through a single, interpretable coefficient — which is the whole point of this step.
+
+**Fit.** Baseline model with month dummies only explains **42.3%** of variation across the 48 cells. Adding `heat_share` and its interaction with quartile raises R² to **94.2%**.
+
+**Interpretation.** The 52-percentage-point jump comes almost entirely from a single variable. The calendar explanation (option a) can only take us from 0% to 42.3%; everything beyond that requires knowing what share of each cell's complaints are HEAT/HOT WATER. And the interaction coefficient is the clincher: the effect of heat_share on wait time is much stronger in Q1 than in Q4, meaning that in poorer neighborhoods, a larger heat share makes the queue worse than it would in wealthier ones (likely because those same neighborhoods are also the slowest to respond to the sheer volume of backlogged heat complaints). The winter spike is not a calendar phenomenon. It is a **mix phenomenon**, and the mix is concentrated in Q1 housing.
 
 ## References
 
