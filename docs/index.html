@@ -567,10 +567,9 @@
         building&rsquo;s value. The problem is resolved privately, before 311 is ever
         dialed, so it never enters the dataset at all. Public-space complaints from
         wealthier areas still flow in as usual, while the housing branch carries
-        noticeably lighter traffic. What looks in the data like
-        &ldquo;poorer neighborhoods complain more&rdquo; reflects, underneath, where
-        private maintenance has failed and where residents have been forced to
-        escalate.
+        noticeably lighter traffic. The higher complaint volume in poorer
+        neighborhoods is, at its root, a record of failed private maintenance,
+        where tenants have been left with no option but to escalate to the city.
       </p>
     </div>
   </section>
@@ -579,32 +578,48 @@
   <section id="conclusion" class="story-section conclusion">
     <div class="section-header"><h2>Conclusion</h2></div>
 
-    <!-- <div class="body-text">
+    <div class="body-text">
       <p>
-        The gap has <strong>two layers</strong>. The first is a year-round foundation. Lower-income
-        neighborhoods file more Infrastructure and Health&nbsp;&amp;&nbsp;Safety complaints, types
-        that are inherently slow to resolve, creating a baseline inequity that never disappears.
-        The second is a seasonal amplifier. HEAT/HOT&nbsp;WATER floods the caseload in winter,
-        driven by aging boilers and failing heating systems in old buildings. Together, they
-        explain both the persistent gap and its dramatic winter peak.
+        <strong>A real gap that income alone cannot explain.</strong> Q1
+        neighborhoods wait roughly three times as long as Q4 for a 311 complaint
+        to close (10.8 hours versus 3.9 hours). Yet the correlation between
+        neighborhood income and wait time is just <strong>r = 0.046</strong>.
+        Something more specific than simple discrimination is driving the
+        difference.
       </p>
       <p>
-        <strong>97.8%</strong> of the resolution-time gap is explained by complaint mix alone.
-        Within the same complaint type, wealthier neighborhoods sometimes wait even longer.
-        The patterns in this dataset suggest that differences in complaint mix
-        explain far more of the gap than differences in resolution speed within the
-        same complaint type. The equity gap is, at its root, a
-        <strong>housing infrastructure crisis</strong>.
+        <strong>Complaint mix carries almost all of it.</strong> Adding
+        complaint type to the regression lifts R&sup2; from
+        <strong>12.3%</strong> to <strong>79.2%</strong>, and Oaxaca-Blinder
+        decomposition attributes <strong>97.8%</strong> of the Q1 to Q4 gap to
+        differences in what residents report, not to differences in within-type
+        response speed. Poorer neighborhoods file far more Health &amp; Safety
+        and interior-housing complaints, which are inherently slow to resolve.
       </p>
       <p>
-        The 311 data does not reveal a biased government. It reveals an economic landscape where
-        the burden of failing infrastructure falls disproportionately on those who can least
-        afford better housing. If you are poor, you are more likely to live in an older building
-        that breaks down more often, loses heat in winter, and generates the kinds of complaints
-        that take the longest to resolve. The service gap is real, but it starts with the
-        buildings people live in.
+        <strong>Winter sharpens the same mechanism.</strong> HEAT/HOT&nbsp;WATER
+        surges in Q1 every heating season, reaching <strong>88.2 complaints per
+        10,000 residents</strong> in December, more than four times Q4&rsquo;s
+        rate. Adding the heat-share interaction to the model lifts fit from
+        <strong>42.3%</strong> to <strong>94.2%</strong>. The winter spike is a
+        mix effect concentrated in lower-income housing, not a standalone
+        calendar effect.
       </p>
-    </div> -->
+      <p>
+        <strong>The root cause sits upstream of 311.</strong> For public-space
+        problems, 311 dispatches directly to a city agency. For housing
+        problems, it activates only after a tenant&rsquo;s private request to
+        their landlord has failed. Poorer neighborhoods rely on this escalation
+        path because their buildings break more often and their landlords defer
+        repairs, while wealthier neighborhoods resolve the same issues
+        privately and never enter the dataset. The 311 data does not show a
+        biased city. It shows an economic landscape where failing housing
+        infrastructure falls on those least able to leave it behind, and the
+        equity gap in resolution time is, at its root, a
+        <strong>housing infrastructure crisis</strong> made visible through the
+        city&rsquo;s own records.
+      </p>
+    </div>
 
   </section>
 
