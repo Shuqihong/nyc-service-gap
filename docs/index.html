@@ -124,6 +124,26 @@
       opacity: 0; z-index: 1000; transition: opacity .15s; max-width: 240px;
     }
 
+    /* ── 311 flow chart ── */
+    .flow-chart { max-width: var(--max-figure); margin: 28px auto 8px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .flow-branch { border: 1px solid var(--border); border-radius: 10px;
+      padding: 18px 16px 20px; background: #fbf6ed;
+      display: flex; flex-direction: column; align-items: stretch; }
+    .flow-branch h4 { margin: 0 0 14px; font-family: var(--font-serif);
+      font-size: 1.02rem; font-weight: 700; color: var(--ink); text-align: center; }
+    .flow-step { padding: 9px 11px; border: 1.5px solid var(--border);
+      background: #fff; border-radius: 6px; text-align: center;
+      font-family: var(--font-sans); font-size: .86rem; color: var(--ink-mid); line-height: 1.4; }
+    .flow-step-accent { border-color: var(--accent); background: #fdf3f2;
+      color: var(--ink); font-weight: 600; }
+    .flow-arrow { color: var(--ink-light); font-size: 1.05rem; margin: 5px 0;
+      display: flex; flex-direction: column; align-items: center; line-height: 1.1;
+      font-style: normal; }
+    .flow-arrow-label { font-size: .72rem; color: var(--ink-light); margin-bottom: 2px;
+      font-style: normal; }
+    @media (max-width: 640px) { .flow-chart { grid-template-columns: 1fr; } }
+
     .conclusion { border-top: 2px solid var(--border); }
     .conclusion .section-header h2::after { width: 108px; }
     .footnote { margin: 0 auto; padding-top: .95rem; border-top: 1px solid var(--border);
@@ -477,99 +497,95 @@
   <section id="the-full-picture" class="story-section">
     <div class="section-header"><h2>The Full Picture</h2></div>
 
-    <!-- <div class="body-text">
+    <div class="body-text">
       <p>
-        Everything so far has traced the proximate cause of the gap. Lower-income
-        neighborhoods wait longer because they file more of the complaint types that are slow
-        to resolve, and because in winter those slow types surge. But this only pushes the
-        question one step back. Why do poorer neighborhoods file so many more heat failures,
-        plumbing breakdowns, and pest problems in the first place? The 311 data itself does
-        not answer this. The answer lies outside the dataset, in the structure of the housing
-        market and the distribution of digital infrastructure. The root cause is
-        <strong>economic inequality</strong>, and it reaches the 311 system through two
-        parallel pathways, one dominant and one secondary.
+        311 is essentially a city-level request and complaint intake system. It records
+        issues reported by residents and routes them to the appropriate responsible parties.
+        For housing-related problems, it is not the first step but an
+        <strong>escalation mechanism</strong>. Tenants are expected to contact their landlord
+        or property manager first to request repairs. Only when the landlord delays, refuses,
+        or fails to act do they turn to 311. Once a complaint enters the system, the issue
+        shifts from a private interaction to a documented public matter. The case is then
+        forwarded to agencies such as the NYC Department of Housing Preservation and
+        Development (HPD), which may conduct inspections, issue violations, and apply legal
+        or administrative pressure on the landlord. In this process, 311 does not directly
+        fix the problem; instead, it operates through
+        <strong>documentation, routing, and enforcement</strong>, transforming a situation
+        where requests are ignored into one where action is required.
       </p>
       <p>
-        The dominant pathway runs through <strong>housing</strong>. In a market where rent
-        takes up a rising share of low-income household budgets, the buildings that the
-        poorest residents can afford are disproportionately older, smaller, and under the
-        control of landlords whose financial incentives do not favor proactive maintenance.
-        Matthew Desmond&rsquo;s fieldwork in &ldquo;Evicted&rdquo; (2016) documents this dynamic in
-        detail. In low-rent buildings, owners calculate that the cost of replacing a failing
-        boiler or repairing chronic plumbing leaks often exceeds the marginal rent they can
-        extract from the unit, so they defer the work, sometimes indefinitely, while tenants
-        with little bargaining power absorb the consequences. Tenants who own their homes can
-        fix a leak themselves the same day. Tenants who rent can only file a complaint and
-        wait. The <strong>renter-owner split</strong> is therefore not a demographic detail,
-        it is the switch that converts a private maintenance problem into a public 311 ticket.
-        NYU&rsquo;s Furman Center, in its annual &ldquo;State of New York City&rsquo;s Housing
-        and Neighborhoods&rdquo; reports, has shown repeatedly that serious housing
-        deficiencies, including rodent infestations, water leaks, and heating breakdowns,
-        are concentrated in lower-income ZIP codes. HUD&rsquo;s American Housing Survey
-        finds similar patterns nationally. None of this is a coincidence of geography. It
-        is the legacy of decades of housing policy choices, from the mid-century redlining
-        maps documented by Richard Rothstein in &ldquo;The Color of Law&rdquo; (2017) to
-        contemporary patterns of landlord disinvestment in rent-stabilized low-rent
-        buildings. When we see HEAT/HOT WATER complaints flood Q1 neighborhoods in January,
-        we are watching that accumulated history finally break through the surface of the
-        municipal data.
+        For public space issues, 311 functions more as a
+        <strong>dispatching and coordination system</strong>. Problems such as illegal
+        parking, graffiti, road damage, and noise already fall under the responsibility of
+        city agencies, so residents can report them directly without going through a private
+        party. The system automatically routes each case to the relevant department for
+        handling or enforcement. In this context, 311 is not used to pressure an individual
+        actor but to facilitate internal government response. As a result, although both
+        appear as 311 complaints, housing-related requests primarily reflect unresolved
+        private maintenance issues, while public-space complaints more directly capture
+        demands for municipal services.
       </p>
-      <p>
-        The secondary pathway runs through <strong>digital access</strong>. The Pew Research
-        Center&rsquo;s ongoing broadband and smartphone surveys have documented a persistent
-        gap in reliable home internet, computer ownership, and day-to-day comfort with
-        digital tools between lower- and higher-income Americans. In New York specifically,
-        Census and city broadband reports show the same gap at the neighborhood level. A
-        resident with fast home internet and an up-to-date phone will usually file a
-        non-urgent 311 request through the NYC311 website or mobile app. A resident without
-        those things, or who has to share a device, will usually pick up the phone. This
-        does not, as our regression showed, make the city answer phone complaints more
-        slowly. But it does mean that filing channel carries a small independent signature of
-        the digital divide, layered on top of the much larger housing pathway.
-      </p>
-      <p>
-        The diagram below makes the full chain visible. Economic inequality sits at the top.
-        It feeds the two upstream mechanisms, which in turn reshape what neighborhoods file
-        and how they file it. The thick red arrow in the middle of the diagram marks the
-        direct causal edge that does almost all of the work: the complaint mix itself drives
-        resolution time, because some complaint types are inherently slow to fix and others
-        are not.
-      </p>
-    </div> -->
+    </div>
 
-    <div class="d3-chart" id="chart-dag"></div>
+    <div class="flow-chart" aria-label="How a 311 complaint flows through the system">
+      <div class="flow-branch">
+        <h4>Housing issue &mdash; escalation path</h4>
+        <div class="flow-step">Tenant experiences issue<br>(no heat, leak, pests)</div>
+        <div class="flow-arrow"><span class="flow-arrow-label">contacts first</span>&darr;</div>
+        <div class="flow-step">Landlord or property manager</div>
+        <div class="flow-arrow"><span class="flow-arrow-label">delays, refuses, or fails to act</span>&darr;</div>
+        <div class="flow-step flow-step-accent">Tenant files 311 complaint</div>
+        <div class="flow-arrow"><span class="flow-arrow-label">routed to</span>&darr;</div>
+        <div class="flow-step">HPD: inspection, violation, legal pressure</div>
+        <div class="flow-arrow">&darr;</div>
+        <div class="flow-step">Landlord required to act</div>
+      </div>
+      <div class="flow-branch">
+        <h4>Public space issue &mdash; dispatch path</h4>
+        <div class="flow-step">Resident observes issue<br>(graffiti, pothole, illegal parking, noise)</div>
+        <div class="flow-arrow">&darr;</div>
+        <div class="flow-step flow-step-accent">Resident files 311 complaint</div>
+        <div class="flow-arrow"><span class="flow-arrow-label">auto-routed to</span>&darr;</div>
+        <div class="flow-step">Responsible city agency<br>(DOT, DSNY, NYPD, DEP&hellip;)</div>
+        <div class="flow-arrow">&darr;</div>
+        <div class="flow-step">Agency response or enforcement</div>
+      </div>
+    </div>
 
-    <!-- <div class="body-text">
+    <div class="body-text">
       <p>
-        A few details in the diagram are worth reading carefully. First, the arrow from
-        <strong>complaint mix</strong> to <strong>resolution time</strong> is drawn bold and
-        red because the Oaxaca decomposition showed that this single edge accounts for 97.8%
-        of the gap between the poorest and wealthiest quartiles. Everything else in the
-        diagram feeds into it or rides on top of it. Second, the
-        <strong>winter amplifier</strong> is drawn as a branch off the complaint-mix node, not
-        as an independent cause. Winter does not slow the city down on its own. It
-        rearranges the seasonal mix of complaint types in lower-income neighborhoods, and
-        that rearrangement is what produces the winter spike. Third, the arrow from
-        <strong>filing channel</strong> is drawn dashed and marked &ldquo;&asymp;0 after
-        controls,&rdquo; to make it clear that the phone signal disappears once complaint
-        type is held fixed. It is a real marker of the digital divide, but it is not an
-        independent slowdown mechanism. Finally, the outcome node is labeled simply
-        &ldquo;longer 311 resolution time,&rdquo; not &ldquo;longer wait in Q1.&rdquo; The
-        mechanism is general. It produces slower waits in any neighborhood whose complaint
-        mix tilts toward slow housing-interior issues, and faster waits in any neighborhood
-        whose mix tilts toward fast, externally visible issues. Income is how neighborhoods
-        end up on one side of that tilt or the other, but the mechanism itself is about
-        complaint composition, not zip-code labels.
+        The diagram traces both paths. On the left, a housing complaint only reaches 311
+        after a private request to the landlord has already failed, so the ticket is a
+        record of a maintenance relationship that has broken down. On the right, a
+        public-space complaint enters 311 at the very first step, because no private party
+        owns the problem to begin with. The same phone number routes to two fundamentally
+        different social processes.
       </p>
       <p>
-        None of this shows the city&rsquo;s 311 system treating rich and poor neighborhoods
-        differently. Within matched cells (same agency, same complaint category, same
-        borough, same month) the wealthier quartile is faster in only <strong>52.3%</strong>
-        of cases, essentially a coin flip. What the diagram shows is
-        <strong>structural inequality upstream of 311</strong>. The 311 dataset is not the
-        site of the inequity. It is the mirror that makes the inequity legible.
+        This asymmetry is what makes the housing pathway so unevenly distributed across
+        neighborhoods. In low-rent buildings, owners often calculate that the cost of
+        replacing a failing boiler or repairing chronic plumbing leaks exceeds the marginal
+        rent they can extract from the unit, so they defer the work, sometimes indefinitely.
+        Tenants with little bargaining power have no way to force the repair privately, and
+        when the landlord stops answering, 311 becomes the only remaining lever. HEAT/HOT
+        WATER, plumbing, and pest complaints pile up in the dataset as a result. Matthew
+        Desmond&rsquo;s fieldwork in &ldquo;Evicted&rdquo; (2016) documents this dynamic in
+        detail, and NYU&rsquo;s Furman Center has shown repeatedly that the most serious
+        housing deficiencies cluster in the city&rsquo;s poorest ZIP codes.
       </p>
-    </div> -->
+      <p>
+        Higher-income neighborhoods rarely generate the same volume of housing tickets, but
+        not because their buildings never break. When a leak appears in an owner-occupied
+        apartment, the owner simply calls a plumber. When it appears in a well-maintained
+        rental, a responsive landlord fixes it to protect the rent roll and the
+        building&rsquo;s value. The problem is resolved privately, before the escalation
+        step on the left ever begins, so it never enters 311 at all. Public-space
+        complaints from wealthier areas still flow through the dispatch path on the right,
+        but the housing escalation path stays largely empty. What looks in the data like
+        &ldquo;poorer neighborhoods complain more&rdquo; is, underneath, a map of where
+        private maintenance has failed and where residents have been forced to escalate.
+      </p>
+    </div>
   </section>
 
   <!-- ══════════════════════════════════ CONCLUSION -->
