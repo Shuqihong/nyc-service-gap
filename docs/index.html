@@ -125,23 +125,25 @@
     }
 
     /* ── 311 flow chart ── */
-    .flow-chart { max-width: var(--max-figure); margin: 28px auto 8px;
+    .flow-chart-title { max-width: var(--max-figure); margin: 28px auto 6px;
+      text-align: center; font-family: var(--font-sans);
+      font-size: .95rem; font-weight: 600; color: var(--ink); }
+    .flow-chart { max-width: var(--max-figure); margin: 0 auto 8px;
       display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .flow-branch { border: 1px solid var(--border); border-radius: 10px;
       padding: 18px 16px 20px; background: #fbf6ed;
       display: flex; flex-direction: column; align-items: stretch; }
     .flow-branch h4 { margin: 0 0 14px; font-family: var(--font-serif);
-      font-size: 1.02rem; font-weight: 700; color: var(--ink); text-align: center; }
-    .flow-step { padding: 9px 11px; border: 1.5px solid var(--border);
+      font-size: 1rem; font-weight: 700; color: var(--ink); text-align: center; }
+    .flow-step { padding: 10px 12px; border: 1.5px solid var(--border);
       background: #fff; border-radius: 6px; text-align: center;
-      font-family: var(--font-sans); font-size: .86rem; color: var(--ink-mid); line-height: 1.4; }
+      font-family: var(--font-sans); font-size: .88rem; color: var(--ink-mid); line-height: 1.4; }
     .flow-step-accent { border-color: var(--accent); background: #fdf3f2;
       color: var(--ink); font-weight: 600; }
-    .flow-arrow { color: var(--ink-light); font-size: 1.05rem; margin: 5px 0;
-      display: flex; flex-direction: column; align-items: center; line-height: 1.1;
-      font-style: normal; }
-    .flow-arrow-label { font-size: .72rem; color: var(--ink-light); margin-bottom: 2px;
-      font-style: normal; }
+    .flow-arrow { color: var(--ink-light); font-size: 1.15rem; margin: 6px 0;
+      display: flex; flex-direction: row; align-items: center; justify-content: center;
+      gap: 8px; line-height: 1; font-style: normal; }
+    .flow-arrow-label { font-size: .75rem; color: var(--ink-light); font-style: normal; }
     @media (max-width: 640px) { .flow-chart { grid-template-columns: 1fr; } }
 
     .conclusion { border-top: 2px solid var(--border); }
@@ -499,68 +501,51 @@
 
     <div class="body-text">
       <p>
-        311 is essentially a city-level request and complaint intake system. It records
-        issues reported by residents and routes them to the appropriate responsible parties.
-        For housing-related problems, it is not the first step but an
-        <strong>escalation mechanism</strong>. Tenants are expected to contact their landlord
-        or property manager first to request repairs. Only when the landlord delays, refuses,
-        or fails to act do they turn to 311. Once a complaint enters the system, the issue
-        shifts from a private interaction to a documented public matter. The case is then
-        forwarded to agencies such as the NYC Department of Housing Preservation and
-        Development (HPD), which may conduct inspections, issue violations, and apply legal
-        or administrative pressure on the landlord. In this process, 311 does not directly
-        fix the problem; instead, it operates through
-        <strong>documentation, routing, and enforcement</strong>, transforming a situation
-        where requests are ignored into one where action is required.
+        For housing-related problems, 311 is not the first step but an
+        <strong>escalation mechanism</strong>. Tenants are expected to contact their
+        landlord first; only when the landlord delays, refuses, or fails to act do they
+        file a 311 complaint. The case is then routed to the NYC Department of Housing
+        Preservation and Development (HPD), which may inspect the building, issue
+        violations, and apply legal or administrative pressure on the landlord. 311 does
+        not repair anything directly&mdash;it turns an ignored private request into a
+        documented public matter the city can enforce.
       </p>
       <p>
-        For public space issues, 311 functions more as a
-        <strong>dispatching and coordination system</strong>. Problems such as illegal
-        parking, graffiti, road damage, and noise already fall under the responsibility of
-        city agencies, so residents can report them directly without going through a private
-        party. The system automatically routes each case to the relevant department for
-        handling or enforcement. In this context, 311 is not used to pressure an individual
-        actor but to facilitate internal government response. As a result, although both
-        appear as 311 complaints, housing-related requests primarily reflect unresolved
-        private maintenance issues, while public-space complaints more directly capture
-        demands for municipal services.
+        For public-space problems such as potholes, graffiti, illegal parking, or noise,
+        no private party owns the issue, so residents report directly to 311. The system
+        then acts as a <strong>dispatcher</strong>, automatically routing each case to
+        the relevant city agency&mdash;for example, the Department of Transportation
+        (DOT), the Department of Sanitation (DSNY), or the Department of Environmental
+        Protection (DEP)&mdash;for handling or enforcement.
+      </p>
+      <p>
+        The diagram below traces both paths.
       </p>
     </div>
 
-    <div class="flow-chart" aria-label="How a 311 complaint flows through the system">
+    <div class="flow-chart-title">How a 311 complaint reaches the city</div>
+    <div class="flow-chart" aria-label="How a 311 complaint reaches the city">
       <div class="flow-branch">
-        <h4>Housing issue &mdash; escalation path</h4>
-        <div class="flow-step">Tenant experiences issue<br>(no heat, leak, pests)</div>
-        <div class="flow-arrow"><span class="flow-arrow-label">contacts first</span>&darr;</div>
-        <div class="flow-step">Landlord or property manager</div>
-        <div class="flow-arrow"><span class="flow-arrow-label">delays, refuses, or fails to act</span>&darr;</div>
+        <h4>Housing problem<br><span style="font-weight:400;color:var(--ink-light);font-size:.85rem;">(goes through the landlord first)</span></h4>
+        <div class="flow-step">Tenant experiences issue<br>(no heat, leak, pests, &hellip;)</div>
+        <div class="flow-arrow">&darr; <span class="flow-arrow-label">contacts first</span></div>
+        <div class="flow-step">Landlord</div>
+        <div class="flow-arrow">&darr; <span class="flow-arrow-label">delays or refuses</span></div>
         <div class="flow-step flow-step-accent">Tenant files 311 complaint</div>
-        <div class="flow-arrow"><span class="flow-arrow-label">routed to</span>&darr;</div>
-        <div class="flow-step">HPD: inspection, violation, legal pressure</div>
-        <div class="flow-arrow">&darr;</div>
-        <div class="flow-step">Landlord required to act</div>
+        <div class="flow-arrow">&darr; <span class="flow-arrow-label">routed to</span></div>
+        <div class="flow-step">HPD inspection &amp; enforcement</div>
       </div>
       <div class="flow-branch">
-        <h4>Public space issue &mdash; dispatch path</h4>
-        <div class="flow-step">Resident observes issue<br>(graffiti, pothole, illegal parking, noise)</div>
+        <h4>Public-space problem<br><span style="font-weight:400;color:var(--ink-light);font-size:.85rem;">(goes straight to the city)</span></h4>
+        <div class="flow-step">Resident observes issue<br>(pothole, graffiti, noise, &hellip;)</div>
         <div class="flow-arrow">&darr;</div>
         <div class="flow-step flow-step-accent">Resident files 311 complaint</div>
-        <div class="flow-arrow"><span class="flow-arrow-label">auto-routed to</span>&darr;</div>
-        <div class="flow-step">Responsible city agency<br>(DOT, DSNY, NYPD, DEP&hellip;)</div>
-        <div class="flow-arrow">&darr;</div>
-        <div class="flow-step">Agency response or enforcement</div>
+        <div class="flow-arrow">&darr; <span class="flow-arrow-label">auto-routed to</span></div>
+        <div class="flow-step">City agency response<br>(DOT, DSNY, DEP, &hellip;)</div>
       </div>
     </div>
 
     <div class="body-text">
-      <p>
-        The diagram traces both paths. On the left, a housing complaint only reaches 311
-        after a private request to the landlord has already failed, so the ticket is a
-        record of a maintenance relationship that has broken down. On the right, a
-        public-space complaint enters 311 at the very first step, because no private party
-        owns the problem to begin with. The same phone number routes to two fundamentally
-        different social processes.
-      </p>
       <p>
         This asymmetry is what makes the housing pathway so unevenly distributed across
         neighborhoods. In low-rent buildings, owners often calculate that the cost of
@@ -578,10 +563,10 @@
         not because their buildings never break. When a leak appears in an owner-occupied
         apartment, the owner simply calls a plumber. When it appears in a well-maintained
         rental, a responsive landlord fixes it to protect the rent roll and the
-        building&rsquo;s value. The problem is resolved privately, before the escalation
-        step on the left ever begins, so it never enters 311 at all. Public-space
-        complaints from wealthier areas still flow through the dispatch path on the right,
-        but the housing escalation path stays largely empty. What looks in the data like
+        building&rsquo;s value. The problem is resolved privately, before 311 is ever
+        dialed, so it never enters the dataset at all. Public-space complaints from
+        wealthier areas still flow in as usual, but the housing branch stays largely
+        empty. What looks in the data like
         &ldquo;poorer neighborhoods complain more&rdquo; is, underneath, a map of where
         private maintenance has failed and where residents have been forced to escalate.
       </p>
