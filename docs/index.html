@@ -181,7 +181,7 @@
     <div class="oaxaca-note-layout" style="max-width: var(--max-prose);">
       <div class="body-text" style="max-width: none; margin: 0; padding: 0;">
         <p>
-          March 7, 2024. Two New Yorkers wake up to the same emergency: no heat. Both call 311,
+          March 7, 2024. Two New Yorkers wake up to the same emergency, no heat. Both call 311,
           both get routed to the NYC Department of Housing Preservation and Development (HPD), and both describe the problem in nearly the same words.
         </p>
         <p>
@@ -215,7 +215,7 @@
         rich and poor neighborhoods differently, or is something else going on?
       </p>
       <p>
-        To find out, we analyzed every closed 311 service request filed in New York City
+        To find out, I analyzed every closed 311 service request filed in New York City
         in 2024, over 3 million complaints across 177 neighborhoods. The data reveals
         something more specific than simple discrimination.
       </p>
@@ -242,10 +242,10 @@
     <div class="oaxaca-note-layout">
       <div class="body-text">
         <p>
-          That pattern is visible at the group level. But when we look across all 3.2 million complaints, 
-          the relationship between neighborhood income and resolution time is extremely weak: 
-          the correlation is just <strong>r = 0.046</strong>. In other words, income by itself tells us very 
-          little about how long any single complaint will take to resolve. The gap is real, but income alone 
+          That pattern is visible at the group level. But when I look across all 3.2 million complaints,
+          the relationship between neighborhood income and resolution time is extremely weak.
+          The correlation is just <strong>r = 0.046</strong>. In other words, income by itself says very
+          little about how long any single complaint will take to resolve. The gap is real, but income alone
           does not explain it.
         </p>
       </div>
@@ -268,7 +268,7 @@
 
     <div class="body-text">
       <p>
-        To look more closely at what is going on, we start with a heat map of the main variables.
+        To look more closely at what is going on, I start with a heat map of the main variables.
         Two factors stand out immediately. <strong>Complaint type</strong> (0.84) and
         <strong>city agency</strong> (0.81) show the strongest relationships with resolution
         time. Filing channel is more moderate (0.35), while income, month, and population are
@@ -284,7 +284,7 @@
 
     <div class="body-text">
       <p>
-        To separate their contributions, we fit a sequence of nested regression models, adding
+        To separate their contributions, I fit a sequence of nested regression models, adding
         one block of predictors at a time and watching how much each addition actually improves
         the fit.
       </p>
@@ -297,7 +297,7 @@
         <p>
           Nested regression fits a sequence of models where each step adds a new
           predictor block on top of the previous one. This shows how much model
-          fit improves as we introduce more information.
+          fit improves as more information is introduced.
         </p>
         <p><strong>What is R&sup2;?</strong></p>
         <p>
@@ -319,7 +319,7 @@
         As the plot above shows, income quartile, month, and filing channel together explain only
         <strong>12.3%</strong> of the variance in resolution time. Adding city agency and
         complaint type lifts R&sup2; to <strong>79.2%</strong>. Since agency, complaint type, and
-        filing channel are correlated, we use a drop-one-block test on the full model to isolate each
+        filing channel are correlated, I use a drop-one-block test on the full model to isolate each
         variable&rsquo;s independent contribution. Removing complaint type drops R&sup2; by
         <strong>12.6 percentage points</strong> (&Delta;R&sup2; = 0.126), while removing city
         agency drops it by <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012), and
@@ -339,7 +339,7 @@
       <p>
         If complaint type carries almost all of the gap, the next question is what those
         complaints actually are. The raw data contains roughly two hundred distinct complaint
-        strings, which is too many to reason about directly, so we group them into four broad
+        strings, which is too many to reason about directly, so I group them into four broad
         categories based on the nature of the underlying issue.
         <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, electrical issues, and similar building- or street-system problems.
         <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, water leaks, and other hazards that threaten habitability.
@@ -378,7 +378,7 @@
         <strong>9.6%</strong> in Q4.
       </p>
       <p>
-        We used Oaxaca-Blinder decomposition to indicate how much of the Q1-Q4 wait gap comes
+        I used Oaxaca-Blinder decomposition to indicate how much of the Q1-Q4 wait gap comes
         specifically from complaint composition. It builds a counterfactual where Q1 keeps its own
         within-type response speeds but takes Q4&rsquo;s complaint mix, then computes Q1&rsquo;s
         expected wait under that scenario.
@@ -393,7 +393,7 @@
         <p><strong>What is Oaxaca-Blinder decomposition?</strong></p>
         <p>
           A statistical technique originally developed in labor economics to
-          decompose a gap between two groups into two parts: the portion
+          decompose a gap between two groups into two parts. The portion
           explained by differences in observable characteristics (such as
           complaint type mix), and a residual that remains after controlling
           for those differences.
@@ -429,8 +429,8 @@
 
     <div class="body-text">
       <p>
-        Expanding the data across the calendar, the gap separates into two layers:
-        a <strong>year-round baseline</strong> that persists every month, and a
+        Expanding the data across the calendar, the gap separates into two layers.
+        A <strong>year-round baseline</strong> that persists every month, and a
         <strong>winter amplifier</strong> that temporarily makes the gap much larger.
       </p>
     </div>
@@ -484,7 +484,8 @@
         months, but only <strong>2.6%</strong> in non-heating months.
       </p>
       <p>
-        To quantify this interaction, we fit a simple model on the 48 month-by-quartile cells:
+        To quantify this interaction, I fit a simple ordinary least squares (OLS) linear regression
+        on the 48 month-by-quartile cells, of the form
         median resolution time ~ month + income quartile + HEAT/HOT&nbsp;WATER share +
         (income quartile &times; HEAT/HOT&nbsp;WATER share). A month-only model explains
         <strong>42.3%</strong> of variation (R&sup2; = 0.423), while adding HEAT/HOT&nbsp;WATER
@@ -659,7 +660,7 @@
   <!-- ══════════════════════════════════════════════════════ FOOTER -->
   <footer style="max-width: var(--max-section); margin: 0 auto; padding: 0 24px 2.5rem;">
     <p class="footnote" style="width: min(100%, var(--max-prose)); margin: 0 auto;">
-      Data: NYC Open Data, 311 Service Requests 2024 (3,187,149 closed complaints) &middot;
+      Data from NYC Open Data, 311 Service Requests 2024 (3,187,149 closed complaints) &middot;
       U.S. Census ACS 5-Year Estimates &middot; NYC DOHMH Modified ZCTA Shapefile.
       <a href="https://github.com/shuqihong/nyc-service-gap" style="color: var(--accent);">Methodology &amp; code</a>.
     </p>
