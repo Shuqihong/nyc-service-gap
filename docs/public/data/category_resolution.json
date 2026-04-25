@@ -142,5 +142,41 @@
     "median_h": 2.03,
     "p5_h": 0.2,
     "p95_h": 2687.2
+  },
+  {
+    "quartile": "Overall",
+    "category": "interior_housing",
+    "n": 772933,
+    "share_pct": 24.4,
+    "median_h": 117.31,
+    "p5_h": 8.8,
+    "p95_h": 2210.8
+  },
+  {
+    "quartile": "Overall",
+    "category": "public_infra",
+    "n": 324541,
+    "share_pct": 10.2,
+    "median_h": 65.43,
+    "p5_h": 1.0,
+    "p95_h": 5798.2
+  },
+  {
+    "quartile": "Overall",
+    "category": "quality_of_life",
+    "n": 1011902,
+    "share_pct": 31.9,
+    "median_h": 1.18,
+    "p5_h": 0.1,
+    "p95_h": 216.3
+  },
+  {
+    "quartile": "Overall",
+    "category": "other",
+    "n": 1062436,
+    "share_pct": 33.5,
+    "median_h": 2.85,
+    "p5_h": 0.2,
+    "p95_h": 1308.5
   }
 ]

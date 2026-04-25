@@ -161,6 +161,8 @@
       .hero { padding-top: 4rem; padding-bottom: 2.4rem; }
       .story-section { padding: 1.2rem .85rem; }
     }
+    .cat-tip { border-bottom: 1px dotted #b08070; cursor: help; font-weight: 700; color: var(--ink); }
+    .cat-tip:hover { color: var(--accent); border-bottom-color: var(--accent); }
   </style>
 </head>
 <body>
@@ -320,19 +322,13 @@
         If complaint type carries almost all of the gap, the next question is what those
         complaints actually are. The raw data contains roughly two hundred distinct complaint
         strings, which is too many to reason about directly, so I group them into four
-        categories based on where the broken asset sits and who has to fix it.
-        <strong>Interior Housing</strong> covers problems inside someone&rsquo;s apartment
-        &mdash; no heat or hot water, plumbing, leaks, electrical, doors and windows, paint
-        and plaster, elevators, pests, mold, lead. These are routed to HPD, which inspects
-        and pressures the landlord, so they take days to weeks to close.
-        <strong>Public Infrastructure</strong> covers physical assets in the public realm
-        &mdash; potholes, sidewalks, street lights, traffic signals, water mains, sewers,
-        street trees. These are routed to DOT, DEP, or DPR, and typically close in hours.
-        <strong>Quality of Life</strong> covers noise, dirty conditions, graffiti,
-        encampments, illegal dumping &mdash; nuisances in shared space, mostly handled by
-        NYPD or DSNY.
-        <strong>Other</strong> is everything else, such as parking violations, abandoned
-        vehicles, missed sanitation pickups, and food-establishment complaints.
+        categories based on where the broken asset sits and who has to fix it:
+        <span class="cat-tip" data-tip="Problems inside someone&#39;s apartment, routed to HPD: HEAT/HOT WATER, plumbing, water leaks, electrical, paint &amp; plaster, doors &amp; windows, flooring, appliances, elevators, pests, mold, asbestos, lead.">Interior Housing</span>,
+        <span class="cat-tip" data-tip="Physical assets in the public realm, routed to DOT/DEP/DPR: street conditions, potholes, sidewalks, street lights, traffic signals, water mains, sewers, street trees, snow/highway, park facilities.">Public Infrastructure</span>,
+        <span class="cat-tip" data-tip="Nuisances in shared space, mostly handled by NYPD or DSNY: noise (residential, street, vehicle, helicopter, etc.), dirty conditions, graffiti, encampments, illegal dumping, panhandling, drug activity.">Quality of Life</span>,
+        and
+        <span class="cat-tip" data-tip="Everything else: illegal parking, blocked driveways, abandoned/derelict vehicles, missed sanitation collection, for-hire vehicle complaints, food-establishment inspections, consumer complaints.">Other</span>.
+        Hover over a category to see the complaints it covers.
       </p>
     </div>
 
@@ -341,14 +337,14 @@
 
     <div class="body-text">
       <p>
-        The split between fast and slow categories is dramatic. Quality of Life and Other
-        complaints close within a few hours regardless of income, with medians of roughly 1 to
-        3 hours across all four quartiles. Public Infrastructure is moderately fast, with
-        medians in the <strong>53 to 71 hours</strong> range. Interior Housing is in a
-        different regime entirely, with medians of <strong>110 to 121 hours</strong> &mdash;
-        roughly five days &mdash; in every quartile. Within each category, the wait is broadly
-        similar across income groups; what changes from Q1 to Q4 is not how fast each kind of
-        complaint is handled but how often each kind is filed.
+        The split between fast and slow categories is dramatic. Quality of Life closes in about
+        an hour, Other in two to three, Public Infrastructure in roughly two to three days, and
+        Interior Housing in nearly five. Within each category, the median resolution time is
+        broadly similar from Q1 to Q4 &mdash; the four quartile medians fall within a tight
+        band (Interior Housing 110&ndash;121h, Public Infrastructure 53&ndash;71h, Quality of
+        Life 1.1&ndash;1.2h, Other 2.0&ndash;3.3h; hover the bars for the per-quartile
+        breakdown). What changes from Q1 to Q4 is not how fast each kind of complaint is
+        handled but how often each kind is filed.
       </p>
     </div>
 
@@ -656,9 +652,9 @@
   <!-- ══════════════════════════════════════════════════════ SCRIPTS -->
   <div class="chart-tooltip" id="tooltip"></div>
   <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
-  <script src="js/observe.js"></script>
+  <script src="js/observe.js?v=20260425-2"></script>
   <script src="js/section1.js?v=20260425-1"></script>
-  <script src="js/gap_charts.js?v=20260425-1"></script>
+  <script src="js/gap_charts.js?v=20260425-2"></script>
   <script src="js/stat_analysis.js?v=20260425-1"></script>
   <script src="js/explanation_charts.js?v=20260425-1"></script>
   <script src="js/winter.js"></script>

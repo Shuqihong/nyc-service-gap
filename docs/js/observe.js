@@ -52,3 +52,15 @@ function moveTip(evt) {
 function hideTip() {
   getTooltip().style.opacity = "0";
 }
+
+/* Inline category-name tooltips: any element with class "cat-tip" and a
+   data-tip attribute reveals the tooltip on hover. */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".cat-tip").forEach(el => {
+    const tip = el.getAttribute("data-tip");
+    if (!tip) return;
+    el.addEventListener("mouseover", evt => showTip(evt, tip));
+    el.addEventListener("mousemove", moveTip);
+    el.addEventListener("mouseout", hideTip);
+  });
+});

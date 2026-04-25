@@ -90,14 +90,24 @@ const CAT_LABEL = { interior_housing: "Interior Housing", public_infra: "Public 
 })();
 
 /* ══════════════════════════════════
-   CHART 2: Category × Quartile grouped bars
+   CHART 2: Median resolution time by category (overall, with hover breakdown)
    ══════════════════════════════════ */
 (async function () {
-  const data = await d3.json("public/data/category_resolution.json");
+  const raw = await d3.json("public/data/category_resolution.json");
   const el = document.getElementById("chart-category-bars");
   if (!el) return;
 
-  const margin = { top: 36, right: 20, bottom: 50, left: 55 };
+  /* One bar per category using the overall median.
+     Hover reveals the per-quartile breakdown. */
+  const overall = CAT_ORDER.map(cat =>
+    raw.find(r => r.category === cat && r.quartile === "Overall")
+  ).filter(Boolean);
+  const byCatQuartile = {};
+  CAT_ORDER.forEach(cat => {
+    byCatQuartile[cat] = Q_ORDER.map(q => raw.find(r => r.category === cat && r.quartile === q));
+  });
+
+  const margin = { top: 36, right: 20, bottom: 50, left: 60 };
   const W = el.clientWidth || 760;
   const H = 400;
   const w = W - margin.left - margin.right;
@@ -109,25 +119,24 @@ const CAT_LABEL = { interior_housing: "Interior Housing", public_infra: "Public 
 
   const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
-  const x0 = d3.scaleBand().domain(CAT_ORDER).range([0, w]).padding(0.18);
-  const x1 = d3.scaleBand().domain(Q_ORDER).range([0, x0.bandwidth()]).padding(0.06);
-  const yMax = d3.max(data, d => d.median_h);
-  const y = d3.scaleLinear().domain([0, yMax * 1.05]).range([h, 0]);
+  const x = d3.scaleBand().domain(CAT_ORDER).range([0, w]).padding(0.35);
+  const yMax = d3.max(overall, d => d.median_h);
+  const y = d3.scaleLinear().domain([0, yMax * 1.1]).range([h, 0]);
 
   svg.append("text").attr("x", W / 2).attr("y", 22).attr("text-anchor", "middle")
     .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("Median Resolution Time by Category & Income Quartile");
+    .text("Median Resolution Time by Category");
 
   g.append("g").attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(x0).tickSize(0).tickFormat(d => CAT_LABEL[d]))
-    .selectAll("text").style("font-size", "11px");
+    .call(d3.axisBottom(x).tickSize(0).tickFormat(d => CAT_LABEL[d]))
+    .selectAll("text").style("font-size", "12px");
   g.select(".domain").attr("stroke", "#ccc");
 
   g.append("g").call(d3.axisLeft(y).ticks(5).tickFormat(d => d + "h"))
     .selectAll("text").style("font-size", "11px");
 
   g.append("text").attr("transform", "rotate(-90)")
-    .attr("x", -h / 2).attr("y", -42).attr("text-anchor", "middle")
+    .attr("x", -h / 2).attr("y", -46).attr("text-anchor", "middle")
     .style("font-size", "12px").style("fill", "#666")
     .text("Median resolution time (hours)");
 
@@ -135,46 +144,67 @@ const CAT_LABEL = { interior_housing: "Interior Housing", public_infra: "Public 
     .attr("x1", 0).attr("x2", w).attr("y1", d => y(d)).attr("y2", d => y(d))
     .attr("stroke", "#eae5db").attr("stroke-dasharray", "3,3");
 
-  /* Bars (start at zero) */
-  const bars = g.selectAll(".catbar").data(data)
+  const CAT_COLOR = {
+    interior_housing: "#d96459",
+    public_infra:     "#5b93c5",
+    quality_of_life:  "#f2a553",
+    other:            "#b8b0a8",
+  };
+
+  /* Bars (one per category) */
+  const bars = g.selectAll(".catbar").data(overall)
     .enter().append("rect").attr("class", "catbar")
-    .attr("x", d => x0(d.category) + x1(d.quartile))
-    .attr("width", x1.bandwidth())
-    .attr("y", h).attr("height", 0).attr("rx", 2)
-    .attr("fill", d => Q_COLOR[d.quartile])
+    .attr("x", d => x(d.category)).attr("width", x.bandwidth())
+    .attr("y", h).attr("height", 0).attr("rx", 3)
+    .attr("fill", d => CAT_COLOR[d.category])
     .style("cursor", "pointer")
-    .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${CAT_LABEL[d.category]}</strong> · ${Q_LABEL[d.quartile]}<br>` +
-      `P95: ${d.p95_h}h<br>` +
-      `Median: <strong>${d.median_h.toFixed(1)}h</strong><br>` +
-      `P5: ${d.p5_h}h<br>` +
-      `<span style="color:#888">${d.n.toLocaleString()} complaints</span>`))
+    .on("mouseover", (evt, d) => {
+      const rows = byCatQuartile[d.category]
+        .filter(Boolean)
+        .map(r => `<tr><td style="padding-right:8px">${r.quartile}</td><td style="text-align:right"><strong>${r.median_h.toFixed(1)}h</strong></td></tr>`)
+        .join("");
+      showTip(evt,
+        `<strong>${CAT_LABEL[d.category]}</strong><br>` +
+        `Overall median: <strong>${d.median_h.toFixed(1)}h</strong><br>` +
+        `<span style="color:#888">${d.n.toLocaleString()} complaints</span>` +
+        `<table style="margin-top:6px;font-size:11px">${rows}</table>`);
+    })
     .on("mousemove", moveTip).on("mouseout", hideTip);
 
-  /* Value labels above each bar — visible even when bars are short */
-  const valueLabels = g.selectAll(".catbar-lbl").data(data)
+  /* Value label above each bar */
+  const valueLabels = g.selectAll(".catbar-lbl").data(overall)
     .enter().append("text").attr("class", "catbar-lbl")
-    .attr("x", d => x0(d.category) + x1(d.quartile) + x1.bandwidth() / 2)
+    .attr("x", d => x(d.category) + x.bandwidth() / 2)
     .attr("y", h)
     .attr("text-anchor", "middle")
-    .style("font-size", "9.5px").style("font-weight", "700").style("fill", "#3a2a1a")
+    .style("font-size", "13px").style("font-weight", "700").style("fill", "#3a2a1a")
     .style("opacity", 0)
     .text(d => d.median_h >= 10 ? Math.round(d.median_h) + "h" : d.median_h.toFixed(1) + "h");
 
-  /* Legend */
-  const leg = g.append("g").attr("transform", `translate(${w - 150}, -6)`);
-  Q_ORDER.forEach((q, i) => {
-    const row = leg.append("g").attr("transform", `translate(0, ${i * 18})`);
-    row.append("rect").attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", Q_COLOR[q]);
-    row.append("text").attr("x", 16).attr("y", 10).style("font-size", "10px").style("fill", "#666").text(q);
-  });
+  /* Range label below the value (Q1–Q4 spread) */
+  const rangeLabels = g.selectAll(".catbar-range").data(overall)
+    .enter().append("text").attr("class", "catbar-range")
+    .attr("x", d => x(d.category) + x.bandwidth() / 2)
+    .attr("y", h)
+    .attr("text-anchor", "middle")
+    .style("font-size", "10px").style("fill", "#888")
+    .style("opacity", 0)
+    .text(d => {
+      const meds = byCatQuartile[d.category].filter(Boolean).map(r => r.median_h);
+      const lo = Math.min(...meds), hi = Math.max(...meds);
+      const fmt = v => v >= 10 ? Math.round(v) : v.toFixed(1);
+      return `Q1–Q4: ${fmt(lo)}–${fmt(hi)}h`;
+    });
 
   onReveal(el, () => {
     bars.transition().duration(800).ease(d3.easeCubicOut)
       .attr("y", d => y(d.median_h))
       .attr("height", d => h - y(d.median_h));
     valueLabels.transition().duration(800).ease(d3.easeCubicOut)
-      .attr("y", d => y(d.median_h) - 3)
+      .attr("y", d => y(d.median_h) - 22)
+      .style("opacity", 1);
+    rangeLabels.transition().duration(800).ease(d3.easeCubicOut)
+      .attr("y", d => y(d.median_h) - 6)
       .style("opacity", 1);
   });
 })();

@@ -97,7 +97,7 @@ def main():
     for k in CATEGORY_ORDER:
         print(f"  {CATEGORY_LABEL[k]:24s} {cov.get(k,0):>10,d}  {cov_pct.get(k,0):.2f}%")
 
-    # ── 1) category_resolution.json (per-quartile median per cat) ──
+    # ── 1) category_resolution.json (per-quartile + overall) ──
     rows = []
     for q in ["Q1", "Q2", "Q3", "Q4"]:
         dq = d[d["income_quartile"] == q]
@@ -117,6 +117,22 @@ def main():
                 "p5_h":       round(float(np.percentile(rh, 5)), 1),
                 "p95_h":      round(float(np.percentile(rh, 95)), 1),
             })
+    # Add overall (across all quartiles) row per category
+    for cat in CATEGORY_ORDER:
+        sub = d[d["cat2"] == cat]
+        n = len(sub)
+        if n == 0:
+            continue
+        rh = sub["resolution_hours"].values
+        rows.append({
+            "quartile":   "Overall",
+            "category":   cat,
+            "n":          int(n),
+            "share_pct":  round(n / len(d) * 100, 1),
+            "median_h":   round(float(np.median(rh)), 2),
+            "p5_h":       round(float(np.percentile(rh, 5)), 1),
+            "p95_h":      round(float(np.percentile(rh, 95)), 1),
+        })
     with open(f"{OUT_DIR}/category_resolution.json", "w") as f:
         json.dump(rows, f, indent=2)
     print(f"\nWrote {OUT_DIR}/category_resolution.json ({len(rows)} rows)")
