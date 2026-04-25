@@ -20,36 +20,11 @@
 
   // Diagnostic notes shown only where they add information beyond the plotted bars.
   const data = [
-    {
-      name: "income only", r2: 0.001,
-      note: [
-        "Drop-one ΔR²: 0.0001",
-      ],
-    },
-    {
-      name: "+ total complaints", r2: 0.002,
-      note: [
-        "Drop-one ΔR²: 0.0001",
-      ],
-    },
-    {
-      name: "+ filing channel", r2: 0.119,
-      note: [
-        "Drop-one ΔR²: 0.0005",
-      ],
-    },
-    {
-      name: "+ city agency", r2: 0.664,
-      note: [
-        "Drop-one ΔR²: 0.0116",
-      ],
-    },
-    {
-      name: "+ complaint type", r2: 0.789,
-      note: [
-        "Drop-one ΔR²: 0.1253",
-      ],
-    },
+    { name: "income only",       r2: 0.001 },
+    { name: "+ total complaints", r2: 0.002 },
+    { name: "+ complaint type",  r2: 0.778 },
+    { name: "+ filing channel",  r2: 0.778 },
+    { name: "+ city agency",     r2: 0.789 },
   ];
 
   const margin = { top: 46, right: 70, bottom: 70, left: 60 };

@@ -271,9 +271,9 @@
         To see which variables actually drive the wait, I fit a sequence of nested regression
         models on five candidate predictors &mdash; <strong>median household income</strong>
         (log-transformed), the <strong>total number of complaints</strong> filed in each
-        neighborhood, <strong>filing channel</strong>, <strong>city agency</strong>, and
-        <strong>complaint type</strong> &mdash; adding one block at a time and watching how
-        much each addition actually improves the fit.
+        neighborhood, <strong>complaint type</strong>, <strong>filing channel</strong>, and
+        <strong>city agency</strong> &mdash; adding one block at a time and watching how much
+        each addition actually improves the fit.
       </p>
     </div>
 
@@ -290,31 +290,22 @@
         <p>
           <strong>R&sup2;</strong> ranges from 0 to 1 and measures the share of outcome
           variation explained by the model. Multiply by 100 to read it as a
-          percentage (for example, R&sup2; = 0.123 means 12.3% explained variation).
+          percentage (for example, R&sup2; = 0.778 means 77.8% explained variation).
           Higher R&sup2; means better in-sample fit.
-        </p>
-        <p><strong>Drop-one &Delta;R&sup2;</strong></p>
-        <p>
-          Keep the full model fixed, remove one predictor block, and recompute R&sup2;.
-          The decrease is that block&rsquo;s unique contribution beyond the others.
         </p>
       </aside>
     </div>
 
     <div class="body-text">
       <p>
-        As the plot above shows, income, neighborhood complaint volume, and filing channel
-        together explain only <strong>11.9%</strong> of the variance in resolution time. Adding
-        city agency lifts R&sup2; to <strong>66.4%</strong>, and adding complaint type on top
-        of that lifts it to <strong>78.9%</strong>. Because several of these predictors are
-        correlated, I run a drop-one-block test on the full model to isolate each variable&rsquo;s
-        unique contribution. Removing complaint type drops R&sup2; by <strong>12.5 percentage
-        points</strong> (&Delta;R&sup2; = 0.125), while removing city agency drops it by
-        <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012). Removing filing channel,
-        income, or total complaint volume each costs less than a tenth of a percentage point
-        (&Delta;R&sup2; &le; 0.0005). Complaint type is therefore almost the entire reason the
-        gap appears in the model, with agency adding a small amount of unique information and
-        the remaining variables contributing essentially nothing once the others are in place.
+        The result is a cliff. Income and neighborhood complaint volume together explain only
+        <strong>0.2%</strong> of the variance in resolution time. Adding complaint type lifts
+        R&sup2; to <strong>77.8%</strong>. Adding filing channel on top contributes essentially
+        nothing, and adding city agency adds a further <strong>1.2 percentage points</strong>
+        to reach <strong>78.9%</strong>. Once you know what kind of problem a complaint is
+        about, almost everything else &mdash; who reported it, how they filed it, how rich
+        their neighborhood is, how many complaints their neighborhood files in total &mdash;
+        adds little new information about how long it will take to resolve.
       </p>
     </div>
 
