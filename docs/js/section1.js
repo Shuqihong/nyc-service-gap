@@ -47,7 +47,7 @@
     g.append("text").attr("x", innerW / 2).attr("y", compact ? -28 : -20)
       .attr("text-anchor", "middle").attr("font-family", "Newsreader, Georgia, serif")
       .attr("font-size", compact ? "13px" : "15px").attr("fill", "#444")
-      .text(`${storyDate} — Same complaint, same agency`);
+      .text(`${storyDate} — Same complaint (no heat), same agency (HPD)`);
 
     const earliest = new Date(Math.min(loCreated, hiCreated));
     const latest = loClosed;
