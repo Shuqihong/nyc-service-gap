@@ -6,9 +6,9 @@
 const Q_ORDER = ["Q1 (lowest)", "Q2", "Q3", "Q4 (highest)"];
 const Q_COLOR = { "Q1 (lowest)": "#d96459", "Q2": "#f2a553", "Q3": "#7bc8a4", "Q4 (highest)": "#5b93c5" };
 const Q_LABEL = { "Q1 (lowest)": "Q1 (lowest income)", "Q2": "Q2", "Q3": "Q3", "Q4 (highest)": "Q4 (highest income)" };
-const CAT_ORDER = ["infrastructure", "health_safety", "quality_of_life", "other"];
+const CAT_ORDER = ["interior_housing", "public_infra", "quality_of_life", "other"];
 const CAT_COLOR = { health_safety: "#d96459", infrastructure: "#5b93c5", quality_of_life: "#f2a553", other: "#b8b0a8" };
-const CAT_LABEL = { infrastructure: "Infrastructure", health_safety: "Health & Safety", quality_of_life: "Quality of Life", other: "Other" };
+const CAT_LABEL = { interior_housing: "Interior Housing", public_infra: "Public Infrastructure", quality_of_life: "Quality of Life", other: "Other" };
 
 /* ══════════════════════════════════
    CHART 1: Quartile bars

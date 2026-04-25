@@ -313,18 +313,26 @@
 
   <!-- ══════════════════════════════════ THE MECHANISM -->
   <section id="the-explanation" class="story-section">
-    <div class="section-header"><h2>Complaint Mix, Not Treatment</h2></div>
+    <div class="section-header"><h2>Different Complaints, Different Speeds</h2></div>
 
     <div class="body-text">
       <p>
         If complaint type carries almost all of the gap, the next question is what those
         complaints actually are. The raw data contains roughly two hundred distinct complaint
-        strings, which is too many to reason about directly, so I group them into four broad
-        categories based on the nature of the underlying issue.
-        <strong>Infrastructure</strong> covers plumbing, elevators, street conditions, electrical issues, and similar building- or street-system problems.
-        <strong>Health &amp; Safety</strong> includes no heat, rodent infestations, unsanitary conditions, water leaks, and other hazards that threaten habitability.
-        <strong>Quality of Life</strong> covers noise, dirty conditions, graffiti, and similar neighborhood nuisances.
-        <strong>Other</strong> is everything else, such as parking violations, blocked driveways, abandoned vehicles, etc.
+        strings, which is too many to reason about directly, so I group them into four
+        categories based on where the broken asset sits and who has to fix it.
+        <strong>Interior Housing</strong> covers problems inside someone&rsquo;s apartment
+        &mdash; no heat or hot water, plumbing, leaks, electrical, doors and windows, paint
+        and plaster, elevators, pests, mold, lead. These are routed to HPD, which inspects
+        and pressures the landlord, so they take days to weeks to close.
+        <strong>Public Infrastructure</strong> covers physical assets in the public realm
+        &mdash; potholes, sidewalks, street lights, traffic signals, water mains, sewers,
+        street trees. These are routed to DOT, DEP, or DPR, and typically close in hours.
+        <strong>Quality of Life</strong> covers noise, dirty conditions, graffiti,
+        encampments, illegal dumping &mdash; nuisances in shared space, mostly handled by
+        NYPD or DSNY.
+        <strong>Other</strong> is everything else, such as parking violations, abandoned
+        vehicles, missed sanitation pickups, and food-establishment complaints.
       </p>
     </div>
 
@@ -333,16 +341,14 @@
 
     <div class="body-text">
       <p>
-        Quality of Life and Other complaints close within a few hours regardless of income.
-        Health &amp; Safety and Infrastructure, however, take far longer. Health &amp; Safety
-        averages 61 to 71 hours across quartiles, while Infrastructure ranges from 66 hours in
-        Q4 to <strong>163 hours</strong> in Q1. In addition, Infrastructure splits naturally
-        into <strong>interior housing repairs</strong> (plumbing, elevators, etc.) and
-        <strong>public infrastructure</strong> (street conditions, sewers, etc.). Interior repairs
-        take far longer to resolve, over 200 hours on average across quartiles, while public
-        infrastructure is much faster at about 29 to 48 hours. As neighborhoods get poorer,
-        interior repairs make up a larger share of infrastructure complaints, rising from about
-        28% in Q4 to about 68% in Q1.
+        The split between fast and slow categories is dramatic. Quality of Life and Other
+        complaints close within a few hours regardless of income, with medians of roughly 1 to
+        3 hours across all four quartiles. Public Infrastructure is moderately fast, with
+        medians in the <strong>53 to 71 hours</strong> range. Interior Housing is in a
+        different regime entirely, with medians of <strong>110 to 121 hours</strong> &mdash;
+        roughly five days &mdash; in every quartile. Within each category, the wait is broadly
+        similar across income groups; what changes from Q1 to Q4 is not how fast each kind of
+        complaint is handled but how often each kind is filed.
       </p>
     </div>
 
@@ -351,17 +357,18 @@
 
     <div class="body-text">
       <p>
-        The stacked composition chart indicates that the poorer the neighborhood, the larger the
-        share of slow-resolving complaints. Health &amp; Safety and interior housing repairs
-        together account for <strong>31.4%</strong> of Q1&rsquo;s complaints,
-        <strong>19.2%</strong> in Q2, <strong>13.8%</strong> in Q3, and just
-        <strong>9.6%</strong> in Q4.
+        The stacked composition chart indicates that the poorer the neighborhood, the larger
+        the share of slow-resolving complaints. Interior Housing alone accounts for
+        <strong>34.6%</strong> of Q1&rsquo;s complaints, <strong>22.8%</strong> in Q2,
+        <strong>17.6%</strong> in Q3, and just <strong>12.1%</strong> in Q4. Q4&rsquo;s stream
+        is dominated instead by Quality of Life and Other complaints (about <strong>76%</strong>
+        combined), almost all of which close in under a day.
       </p>
       <p>
-        I used Oaxaca-Blinder decomposition to indicate how much of the Q1-Q4 wait gap comes
-        specifically from complaint composition. It builds a counterfactual where Q1 keeps its own
-        within-type response speeds but takes Q4&rsquo;s complaint mix, then computes Q1&rsquo;s
-        expected wait under that scenario.
+        I used Oaxaca-Blinder decomposition to indicate how much of the Q1&ndash;Q4 wait gap
+        comes specifically from complaint composition. It builds a counterfactual where Q1
+        keeps its own within-type response speeds but takes Q4&rsquo;s complaint mix, then
+        computes Q1&rsquo;s expected wait under that scenario.
       </p>
     </div>
 
@@ -423,10 +430,10 @@
         line plot shows, even in June, when all four quartiles converge into a narrow band
         between 2.8 and 6.4 hours,
         Q4&rsquo;s 2.8 hours still sits below the other three. This baseline gap exists because
-        Q1, Q2, and Q3 file far more Infrastructure and Health &amp; Safety complaints, such as
-        plumbing failures, elevator outages, rodent infestations, and water leaks. Those types
-        take days or weeks to resolve regardless of season, so they keep Q1 through Q3 medians
-        higher than Q4&rsquo;s even in the calmest months. The baseline is inequitable year-round.
+        Q1, Q2, and Q3 file far more Interior Housing complaints, such as plumbing failures,
+        elevator outages, rodent infestations, and water leaks. Those types take days or weeks
+        to resolve regardless of season, so they keep Q1 through Q3 medians higher than
+        Q4&rsquo;s even in the calmest months. The baseline is inequitable year-round.
       </p>
     </div>
 
@@ -570,12 +577,12 @@
       </p>
       <p>
         <strong>Complaint mix carries almost all of it.</strong> Adding
-        complaint type to the regression lifts R&sup2; from
-        <strong>12.3%</strong> to <strong>79.2%</strong>, and Oaxaca-Blinder
-        decomposition attributes <strong>97.8%</strong> of the Q1 to Q4 gap to
-        differences in what residents report, not to differences in within-type
-        response speed. Poorer neighborhoods file far more Health &amp; Safety
-        and interior-housing complaints, which are inherently slow to resolve.
+        complaint type to the regression lifts R&sup2; from <strong>0.2%</strong>
+        to <strong>77.8%</strong>, and Oaxaca-Blinder decomposition attributes
+        <strong>97.8%</strong> of the Q1 to Q4 gap to differences in what
+        residents report, not to differences in within-type response speed.
+        Poorer neighborhoods file far more Interior Housing complaints (heat,
+        plumbing, leaks, pests), which are inherently slow to resolve.
       </p>
       <p>
         <strong>Winter sharpens the same mechanism.</strong> HEAT/HOT&nbsp;WATER

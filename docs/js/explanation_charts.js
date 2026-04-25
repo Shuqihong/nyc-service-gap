@@ -1,134 +1,12 @@
 /**
  * explanation_charts.js — The Explanation section:
- *   1. Infrastructure breakdown (stacked composition + within-type resolution)
- *   2. Complaint mix (stacked percentage bars)
- *   3. Oaxaca decomposition (3 bars)
- * All animate on scroll.
+ *   1. Complaint mix (stacked percentage bars)
+ *   2. Oaxaca decomposition (3 bars)
+ * Both animate on scroll.
  */
 
 /* ══════════════════════════════════
-   CHART 3: Infrastructure breakdown (dual panel)
-   ══════════════════════════════════ */
-(async function () {
-  const data = await d3.json("public/data/infra_breakdown.json");
-  const el = document.getElementById("chart-infra-breakdown");
-  if (!el) return;
-
-  const margin = { top: 50, right: 20, bottom: 55, left: 55 };
-  const W = el.clientWidth || 760;
-  const H = 420;
-  const w = W - margin.left - margin.right;
-  const h = H - margin.top - margin.bottom;
-
-  const svg = d3.select(el).append("svg")
-    .attr("viewBox", `0 0 ${W} ${H}`)
-    .attr("preserveAspectRatio", "xMidYMid meet");
-
-  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-  svg.append("text").attr("x", W / 2).attr("y", 22).attr("text-anchor", "middle")
-    .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("Inside Infrastructure: Composition & Resolution Time");
-
-  const halfW = w * 0.44;
-  const gapX = w * 0.12;
-
-  /* ── LEFT: stacked composition ── */
-  const xL = d3.scaleBand().domain(Q_ORDER).range([0, halfW]).padding(0.3);
-  const yL = d3.scaleLinear().domain([0, 100]).range([h, 0]);
-
-  g.append("g").attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(xL).tickSize(0)).selectAll("text").style("font-size", "10px");
-
-  g.append("g").call(d3.axisLeft(yL).ticks(5).tickFormat(d => d + "%"))
-    .selectAll("text").style("font-size", "10px");
-
-  g.append("text").attr("x", halfW / 2).attr("y", -6)
-    .attr("text-anchor", "middle").style("font-size", "11px").style("font-weight", "600").style("fill", "#888")
-    .text("Share of infrastructure complaints");
-
-  /* stacked bars (start at 0) */
-  const intBars = g.selectAll(".infra-int").data(data).enter().append("rect").attr("class", "infra-int")
-    .attr("x", d => xL(d.quartile)).attr("width", xL.bandwidth())
-    .attr("y", h).attr("height", 0).attr("fill", "#d96459").attr("rx", 2)
-    .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile}</strong><br>Interior: <strong>${d.interior_pct}%</strong><br>${d.interior_n.toLocaleString()} complaints`))
-    .on("mousemove", moveTip).on("mouseout", hideTip);
-
-  const pubBars = g.selectAll(".infra-pub").data(data).enter().append("rect").attr("class", "infra-pub")
-    .attr("x", d => xL(d.quartile)).attr("width", xL.bandwidth())
-    .attr("y", h).attr("height", 0).attr("fill", "#5b93c5").attr("rx", 2)
-    .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile}</strong><br>Public: <strong>${d.public_pct}%</strong><br>${d.public_n.toLocaleString()} complaints`))
-    .on("mousemove", moveTip).on("mouseout", hideTip);
-
-  const intLabels = g.selectAll(".infra-int-lbl").data(data).enter().append("text").attr("class", "infra-int-lbl")
-    .attr("x", d => xL(d.quartile) + xL.bandwidth() / 2).attr("y", h)
-    .attr("text-anchor", "middle").style("font-size", "11px").style("font-weight", "600").style("fill", "#fff")
-    .style("opacity", 0).text(d => d.interior_pct + "%");
-
-  /* left legend */
-  const legL = g.append("g").attr("transform", `translate(0, ${h + 28})`);
-  [["Interior housing", "#d96459"], ["Public infra", "#5b93c5"]].forEach(([t, c], i) => {
-    const r = legL.append("g").attr("transform", `translate(${i * 130}, 0)`);
-    r.append("rect").attr("width", 10).attr("height", 10).attr("rx", 2).attr("fill", c);
-    r.append("text").attr("x", 14).attr("y", 9).style("font-size", "10px").style("fill", "#666").text(t);
-  });
-
-  /* ── RIGHT: within-type resolution ── */
-  const xR = d3.scaleBand().domain(Q_ORDER).range([halfW + gapX, w]).padding(0.3);
-  const maxRT = d3.max(data, d => Math.max(d.interior_median_h, d.public_median_h));
-  const yR = d3.scaleLinear().domain([0, maxRT * 1.1]).range([h, 0]);
-  const x1R = d3.scaleBand().domain(["interior", "public"]).range([0, xR.bandwidth()]).padding(0.1);
-
-  g.append("g").attr("transform", `translate(0,${h})`)
-    .call(d3.axisBottom(xR).tickSize(0)).selectAll("text").style("font-size", "10px");
-
-  const yRAxis = g.append("g").attr("transform", `translate(${halfW + gapX},0)`)
-    .call(d3.axisLeft(yR).ticks(5).tickFormat(d => d + "h"));
-  yRAxis.selectAll("text").style("font-size", "10px");
-
-  g.append("text").attr("x", halfW + gapX + (w - halfW - gapX) / 2).attr("y", -6)
-    .attr("text-anchor", "middle").style("font-size", "11px").style("font-weight", "600").style("fill", "#888")
-    .text("Within-type resolution time");
-
-  const rtIntBars = g.selectAll(".infra-rt-int").data(data).enter().append("rect").attr("class", "infra-rt-int")
-    .attr("x", d => xR(d.quartile) + x1R("interior")).attr("width", x1R.bandwidth())
-    .attr("y", h).attr("height", 0).attr("fill", "#d96459").attr("rx", 2)
-    .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile}</strong> · Interior<br>` +
-      `P95: ${d.interior_p95_h}h<br>` +
-      `Median: <strong>${d.interior_median_h.toFixed(1)}h</strong><br>` +
-      `P5: ${d.interior_p5_h}h`))
-    .on("mousemove", moveTip).on("mouseout", hideTip);
-
-  const rtPubBars = g.selectAll(".infra-rt-pub").data(data).enter().append("rect").attr("class", "infra-rt-pub")
-    .attr("x", d => xR(d.quartile) + x1R("public")).attr("width", x1R.bandwidth())
-    .attr("y", h).attr("height", 0).attr("fill", "#5b93c5").attr("rx", 2)
-    .on("mouseover", (evt, d) => showTip(evt,
-      `<strong>${d.quartile}</strong> · Public<br>` +
-      `P95: ${d.public_p95_h}h<br>` +
-      `Median: <strong>${d.public_median_h.toFixed(1)}h</strong><br>` +
-      `P5: ${d.public_p5_h}h`))
-    .on("mousemove", moveTip).on("mouseout", hideTip);
-
-  onReveal(el, () => {
-    const dur = 800;
-    intBars.transition().duration(dur).ease(d3.easeCubicOut)
-      .attr("y", d => yL(d.interior_pct)).attr("height", d => h - yL(d.interior_pct));
-    pubBars.transition().duration(dur).ease(d3.easeCubicOut)
-      .attr("y", d => yL(100)).attr("height", d => yL(d.interior_pct) - yL(100));
-    intLabels.transition().duration(dur).ease(d3.easeCubicOut)
-      .attr("y", d => yL(d.interior_pct / 2) + 4).style("opacity", 1);
-    rtIntBars.transition().duration(dur).ease(d3.easeCubicOut)
-      .attr("y", d => yR(d.interior_median_h)).attr("height", d => h - yR(d.interior_median_h));
-    rtPubBars.transition().duration(dur).ease(d3.easeCubicOut)
-      .attr("y", d => yR(d.public_median_h)).attr("height", d => h - yR(d.public_median_h));
-  });
-})();
-
-/* ══════════════════════════════════
-   CHART 4: Complaint mix stacked bars
+   CHART 1: Complaint mix stacked bars
    ══════════════════════════════════ */
 (async function () {
   const raw = await d3.json("public/data/complaint_mix.json");
@@ -163,18 +41,16 @@
     .style("font-size", "12px").style("fill", "#666")
     .text("Share of complaints (%)");
 
-  const stackOrder = ["health_safety", "interior_housing", "public_infra", "quality_of_life", "other"];
+  const stackOrder = ["interior_housing", "public_infra", "quality_of_life", "other"];
   const MIX_LABEL = {
-    health_safety: "Health & Safety",
-    interior_housing: "Interior housing repairs",
-    public_infra: "Public infrastructure",
+    interior_housing: "Interior Housing",
+    public_infra: "Public Infrastructure",
     quality_of_life: "Quality of Life",
     other: "Other"
   };
   const MIX_COLOR = {
-    health_safety: "#d96459",
-    interior_housing: "#9ec5e8",
-    public_infra: "#5f8fbc",
+    interior_housing: "#d96459",
+    public_infra: "#5b93c5",
     quality_of_life: "#f2a553",
     other: "#b8b0a8"
   };
@@ -208,41 +84,14 @@
         out.shares[cat] = valueFrom(shares, [cat]);
         out.medians[cat] = valueFrom(medians, [cat]);
       });
-      const hasSplitShare = shares.interior_housing != null || shares.public_infra != null;
-      const hasSplitMedian = medians.interior_housing != null || medians.public_infra != null;
-      if (!hasSplitShare && shares.infrastructure != null) {
-        out.shares.public_infra = valueFrom(shares, ["infrastructure"]);
-        out.shares.interior_housing = 0;
-      }
-      if (!hasSplitMedian && medians.infrastructure != null) {
-        out.medians.public_infra = valueFrom(medians, ["infrastructure"]);
-        out.medians.interior_housing = 0;
-      }
       return;
     }
 
-    /* Format B: one row per quartile, flat columns */
-    if (!row.category) {
-      out.shares.health_safety = valueFrom(row, ["health_safety", "health_safety_pct", "health_safety_share_pct"]);
-      out.shares.interior_housing = valueFrom(row, ["interior_housing", "interior_housing_pct", "interior_housing_share_pct"]);
-      out.shares.public_infra = valueFrom(row, ["public_infra", "public_infra_pct", "public_infra_share_pct", "infrastructure", "infrastructure_pct", "infrastructure_share_pct"]);
-      out.shares.quality_of_life = valueFrom(row, ["quality_of_life", "quality_of_life_pct", "quality_of_life_share_pct"]);
-      out.shares.other = valueFrom(row, ["other", "other_pct", "other_share_pct"]);
-
-      out.medians.health_safety = valueFrom(row, ["health_safety_median_h", "median_h_health_safety"]);
-      out.medians.interior_housing = valueFrom(row, ["interior_housing_median_h", "median_h_interior_housing"]);
-      out.medians.public_infra = valueFrom(row, ["public_infra_median_h", "infrastructure_median_h", "median_h_public_infra", "median_h_infrastructure"]);
-      out.medians.quality_of_life = valueFrom(row, ["quality_of_life_median_h", "median_h_quality_of_life"]);
-      out.medians.other = valueFrom(row, ["other_median_h", "median_h_other"]);
-      return;
-    }
-
-    /* Format C: one row per quartile-category ({category, share_pct, median_h}) */
+    /* Format B: one row per quartile-category ({category, share_pct, median_h}) */
     const cat = row.category;
-    const mapped = cat === "infrastructure" ? "public_infra" : cat;
-    if (!stackOrder.includes(mapped)) return;
-    out.shares[mapped] = valueFrom(row, ["share_pct", "share", "pct"]);
-    out.medians[mapped] = valueFrom(row, ["median_h", "median"]);
+    if (!stackOrder.includes(cat)) return;
+    out.shares[cat] = valueFrom(row, ["share_pct", "share", "pct"]);
+    out.medians[cat] = valueFrom(row, ["median_h", "median"]);
   });
 
   const preferredQuartiles = (typeof Q_ORDER !== "undefined" && Array.isArray(Q_ORDER)) ? Q_ORDER : [];
@@ -268,10 +117,6 @@
     });
     return { quartile: q, shares, medians };
   });
-  const infraTotalByQuartile = new Map(
-    normalized.map(d => [d.quartile, toNum(d.shares.interior_housing) + toNum(d.shares.public_infra)])
-  );
-
   /* Build bar data with y positions */
   const barData = [];
   normalized.forEach(d => {
@@ -279,12 +124,9 @@
     stackOrder.forEach(cat => {
       const val = toNum(d.shares[cat]);
       const med = toNum(d.medians[cat]);
-      const infraTotal = infraTotalByQuartile.get(d.quartile) || 0;
-      const isInfraPart = (cat === "interior_housing" || cat === "public_infra");
       barData.push({
         quartile: d.quartile, category: cat,
         value: val, median_h: med, y0: cumY,
-        infra_within_pct: (isInfraPart && infraTotal > 0) ? (val / infraTotal * 100) : null,
       });
       cumY += val;
     });
@@ -296,12 +138,9 @@
     .attr("height", d => y(d.y0) - y(d.y0 + d.value))
     .attr("fill", d => MIX_COLOR[d.category]).attr("rx", 1)
     .on("mouseover", (evt, d) => {
-      const infraLine = (d.infra_within_pct == null)
-        ? ""
-        : `<br>Share of infrastructure complaints: <strong>${d.infra_within_pct.toFixed(1)}%</strong>`;
       showTip(evt,
         `<strong>${d.quartile} · ${MIX_LABEL[d.category]}</strong><br>` +
-        `Share: ${d.value.toFixed(1)}%${infraLine}<br>` +
+        `Share: ${d.value.toFixed(1)}%<br>` +
         `Median resolution: <strong>${d.median_h.toFixed(1)} h</strong>`);
     })
     .on("mousemove", moveTip).on("mouseout", hideTip);
@@ -314,7 +153,7 @@
     .attr("text-anchor", "middle").attr("dominant-baseline", "middle")
     .style("font-size", "11px").style("font-weight", "700")
     .style("pointer-events", "none")
-    .style("fill", d => (d.category === "interior_housing" || d.category === "quality_of_life") ? "#3a2a10" : "#fff")
+    .style("fill", d => (d.category === "quality_of_life") ? "#3a2a10" : "#fff")
     .text(d => d.value >= 4 ? d.value.toFixed(1) + "%" : "");
 
   /* Legend — horizontal row below x-axis */
@@ -333,7 +172,7 @@
 })();
 
 /* ══════════════════════════════════
-   CHART 5: Oaxaca decomposition
+   CHART 2: Oaxaca decomposition
    ══════════════════════════════════ */
 (async function () {
   const data = await d3.json("public/data/oaxaca.json");

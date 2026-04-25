@@ -2,69 +2,61 @@
   {
     "quartile": "Q1 (lowest)",
     "shares": {
-      "health_safety": 17.7,
-      "interior_housing": 13.7,
-      "public_infra": 6.5,
-      "quality_of_life": 31.9,
-      "other": 30.2
+      "interior_housing": 34.6,
+      "public_infra": 6.8,
+      "quality_of_life": 34.2,
+      "other": 24.3
     },
     "medians": {
-      "health_safety": 60.8,
-      "interior_housing": 202.1,
-      "public_infra": 48.0,
+      "interior_housing": 118.8,
+      "public_infra": 53.4,
       "quality_of_life": 1.2,
-      "other": 3.4
+      "other": 2.7
     }
   },
   {
     "quartile": "Q2",
     "shares": {
-      "health_safety": 11.2,
-      "interior_housing": 8.0,
-      "public_infra": 8.9,
-      "quality_of_life": 24.5,
-      "other": 47.4
+      "interior_housing": 22.8,
+      "public_infra": 11.2,
+      "quality_of_life": 28.5,
+      "other": 37.5
     },
     "medians": {
-      "health_safety": 64.6,
-      "interior_housing": 193.9,
-      "public_infra": 43.3,
-      "quality_of_life": 1.2,
-      "other": 3.9
+      "interior_housing": 110.3,
+      "public_infra": 68.4,
+      "quality_of_life": 1.1,
+      "other": 3.3
     }
   },
   {
     "quartile": "Q3",
     "shares": {
-      "health_safety": 8.4,
-      "interior_housing": 5.4,
-      "public_infra": 10.7,
-      "quality_of_life": 24.2,
-      "other": 51.3
+      "interior_housing": 17.6,
+      "public_infra": 14.4,
+      "quality_of_life": 27.9,
+      "other": 40.1
     },
     "medians": {
-      "health_safety": 65.1,
-      "interior_housing": 202.2,
-      "public_infra": 42.1,
+      "interior_housing": 121.1,
+      "public_infra": 70.8,
       "quality_of_life": 1.2,
-      "other": 4.0
+      "other": 3.0
     }
   },
   {
     "quartile": "Q4 (highest)",
     "shares": {
-      "health_safety": 6.1,
-      "interior_housing": 3.5,
-      "public_infra": 9.0,
-      "quality_of_life": 28.3,
-      "other": 53.1
+      "interior_housing": 12.1,
+      "public_infra": 11.5,
+      "quality_of_life": 36.7,
+      "other": 39.8
     },
     "medians": {
-      "health_safety": 70.8,
-      "interior_housing": 265.6,
-      "public_infra": 29.4,
-      "quality_of_life": 1.4,
-      "other": 1.9
+      "interior_housing": 115.8,
+      "public_infra": 58.6,
+      "quality_of_life": 1.1,
+      "other": 2.0
     }
   }
 ]
