@@ -268,25 +268,12 @@
 
     <div class="body-text">
       <p>
-        To look more closely at what is going on, I start with a heat map of the main variables.
-        Two factors stand out immediately. <strong>Complaint type</strong> (0.84) and
-        <strong>city agency</strong> (0.81) show the strongest relationships with resolution
-        time. Filing channel is more moderate (0.35), while income, month, and population are
-        all close to flat, which suggests that on their own they say little about how long a
-        complaint will take to close. Complaint type and city agency also have a strong
-        relationship with each other (0.87), and several other variables show intermediate
-        overlaps, so much of what any single variable appears to explain may in fact be shared
-        with the others.
-      </p>
-    </div>
-
-    <div class="d3-chart" id="chart-heatmap"></div>
-
-    <div class="body-text">
-      <p>
-        To separate their contributions, I fit a sequence of nested regression models, adding
-        one block of predictors at a time and watching how much each addition actually improves
-        the fit.
+        To see which variables actually drive the wait, I fit a sequence of nested regression
+        models on five candidate predictors &mdash; <strong>income quartile</strong>, the
+        <strong>total number of complaints</strong> filed in each neighborhood,
+        <strong>filing channel</strong>, <strong>city agency</strong>, and
+        <strong>complaint type</strong> &mdash; adding one block at a time and watching how
+        much each addition actually improves the fit.
       </p>
     </div>
 
@@ -316,16 +303,18 @@
 
     <div class="body-text">
       <p>
-        As the plot above shows, income quartile, month, and filing channel together explain only
-        <strong>12.3%</strong> of the variance in resolution time. Adding city agency and
-        complaint type lifts R&sup2; to <strong>79.2%</strong>. Since agency, complaint type, and
-        filing channel are correlated, I use a drop-one-block test on the full model to isolate each
-        variable&rsquo;s independent contribution. Removing complaint type drops R&sup2; by
-        <strong>12.6 percentage points</strong> (&Delta;R&sup2; = 0.126), while removing city
-        agency drops it by <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012), and
-        removing filing channel drops it by just <strong>0.05 percentage points</strong>
-        (&Delta;R&sup2; = 0.0005). Complaint type is therefore almost the entire reason the gap
-        appears in the model, with agency and channel adding little unique information.
+        As the plot above shows, income quartile, neighborhood complaint volume, and filing
+        channel together explain only <strong>12.0%</strong> of the variance in resolution time.
+        Adding city agency lifts R&sup2; to <strong>66.5%</strong>, and adding complaint type
+        on top of that lifts it to <strong>79.0%</strong>. Because several of these predictors
+        are correlated, I run a drop-one-block test on the full model to isolate each variable&rsquo;s
+        unique contribution. Removing complaint type drops R&sup2; by <strong>12.5 percentage
+        points</strong> (&Delta;R&sup2; = 0.125), while removing city agency drops it by
+        <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012). Removing filing channel,
+        income quartile, or total complaint volume each costs less than a tenth of a percentage
+        point (&Delta;R&sup2; &le; 0.0005). Complaint type is therefore almost the entire reason
+        the gap appears in the model, with agency adding a small amount of unique information and
+        the remaining variables contributing essentially nothing once the others are in place.
       </p>
     </div>
 

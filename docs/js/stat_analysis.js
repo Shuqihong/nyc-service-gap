@@ -1,10 +1,9 @@
 /**
  * stat_analysis.js — Statistical Analysis section
  *
- * Three D3 visualizations using the page's color palette:
- *   1. chart-heatmap       — static 7x7 variable association heatmap
- *   2. chart-nested-models — static nested R² bar chart
- *   3. chart-dag           — animated causal DAG (nodes fade in, arrows draw)
+ * Two D3 visualizations using the page's color palette:
+ *   1. chart-nested-models — static nested R² bar chart
+ *   2. chart-dag           — animated causal DAG (nodes fade in, arrows draw)
  *
  * Palette matches gap_charts.js / explanation_charts.js:
  *   red #d96459, orange #f2a553, green #7bc8a4, blue #5b93c5, gray #b8b0a8
@@ -12,121 +11,7 @@
  */
 
 /* ══════════════════════════════════
-   CHART 1: Association heatmap (static)
-   ══════════════════════════════════ */
-(function () {
-  const el = document.getElementById("chart-heatmap");
-  if (!el) return;
-
-  const LABELS = [
-    "Resolution time",
-    "Median household income",
-    "Population",
-    "Month filed",
-    "Complaint type",
-    "City agency",
-    "Filing channel",
-  ];
-  // Values from draft/results/association_matrix_clean.csv
-  const M = [
-    [1.000, 0.035, 0.041, 0.011, 0.843, 0.814, 0.345],
-    [0.035, 1.000, 0.339, 0.012, 0.360, 0.297, 0.128],
-    [0.041, 0.339, 1.000, 0.003, 0.221, 0.236, 0.082],
-    [0.011, 0.012, 0.003, 1.000, 0.117, 0.108, 0.051],
-    [0.843, 0.360, 0.221, 0.117, 1.000, 0.871, 0.518],
-    [0.814, 0.297, 0.236, 0.108, 0.871, 1.000, 0.441],
-    [0.345, 0.128, 0.082, 0.051, 0.518, 0.441, 1.000],
-  ];
-
-  const margin = { top: 46, right: 40, bottom: 110, left: 160 };
-  const W = el.clientWidth || 760;
-  const cellSize = Math.min(58, (W - margin.left - margin.right) / LABELS.length);
-  const gridW = cellSize * LABELS.length;
-  const H = gridW + margin.top + margin.bottom;
-
-  const svg = d3.select(el).append("svg")
-    .attr("viewBox", `0 0 ${W} ${H}`)
-    .attr("preserveAspectRatio", "xMidYMid meet");
-
-  const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-  // Title
-  svg.append("text").attr("x", W / 2).attr("y", 22).attr("text-anchor", "middle")
-    .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("How strongly each variable moves with the others");
-
-  // Color scale — warm palette consistent with page (#fbf6ed → #c72929)
-  const color = d3.scaleLinear()
-    .domain([0, 0.35, 0.7, 1])
-    .range(["#fbf6ed", "#f2a553", "#d96459", "#8a1f1f"]);
-
-  // Cells
-  LABELS.forEach((row, i) => {
-    LABELS.forEach((col, j) => {
-      const v = M[i][j];
-      g.append("rect")
-        .attr("x", j * cellSize).attr("y", i * cellSize)
-        .attr("width", cellSize - 1).attr("height", cellSize - 1)
-        .attr("rx", 2)
-        .attr("fill", color(v))
-        .on("mouseover", (evt) => showTip(evt,
-          `<strong>${row}</strong> &times; <strong>${col}</strong><br>` +
-          `Association: <strong>${v.toFixed(2)}</strong>`))
-        .on("mousemove", moveTip).on("mouseout", hideTip);
-      g.append("text")
-        .attr("x", j * cellSize + cellSize / 2)
-        .attr("y", i * cellSize + cellSize / 2 + 4)
-        .attr("text-anchor", "middle")
-        .style("font-size", "11px").style("font-weight", "600")
-        .style("fill", v > 0.55 ? "#fff" : "#3a2a1a")
-        .style("pointer-events", "none")
-        .text(v.toFixed(2));
-    });
-  });
-
-  // Row labels
-  LABELS.forEach((lab, i) => {
-    g.append("text")
-      .attr("x", -8).attr("y", i * cellSize + cellSize / 2 + 4)
-      .attr("text-anchor", "end")
-      .style("font-size", "12px").style("fill", "#333")
-      .text(lab);
-  });
-
-  // Column labels (rotated)
-  LABELS.forEach((lab, j) => {
-    g.append("text")
-      .attr("transform", `translate(${j * cellSize + cellSize / 2},${gridW + 10}) rotate(-40)`)
-      .attr("text-anchor", "end")
-      .style("font-size", "12px").style("fill", "#333")
-      .text(lab);
-  });
-
-  // Legend
-  const legendW = 180, legendH = 10;
-  const legendX = (gridW - legendW) / 2;
-  const legendY = gridW + 70;
-  const lg = g.append("g").attr("transform", `translate(${legendX},${legendY})`);
-
-  const defs = svg.append("defs");
-  const gradId = "heatmap-gradient";
-  const grad = defs.append("linearGradient").attr("id", gradId)
-    .attr("x1", "0%").attr("x2", "100%");
-  [0, 0.35, 0.7, 1].forEach(stop => {
-    grad.append("stop").attr("offset", `${stop * 100}%`).attr("stop-color", color(stop));
-  });
-  lg.append("rect").attr("width", legendW).attr("height", legendH)
-    .attr("rx", 2).attr("fill", `url(#${gradId})`);
-  lg.append("text").attr("x", 0).attr("y", legendH + 14)
-    .style("font-size", "11px").style("fill", "#666").text("weak (0)");
-  lg.append("text").attr("x", legendW).attr("y", legendH + 14)
-    .attr("text-anchor", "end")
-    .style("font-size", "11px").style("fill", "#666").text("strong (1)");
-})();
-
-
-/* ══════════════════════════════════
-   CHART 2: Nested R² bars (static)
+   CHART 1: Nested R² bars (static)
    ══════════════════════════════════ */
 (function () {
   const el = document.getElementById("chart-nested-models");
@@ -135,24 +20,34 @@
 
   // Diagnostic notes shown only where they add information beyond the plotted bars.
   const data = [
-    { name: "income only",      r2: 0.001 },
-    { name: "+ month",          r2: 0.005 },
     {
-      name: "+ filing channel", r2: 0.123,
+      name: "income only", r2: 0.001,
+      note: [
+        "Drop-one ΔR²: 0.0004",
+      ],
+    },
+    {
+      name: "+ total complaints", r2: 0.001,
+      note: [
+        "Drop-one ΔR²: 0.0001",
+      ],
+    },
+    {
+      name: "+ filing channel", r2: 0.120,
       note: [
         "Drop-one ΔR²: 0.0005",
       ],
     },
     {
-      name: "+ city agency", r2: 0.666,
+      name: "+ city agency", r2: 0.665,
       note: [
-        "Drop-one ΔR²: 0.0117",
+        "Drop-one ΔR²: 0.0116",
       ],
     },
     {
-      name: "+ complaint type", r2: 0.792,
+      name: "+ complaint type", r2: 0.790,
       note: [
-        "Drop-one ΔR²: 0.1255",
+        "Drop-one ΔR²: 0.1251",
       ],
     },
   ];
@@ -168,7 +63,7 @@
 
   svg.append("text").attr("x", W / 2).attr("y", 22).attr("text-anchor", "middle")
     .style("font-size", "14px").style("font-weight", "bold").style("fill", "#222")
-    .text("Nested regression (without borough): variance explained");
+    .text("Nested regression: variance explained");
 
   const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
 
@@ -220,7 +115,7 @@
 
 
 /* ══════════════════════════════════
-   CHART 3: Animated causal DAG
+   CHART 2: Animated causal DAG
    ══════════════════════════════════ */
 (function () {
   const el = document.getElementById("chart-dag");
