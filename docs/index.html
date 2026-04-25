@@ -269,9 +269,9 @@
     <div class="body-text">
       <p>
         To see which variables actually drive the wait, I fit a sequence of nested regression
-        models on five candidate predictors &mdash; <strong>income quartile</strong>, the
-        <strong>total number of complaints</strong> filed in each neighborhood,
-        <strong>filing channel</strong>, <strong>city agency</strong>, and
+        models on five candidate predictors &mdash; <strong>median household income</strong>
+        (log-transformed), the <strong>total number of complaints</strong> filed in each
+        neighborhood, <strong>filing channel</strong>, <strong>city agency</strong>, and
         <strong>complaint type</strong> &mdash; adding one block at a time and watching how
         much each addition actually improves the fit.
       </p>
@@ -303,17 +303,17 @@
 
     <div class="body-text">
       <p>
-        As the plot above shows, income quartile, neighborhood complaint volume, and filing
-        channel together explain only <strong>12.0%</strong> of the variance in resolution time.
-        Adding city agency lifts R&sup2; to <strong>66.5%</strong>, and adding complaint type
-        on top of that lifts it to <strong>79.0%</strong>. Because several of these predictors
-        are correlated, I run a drop-one-block test on the full model to isolate each variable&rsquo;s
+        As the plot above shows, income, neighborhood complaint volume, and filing channel
+        together explain only <strong>11.9%</strong> of the variance in resolution time. Adding
+        city agency lifts R&sup2; to <strong>66.4%</strong>, and adding complaint type on top
+        of that lifts it to <strong>78.9%</strong>. Because several of these predictors are
+        correlated, I run a drop-one-block test on the full model to isolate each variable&rsquo;s
         unique contribution. Removing complaint type drops R&sup2; by <strong>12.5 percentage
         points</strong> (&Delta;R&sup2; = 0.125), while removing city agency drops it by
         <strong>1.2 percentage points</strong> (&Delta;R&sup2; = 0.012). Removing filing channel,
-        income quartile, or total complaint volume each costs less than a tenth of a percentage
-        point (&Delta;R&sup2; &le; 0.0005). Complaint type is therefore almost the entire reason
-        the gap appears in the model, with agency adding a small amount of unique information and
+        income, or total complaint volume each costs less than a tenth of a percentage point
+        (&Delta;R&sup2; &le; 0.0005). Complaint type is therefore almost the entire reason the
+        gap appears in the model, with agency adding a small amount of unique information and
         the remaining variables contributing essentially nothing once the others are in place.
       </p>
     </div>

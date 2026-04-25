@@ -23,31 +23,31 @@
     {
       name: "income only", r2: 0.001,
       note: [
-        "Drop-one ΔR²: 0.0004",
+        "Drop-one ΔR²: 0.0001",
       ],
     },
     {
-      name: "+ total complaints", r2: 0.001,
+      name: "+ total complaints", r2: 0.002,
       note: [
         "Drop-one ΔR²: 0.0001",
       ],
     },
     {
-      name: "+ filing channel", r2: 0.120,
+      name: "+ filing channel", r2: 0.119,
       note: [
         "Drop-one ΔR²: 0.0005",
       ],
     },
     {
-      name: "+ city agency", r2: 0.665,
+      name: "+ city agency", r2: 0.664,
       note: [
         "Drop-one ΔR²: 0.0116",
       ],
     },
     {
-      name: "+ complaint type", r2: 0.790,
+      name: "+ complaint type", r2: 0.789,
       note: [
-        "Drop-one ΔR²: 0.1251",
+        "Drop-one ΔR²: 0.1253",
       ],
     },
   ];
