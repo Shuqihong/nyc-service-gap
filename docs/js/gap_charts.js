@@ -151,6 +151,16 @@ const CAT_LABEL = { interior_housing: "Interior Housing", public_infra: "Public 
       `<span style="color:#888">${d.n.toLocaleString()} complaints</span>`))
     .on("mousemove", moveTip).on("mouseout", hideTip);
 
+  /* Value labels above each bar — visible even when bars are short */
+  const valueLabels = g.selectAll(".catbar-lbl").data(data)
+    .enter().append("text").attr("class", "catbar-lbl")
+    .attr("x", d => x0(d.category) + x1(d.quartile) + x1.bandwidth() / 2)
+    .attr("y", h)
+    .attr("text-anchor", "middle")
+    .style("font-size", "9.5px").style("font-weight", "700").style("fill", "#3a2a1a")
+    .style("opacity", 0)
+    .text(d => d.median_h >= 10 ? Math.round(d.median_h) + "h" : d.median_h.toFixed(1) + "h");
+
   /* Legend */
   const leg = g.append("g").attr("transform", `translate(${w - 150}, -6)`);
   Q_ORDER.forEach((q, i) => {
@@ -163,5 +173,8 @@ const CAT_LABEL = { interior_housing: "Interior Housing", public_infra: "Public 
     bars.transition().duration(800).ease(d3.easeCubicOut)
       .attr("y", d => y(d.median_h))
       .attr("height", d => h - y(d.median_h));
+    valueLabels.transition().duration(800).ease(d3.easeCubicOut)
+      .attr("y", d => y(d.median_h) - 3)
+      .style("opacity", 1);
   });
 })();
