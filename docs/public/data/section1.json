@@ -1,0 +1,40 @@
+{
+  "high_income_complaint": {
+    "unique_key": "60521278",
+    "created_date": "2024-03-07 14:47:45+00:00",
+    "closed_date": "2024-03-07 17:08:16+00:00",
+    "resolution_hours": 2.3419444444444446,
+    "complaint_type": "HEAT/HOT WATER",
+    "descriptor": "APARTMENT ONLY",
+    "incident_address": "223-09 114 ROAD",
+    "borough": "QUEENS",
+    "zip": "11411",
+    "modzcta": 11411,
+    "agency": "HPD",
+    "agency_name": "Department of Housing Preservation and Development",
+    "status": "Closed",
+    "resolution_description": "The Department of Housing Preservation and Development conducted or attempted to conduct an inspection.  More information about inspection results can be found through HPD's website at www.nyc.gov/hpd by using HPDONLINE (enter your address on the home page) and entering your SR number under the complaint status option.",
+    "latitude": "40.70102610787242",
+    "longitude": "-73.73417834870956"
+  },
+  "low_income_complaint": {
+    "unique_key": "60513880",
+    "created_date": "2024-03-07 11:18:35+00:00",
+    "closed_date": "2024-03-24 14:13:37+00:00",
+    "resolution_hours": 410.9172222222222,
+    "complaint_type": "HEAT/HOT WATER",
+    "descriptor": "APARTMENT ONLY",
+    "incident_address": "1931 HAVILAND AVENUE",
+    "borough": "BRONX",
+    "zip": "10472",
+    "modzcta": "10472",
+    "agency": "HPD",
+    "agency_name": "Department of Housing Preservation and Development",
+    "status": "Closed",
+    "resolution_description": "The Department of Housing Preservation and Development inspected the following conditions. No violations were issued. The complaint has been closed.",
+    "latitude": "40.82935514502692",
+    "longitude": "-73.85919411628154"
+  },
+  "gap_hours": 408.58,
+  "note": "Maximum resolution-time gap among all same-day Q4/Q1 HEAT/HOT WATER pairs in winter 2024."
+}

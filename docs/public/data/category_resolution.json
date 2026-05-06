@@ -1,0 +1,182 @@
+[
+  {
+    "quartile": "Q1 (lowest)",
+    "category": "interior_housing",
+    "n": 411770,
+    "share_pct": 34.6,
+    "median_h": 118.81,
+    "p5_h": 9.1,
+    "p95_h": 1882.3
+  },
+  {
+    "quartile": "Q1 (lowest)",
+    "category": "public_infra",
+    "n": 80704,
+    "share_pct": 6.8,
+    "median_h": 53.35,
+    "p5_h": 1.0,
+    "p95_h": 5129.6
+  },
+  {
+    "quartile": "Q1 (lowest)",
+    "category": "quality_of_life",
+    "n": 407313,
+    "share_pct": 34.2,
+    "median_h": 1.21,
+    "p5_h": 0.1,
+    "p95_h": 76.5
+  },
+  {
+    "quartile": "Q1 (lowest)",
+    "category": "other",
+    "n": 289544,
+    "share_pct": 24.3,
+    "median_h": 2.72,
+    "p5_h": 0.2,
+    "p95_h": 656.5
+  },
+  {
+    "quartile": "Q2",
+    "category": "interior_housing",
+    "n": 183215,
+    "share_pct": 22.8,
+    "median_h": 110.32,
+    "p5_h": 8.7,
+    "p95_h": 2359.2
+  },
+  {
+    "quartile": "Q2",
+    "category": "public_infra",
+    "n": 90109,
+    "share_pct": 11.2,
+    "median_h": 68.41,
+    "p5_h": 1.0,
+    "p95_h": 5825.5
+  },
+  {
+    "quartile": "Q2",
+    "category": "quality_of_life",
+    "n": 229074,
+    "share_pct": 28.5,
+    "median_h": 1.14,
+    "p5_h": 0.1,
+    "p95_h": 113.8
+  },
+  {
+    "quartile": "Q2",
+    "category": "other",
+    "n": 301907,
+    "share_pct": 37.5,
+    "median_h": 3.32,
+    "p5_h": 0.3,
+    "p95_h": 444.7
+  },
+  {
+    "quartile": "Q3",
+    "category": "interior_housing",
+    "n": 112872,
+    "share_pct": 17.6,
+    "median_h": 121.13,
+    "p5_h": 8.6,
+    "p95_h": 3242.8
+  },
+  {
+    "quartile": "Q3",
+    "category": "public_infra",
+    "n": 92037,
+    "share_pct": 14.4,
+    "median_h": 70.77,
+    "p5_h": 1.1,
+    "p95_h": 5975.4
+  },
+  {
+    "quartile": "Q3",
+    "category": "quality_of_life",
+    "n": 178344,
+    "share_pct": 27.9,
+    "median_h": 1.19,
+    "p5_h": 0.1,
+    "p95_h": 529.1
+  },
+  {
+    "quartile": "Q3",
+    "category": "other",
+    "n": 256986,
+    "share_pct": 40.1,
+    "median_h": 2.97,
+    "p5_h": 0.3,
+    "p95_h": 776.1
+  },
+  {
+    "quartile": "Q4 (highest)",
+    "category": "interior_housing",
+    "n": 65076,
+    "share_pct": 12.1,
+    "median_h": 115.77,
+    "p5_h": 7.8,
+    "p95_h": 2502.5
+  },
+  {
+    "quartile": "Q4 (highest)",
+    "category": "public_infra",
+    "n": 61691,
+    "share_pct": 11.5,
+    "median_h": 58.57,
+    "p5_h": 1.0,
+    "p95_h": 6171.1
+  },
+  {
+    "quartile": "Q4 (highest)",
+    "category": "quality_of_life",
+    "n": 197171,
+    "share_pct": 36.7,
+    "median_h": 1.14,
+    "p5_h": 0.1,
+    "p95_h": 815.9
+  },
+  {
+    "quartile": "Q4 (highest)",
+    "category": "other",
+    "n": 213999,
+    "share_pct": 39.8,
+    "median_h": 2.03,
+    "p5_h": 0.2,
+    "p95_h": 2687.2
+  },
+  {
+    "quartile": "Overall",
+    "category": "interior_housing",
+    "n": 772933,
+    "share_pct": 24.4,
+    "median_h": 117.31,
+    "p5_h": 8.8,
+    "p95_h": 2210.8
+  },
+  {
+    "quartile": "Overall",
+    "category": "public_infra",
+    "n": 324541,
+    "share_pct": 10.2,
+    "median_h": 65.43,
+    "p5_h": 1.0,
+    "p95_h": 5798.2
+  },
+  {
+    "quartile": "Overall",
+    "category": "quality_of_life",
+    "n": 1011902,
+    "share_pct": 31.9,
+    "median_h": 1.18,
+    "p5_h": 0.1,
+    "p95_h": 216.3
+  },
+  {
+    "quartile": "Overall",
+    "category": "other",
+    "n": 1062436,
+    "share_pct": 33.5,
+    "median_h": 2.85,
+    "p5_h": 0.2,
+    "p95_h": 1308.5
+  }
+]

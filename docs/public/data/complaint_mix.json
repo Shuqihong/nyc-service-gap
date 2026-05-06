@@ -1,0 +1,62 @@
+[
+  {
+    "quartile": "Q1 (lowest)",
+    "shares": {
+      "interior_housing": 34.6,
+      "public_infra": 6.8,
+      "quality_of_life": 34.2,
+      "other": 24.3
+    },
+    "medians": {
+      "interior_housing": 118.8,
+      "public_infra": 53.4,
+      "quality_of_life": 1.2,
+      "other": 2.7
+    }
+  },
+  {
+    "quartile": "Q2",
+    "shares": {
+      "interior_housing": 22.8,
+      "public_infra": 11.2,
+      "quality_of_life": 28.5,
+      "other": 37.5
+    },
+    "medians": {
+      "interior_housing": 110.3,
+      "public_infra": 68.4,
+      "quality_of_life": 1.1,
+      "other": 3.3
+    }
+  },
+  {
+    "quartile": "Q3",
+    "shares": {
+      "interior_housing": 17.6,
+      "public_infra": 14.4,
+      "quality_of_life": 27.9,
+      "other": 40.1
+    },
+    "medians": {
+      "interior_housing": 121.1,
+      "public_infra": 70.8,
+      "quality_of_life": 1.2,
+      "other": 3.0
+    }
+  },
+  {
+    "quartile": "Q4 (highest)",
+    "shares": {
+      "interior_housing": 12.1,
+      "public_infra": 11.5,
+      "quality_of_life": 36.7,
+      "other": 39.8
+    },
+    "medians": {
+      "interior_housing": 115.8,
+      "public_infra": 58.6,
+      "quality_of_life": 1.1,
+      "other": 2.0
+    }
+  }
+]

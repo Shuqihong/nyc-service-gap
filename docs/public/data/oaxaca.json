@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Q1 actual",
+    "value": 12.6,
+    "type": "q1"
+  },
+  {
+    "label": "Q1 with Q4\u2019s mix",
+    "value": 1.7,
+    "type": "counterfactual"
+  },
+  {
+    "label": "Q4 actual",
+    "value": 1.5,
+    "type": "q4"
+  }
+]
